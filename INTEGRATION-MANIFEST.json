@@ -1,0 +1,18 @@
+{
+  "source_filename": "index(20260906-111621).html",
+  "source_sha256": "39c40cb0e60196895b2cea0cc46dbc255482c8f5b69976b2e0336e7bf7c1feca",
+  "entities": 913,
+  "unique_ids": 913,
+  "unique_slugs": 913,
+  "first_entity": "PARA-0001",
+  "last_entity": "UFO-0913",
+  "aliens": 60,
+  "cases": 24,
+  "timeline": 23,
+  "shapes": 13,
+  "db_sha256": "f42ee5c1b81f08230a90db9cc3c8b8dfd575335338d6cfe3820742e6469d3927",
+  "integrated_sha256": "41bf5595dd26a74a41109642ed7e03da9494aa0673c542281bcc82efb51cddd8",
+  "earth_js_sha256": "ea6be77651afcddc829d848f38f31ac6f2c7e72cb50432c9317e9a6b441d50c3",
+  "earth_css_sha256": "4324471455fb99ad652891381727ce25c8d8b5936b9f20ad21503f80e08dc557",
+  "earth_phase": "Phase 1 — Earth engine only; entity coordinate layer intentionally absent"
+}

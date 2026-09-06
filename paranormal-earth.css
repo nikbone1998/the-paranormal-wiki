@@ -1,0 +1,29 @@
+/* THE UNSEEN ARCHIVE — Phase 1 Earth Engine
+   Standalone visual/interaction layer only. No entity coordinates or dossier links. */
+.ua-globe-section{margin:12px 0 10px;border:1px solid #666699;background:#02020b;box-shadow:inset 0 0 0 1px #11114a;font-family:"Times New Roman",Times,serif}
+.ua-globe-head{background:#111144;color:#00ffff;text-align:center;font:bold 14px Arial,sans-serif;padding:5px;border-bottom:1px solid #666699;letter-spacing:.8px}
+.ua-globe-sub{text-align:center;color:#a8a8ff;font:10px "Courier New",monospace;padding:5px 6px;border-bottom:1px dotted #333366}
+.ua-globe-shell{position:relative;width:100%;height:clamp(360px,62vw,560px);min-height:330px;overflow:hidden;background:radial-gradient(circle at 50% 48%,#05052a 0,#020214 38%,#000 76%);border:2px inset #777;touch-action:pan-y;outline:none;isolation:isolate;cursor:grab}
+.ua-globe-shell:focus-visible{outline:2px dotted #00ffff;outline-offset:2px}
+.ua-globe-shell.ua-dragging{cursor:grabbing;touch-action:none}
+.ua-globe-canvas,.ua-globe-stars,.ua-globe-fallback{position:absolute;inset:0;width:100%;height:100%;display:block}
+.ua-globe-stars{z-index:0;pointer-events:none}
+.ua-globe-canvas{z-index:1;opacity:0;transition:opacity .55s ease}
+.ua-globe-shell.ua-ready .ua-globe-canvas{opacity:1}
+.ua-globe-fallback{z-index:1;object-fit:cover;opacity:0;transition:opacity .3s ease;pointer-events:none}
+.ua-globe-shell.ua-fallback .ua-globe-fallback{opacity:1}
+.ua-globe-vignette{position:absolute;z-index:2;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 48%,transparent 0 48%,rgba(0,0,0,.16) 65%,rgba(0,0,0,.72) 100%),linear-gradient(180deg,rgba(30,30,90,.12),transparent 18%,transparent 80%,rgba(0,0,0,.4));box-shadow:inset 0 0 38px #000}
+.ua-globe-vignette:before,.ua-globe-vignette:after{content:"";position:absolute;left:8px;right:8px;height:1px;background:repeating-linear-gradient(90deg,#353580 0 2px,transparent 2px 12px);opacity:.42}
+.ua-globe-vignette:before{top:8px}.ua-globe-vignette:after{bottom:8px}
+.ua-globe-status{position:absolute;z-index:4;top:12px;left:12px;max-width:62%;color:#bcbcff;background:rgba(0,0,18,.66);border:1px solid #333366;padding:6px 8px;font:9px/1.5 "Courier New",monospace;text-shadow:0 1px #000;pointer-events:none}.ua-globe-status b{color:#00ff99}.ua-globe-quality{color:#ffff66}
+.ua-globe-controls{position:absolute;z-index:5;right:10px;top:10px;display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;max-width:48%}
+.ua-globe-btn{font:10px Arial,sans-serif!important;color:#000!important;background:#c0c0c0!important;border:2px outset #eee!important;padding:4px 7px!important;cursor:pointer!important;white-space:nowrap}.ua-globe-btn:active{border-style:inset!important}.ua-globe-btn:focus-visible{outline:1px dotted #00ffff;outline-offset:2px}
+.ua-globe-help{position:absolute;z-index:4;bottom:12px;left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100% - 20px);text-align:center;color:#aaa;background:rgba(0,0,0,.6);border:1px dotted #444;padding:3px 7px;font:9px "Courier New",monospace;pointer-events:none}
+.ua-globe-loading{position:absolute;z-index:8;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#00ffcc;background:#000;font:11px "Courier New",monospace;letter-spacing:.4px;transition:opacity .35s ease}.ua-globe-shell.ua-ready .ua-globe-loading,.ua-globe-shell.ua-fallback .ua-globe-loading{opacity:0;pointer-events:none}
+.ua-globe-loaderbar{display:block;width:min(260px,70%);height:8px;border:2px inset #777;background:#050505;overflow:hidden}.ua-globe-loaderbar i{display:block;height:100%;width:38%;background:#00aa88;animation:ua-scan 1.1s linear infinite}
+.ua-globe-error{position:absolute;z-index:9;left:50%;top:50%;transform:translate(-50%,58px);display:none;color:#ff6666;background:#150000;border:1px dashed #ff4444;padding:5px 8px;font:9px "Courier New",monospace}.ua-globe-shell.ua-fallback .ua-globe-error{display:block}
+.ua-globe-foot{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;color:#777;padding:5px 7px;font:9px "Courier New",monospace;border-top:1px solid #333366}.ua-globe-signal{color:#66ccaa}.ua-globe-future{color:#a060a0}
+.ua-globe-shell:fullscreen{width:100vw;height:100vh;border:0;background:#000}.ua-globe-shell:fullscreen .ua-globe-status{font-size:11px}.ua-globe-shell:fullscreen .ua-globe-help{font-size:10px}.ua-globe-shell:fullscreen .ua-globe-controls{top:14px;right:14px}
+@keyframes ua-scan{from{transform:translateX(-110%)}to{transform:translateX(360%)}}
+@media(max-width:680px){.ua-globe-shell{height:min(69vh,520px);min-height:340px}.ua-globe-status{top:8px;left:8px;max-width:52%;font-size:8px;padding:5px}.ua-globe-controls{right:7px;top:7px;max-width:47%;gap:3px}.ua-globe-btn{font-size:9px!important;padding:4px 5px!important}.ua-globe-help{bottom:8px;font-size:8px}.ua-globe-foot{font-size:8px}.ua-globe-sub{font-size:9px}}
+@media(prefers-reduced-motion:reduce){.ua-globe-loaderbar i{animation:none}.ua-globe-canvas,.ua-globe-fallback,.ua-globe-loading{transition:none}}
