@@ -14,8 +14,8 @@ module.exports=async function visitorCounter(req,res){
   return send(res,405,{error:'method_not_allowed'});
  }
 
- const redisUrl=process.env.UPSTASH_REDIS_REST_URL;
- const redisToken=process.env.UPSTASH_REDIS_REST_TOKEN;
+ const redisUrl=process.env.UPSTASH_REDIS_REST_URL||process.env.KV_REST_API_URL;
+ const redisToken=process.env.UPSTASH_REDIS_REST_TOKEN||process.env.KV_REST_API_TOKEN;
  if(!redisUrl||!redisToken)return send(res,503,{error:'counter_storage_unavailable'});
 
  const shouldIncrement=req.method==='POST';
