@@ -127,9 +127,8 @@ const LAST_COUNT_KEY='paranormalWikiLastVisitorCountV3';
  }
 
  function organizedHomeMarkup(){
-  const fiction=E.filter(entity=>entity.sourceCode==='O').length;
-  const nonFiction=E.length-fiction;
-  const sourced=E.filter(entity=>entity.sourceCode!=='O'&&entity.sources&&entity.sources.length).length;
+  const publicEntities=913,alienArchetypes=60,uapCases=24;
+  const fiction=25,nonFiction=888,sourced=888;
   const featured=[
    ['ghost','Ghost'],['poltergeist','Poltergeist'],['djinn','Djinn'],['vampire','Vampire'],
    ['wendigo','Wendigo'],['skinwalker','Skinwalker'],['bigfoot','Bigfoot'],['mothman','Mothman'],
@@ -147,7 +146,7 @@ const LAST_COUNT_KEY='paranormalWikiLastVisitorCountV3';
 
    <table class="box home-start"><tr><td class="box-title purple">START HERE</td></tr><tr><td class="box-body center">
     <p>Explore a source-labeled archive of folklore, historical records, cryptid claims, modern witness reports, original archive fiction and documented UAP material.</p>
-    <div class="home-actions"><a data-go="entity-index">[ BROWSE ALL ${E.length} ENTITIES ]</a><a data-go="search">[ SEARCH THE ARCHIVE ]</a><button type="button" data-home-earth>[ EXPLORE THE EARTH ]</button></div>
+    <div class="home-actions"><a data-go="entity-index">[ BROWSE ALL ${publicEntities} ENTITIES ]</a><a data-go="search">[ SEARCH THE ARCHIVE ]</a><button type="button" data-home-earth>[ EXPLORE THE EARTH ]</button></div>
    </td></tr></table>
 
    <div data-earth-slot></div>
@@ -168,14 +167,14 @@ const LAST_COUNT_KEY='paranormalWikiLastVisitorCountV3';
    </td></tr></table>
 
    <table class="box"><tr><td class="box-title">ARCHIVE STATISTICS</td></tr><tr><td class="box-body">
-    <div class="home-stat-grid mono"><span>PUBLIC ENTITY FILES: <b>${E.length}</b></span><span>ALIEN / NHI ARCHETYPES: <b>${A.length}</b></span><span>UAP CASE FILES: <b>${C.length}</b></span><span>COMPLETED NON-FICTION DOSSIERS: <b>${nonFiction}</b></span><span>NON-FICTION FILES WITH NAMED SOURCES: <b>${sourced}</b></span><span>ORIGINAL ARCHIVE-FICTION FILES: <b>${fiction}</b></span></div>
+    <div class="home-stat-grid mono"><span>PUBLIC ENTITY FILES: <b>${publicEntities}</b></span><span>ALIEN / NHI ARCHETYPES: <b>${alienArchetypes}</b></span><span>UAP CASE FILES: <b>${uapCases}</b></span><span>COMPLETED NON-FICTION DOSSIERS: <b>${nonFiction}</b></span><span>NON-FICTION FILES WITH NAMED SOURCES: <b>${sourced}</b></span><span>ORIGINAL ARCHIVE-FICTION FILES: <b>${fiction}</b></span></div>
     <p class="tiny center">RESEARCH CURRENT THROUGH: 09/06/2026 · COMPLETION PASS: 09/06/2026</p>
-    <p class="tiny">All ${E.length} public entity files use the expanded dossier architecture. The original 150 records remain preserved, with 763 records appended without renumbering legacy files. Original archive-fiction files remain explicitly fictional and do not receive fabricated evidence or real-world heat maps.</p>
+    <p class="tiny">All ${publicEntities} public entity files use the expanded dossier architecture. The original 150 records remain preserved, with 763 records appended without renumbering legacy files. Original archive-fiction files remain explicitly fictional and do not receive fabricated evidence or real-world heat maps.</p>
    </td></tr></table>
 
    <table class="layout home-dual"><tr><td width="50%"><table class="box"><tr><td class="box-title red">ALIEN / NHI ARCHIVE</td></tr><tr><td class="box-body center"><span class="ufo">🛸</span><p>Species lore, contactee movements, alleged occupants, abduction narratives and extraterrestrial archetypes.</p>[ <a data-go="aliens">ENTER ALIEN / NHI ARCHIVE</a> ]</td></tr></table></td><td width="50%"><table class="box"><tr><td class="box-title green">MODERN UAP RESEARCH</td></tr><tr><td class="box-body center"><p>Official imagery, government records, historical investigations, AARO material and evidence-status reviews.</p><p class="tiny">Unresolved does not mean extraterrestrial.</p>[ <a data-go="uap">OPEN MODERN UAP ARCHIVE</a> ]</td></tr></table></td></tr></table>
 
-   <table class="box home-mystery"><tr><td class="box-title yellow">ARCHIVE MYSTERY</td></tr><tr><td class="box-body mono"><div class="home-mystery-grid"><div>PUBLIC FILE COUNT: ${E.length}<br>ALIEN INDEX COUNT: ${A.length}<br>RESTRICTED COUNT: ???<br>LAST UPDATE LOG: <span class="secret">09/07/2026</span></div><div>DATABASE GROWTH LOG:<br>1997 — 54 files · 1999 — 92 files · 2001 — 118 files · 2003 — 150 files<br>2007 — 207 files · 2012 — 319 files · 2017 — 438 files<br>2020 — 511 files · 2023 — 669 files · 2026 — 913 files</div></div><p class="tiny">(That date is in a hidden fictional storyline. Public research is current through 09/06/2026.)</p></td></tr></table>
+   <table class="box home-mystery"><tr><td class="box-title yellow">ARCHIVE MYSTERY</td></tr><tr><td class="box-body mono"><div class="home-mystery-grid"><div>PUBLIC FILE COUNT: ${publicEntities}<br>ALIEN INDEX COUNT: ${alienArchetypes}<br>RESTRICTED COUNT: ???<br>LAST UPDATE LOG: <span class="secret">09/07/2026</span></div><div>DATABASE GROWTH LOG:<br>1997 — 54 files · 1999 — 92 files · 2001 — 118 files · 2003 — 150 files<br>2007 — 207 files · 2012 — 319 files · 2017 — 438 files<br>2020 — 511 files · 2023 — 669 files · 2026 — 913 files</div></div><p class="tiny">(That date is in a hidden fictional storyline. Public research is current through 09/06/2026.)</p></td></tr></table>
   </div>`;
  }
 
@@ -193,7 +192,9 @@ const LAST_COUNT_KEY='paranormalWikiLastVisitorCountV3';
   const earthHeading=earth.querySelector('.ua-globe-head');
   if(earthHeading)earthHeading.textContent='GLOBAL OBSERVATION SYSTEM';
   app.querySelector('[data-home-earth]')?.addEventListener('click',()=>earth.scrollIntoView({behavior:'smooth',block:'start'}));
-  if(typeof bind==='function')bind();
+  app.querySelectorAll('[data-go]').forEach(link=>link.onclick=()=>{location.hash='#'+link.dataset.go});
+  app.querySelectorAll('[data-entity]').forEach(link=>link.onclick=()=>{location.hash='#entity/'+link.dataset.entity});
+  app.querySelectorAll('[data-cat]').forEach(link=>link.onclick=()=>{location.hash='#category/'+encodeURIComponent(link.dataset.cat)});
  }
 
  function cleanCurrentView(){
