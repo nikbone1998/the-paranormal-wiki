@@ -1,5 +1,5 @@
-const COUNTER_KEY='the-paranormal-wiki:global-visits';
-const COUNTER_BASELINE=661372;
+const COUNTER_KEY='the-paranormal-wiki:global-visits:v2';
+const COUNTER_BASELINE=0;
 
 function send(res,status,body){
  res.statusCode=status;
