@@ -5,7 +5,7 @@
 (function(){
 'use strict';
 
-const VERSION='2.0.0-observation';
+const VERSION='2.0.1-cloudmask';
 const THREE_URL='https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
 
 const TEXTURES={
@@ -427,15 +427,15 @@ async function mount(root){
          vec2 cuv=vec2(fract(vUv.x+uCloudOffset),clamp(vUv.y,0.001,.999));
          vec2 suv=vec2(fract(vUv.x+uCloudOffset+uSunDir.x*.0035),clamp(vUv.y-uSunDir.y*.0025,.001,.999));
          vec4 cs=texture2D(tCloud,suv);
-         float cloud=max(lum(cs.rgb),cs.a*.82);
-         float shadow=smoothstep(.18,.82,cloud)*uCloudShadowsOn*sun*.115;
+         float cloud=clamp(min(lum(cs.rgb),cs.a),0.0,1.0);
+         float shadow=pow(cloud,1.18)*uCloudShadowsOn*sun*.075;
          float ambient=.025+.035*(1.0-water);
          vec3 surface=day*(ambient+sun*.975);
          surface*=1.0-shadow;
          vec3 H=normalize(S+V);
-         float oceanGlint=pow(max(dot(N,H),0.0),110.0)*water*smoothstep(-.03,.22,ndl);
+         float oceanGlint=pow(max(dot(N,H),0.0),165.0)*water*smoothstep(-.03,.22,ndl);
          float oceanFresnel=pow(1.0-max(dot(N,V),0.0),4.0)*water*smoothstep(-.04,.35,ndl);
-         surface+=vec3(.72,.86,1.0)*oceanGlint*.75;
+         surface+=vec3(.72,.86,1.0)*oceanGlint*.34;
          surface+=vec3(.03,.12,.19)*oceanFresnel*.32;
          vec3 ntex=texture2D(tNight,vUv).rgb;
          float nl=lum(ntex);
@@ -468,10 +468,11 @@ async function mount(root){
          void main(){
            vec2 uv=vec2(fract(vUv.x+uCloudOffset),vUv.y);
            vec4 s=texture2D(tCloud,uv);
-           float a=smoothstep(.07,.78,max(lum(s.rgb),s.a*.8));
+           float mask=clamp(min(lum(s.rgb),s.a),0.0,1.0);
+           float a=pow(mask,1.12);
            float day=.12+.88*smoothstep(-.28,.30,dot(normalize(vWorldNormal),normalize(uSunDir)));
-           vec3 c=mix(vec3(.20,.24,.31),vec3(1.0,.99,.97),day);
-           gl_FragColor=vec4(c,a*(.17+.54*day));
+           vec3 c=mix(vec3(.20,.24,.31),vec3(.98,.99,1.0),day);
+           gl_FragColor=vec4(c,a*(.075+.35*day));
          }`
      });
      clouds=new THREE.Mesh(new THREE.SphereGeometry(1.013,profile.segments,profile.segments),cloudMaterial);
