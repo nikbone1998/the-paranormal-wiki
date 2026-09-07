@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Confirming Forum Account</title>
+  <style>
+    :root{color-scheme:dark}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#050605;color:#d8ddcf;font-family:"Courier New",monospace}body{display:grid;place-items:center;padding:20px;background:radial-gradient(circle at 50% 0,#182016 0,#080a07 45%,#050605 100%)}.box{width:min(680px,100%);border:1px solid #465040;background:#0c100b;padding:22px}.label{font-size:11px;letter-spacing:.1em;color:#8f9a85;margin-bottom:10px}.box h1{margin:0 0 10px;font-size:22px;color:#dce8d2}.box p{line-height:1.55;color:#aab5a2}.status{margin-top:16px;border:1px solid #4a5542;padding:12px;background:#10160e}.status.error{border-color:#6e4c47;color:#d0a39c;background:#17100f}.status.success{border-color:#4c6243;color:#bdd3b2;background:#0e160c}.btn{display:inline-block;margin-top:14px;border:1px solid #596452;background:#171d14;color:#d9e2d1;padding:9px 11px;text-decoration:none;font-weight:bold}.small{font-size:11px;color:#798474;margin-top:14px}
+  </style>
+</head>
+<body>
+  <main class="box">
+    <div class="label">THE PARANORMAL WIKI // FORUM ACCOUNT VERIFICATION</div>
+    <h1>Confirming your forum account…</h1>
+    <p>This page completes the email-verification step for the community forum.</p>
+    <div id="status" class="status">Checking confirmation token…</div>
+    <a id="forumLink" class="btn" href="/forum/" hidden>RETURN TO FORUM</a>
+    <div class="small">Forum accounts are separate from canonical archive research records.</div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0"></script>
+  <script>
+    (async()=>{
+      const status=document.querySelector('#status');
+      const link=document.querySelector('#forumLink');
+      const set=(text,kind='')=>{status.className=`status ${kind}`.trim();status.textContent=text};
+      const client=window.supabase.createClient(
+        'https://waqobihznhkbspdchjbb.supabase.co',
+        'sb_publishable_uPGjlkbauGtisASevhnTLA_jIJDhzZG',
+        {auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}
+      );
+      try{
+        const url=new URL(location.href);
+        const tokenHash=url.searchParams.get('token_hash');
+        const type=url.searchParams.get('type')||'email';
+        const hashParams=new URLSearchParams(location.hash.replace(/^#/,''));
+        const hashError=hashParams.get('error_description')||hashParams.get('error');
+        if(hashError) throw new Error(hashError);
+
+        if(tokenHash){
+          const {error}=await client.auth.verifyOtp({token_hash:tokenHash,type});
+          if(error) throw error;
+        }else{
+          await new Promise(r=>setTimeout(r,250));
+          const {data,error}=await client.auth.getSession();
+          if(error) throw error;
+          if(!data.session){
+            set('This confirmation link did not contain a usable verification token. Please return to the forum and request a new confirmation email.','error');
+            link.hidden=false;
+            return;
+          }
+        }
+
+        set('Email confirmed successfully. Your forum account is ready.','success');
+        link.hidden=false;
+        setTimeout(()=>{location.replace('/forum/?confirmed=1')},1200);
+      }catch(err){
+        console.error(err);
+        set(err?.message||'Email confirmation failed. Request a new confirmation email from the forum.','error');
+        link.hidden=false;
+      }
+    })();
+  </script>
+</body>
+</html>
