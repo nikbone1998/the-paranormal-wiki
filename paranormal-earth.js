@@ -104,8 +104,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  'use strict';
  const PUBLIC_BRAND='THE PARANORMAL WIKI';
  const COUNTER_BASELINE=0;
-const SESSION_KEY='paranormalWikiVisitCountedV3';
-const LAST_COUNT_KEY='paranormalWikiLastVisitorCountV3';
+const SESSION_KEY='paranormalWikiVisitCountedV4';
+const LAST_COUNT_KEY='paranormalWikiLastVisitorCountV4';
 
  // Compatibility repair for the canonical dossier evidence-table formatter.
  if(typeof window.stat!=='function')window.stat=value=>{
