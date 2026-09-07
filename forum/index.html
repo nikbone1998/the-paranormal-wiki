@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>The Paranormal Wiki Forum</title>
+  <link rel="stylesheet" href="/forum/forum.css">
+</head>
+<body>
+  <main class="forum-shell">
+    <div class="forum-topbar">
+      <div><strong>THE PARANORMAL WIKI // COMMUNITY FORUM</strong></div>
+      <div class="forum-actions"><button class="bbs-btn secondary" id="forumHomeBtn" type="button">FORUM INDEX</button><a class="bbs-btn secondary" href="/#home">RETURN TO ARCHIVE</a></div>
+    </div>
+
+    <header class="forum-brand">
+      <h1>PARANORMAL WIKI FORUM</h1>
+      <p>Community discussion, evidence review, archive research, and user-submitted experiences. Forum posts are user contributions and are not automatically treated as verified archive material.</p>
+      <div class="forum-status"><span class="status-chip">DATABASE: ONLINE</span><span class="status-chip">PUBLIC READ ACCESS</span><span class="status-chip">ACCOUNT REQUIRED TO POST</span></div>
+    </header>
+
+    <div id="globalNotice" class="notice hidden" aria-live="polite"></div>
+    <nav id="breadcrumbs" class="crumbs" aria-label="Forum breadcrumb"><span>Forum</span></nav>
+
+    <section id="forumHome" class="forum-grid">
+      <div>
+        <section class="panel">
+          <div class="panel-title"><span id="mainTitle">Archive Boards</span><button id="newThreadBtn" class="bbs-btn" type="button" disabled>NEW DISCUSSION</button></div>
+          <div id="categories"><div class="empty-state">Loading boards…</div></div>
+        </section>
+
+        <section class="panel" style="margin-top:12px">
+          <div class="panel-title"><span>Recent Discussions</span></div>
+          <div id="latestThreads"><div class="empty-state">Loading recent discussions…</div></div>
+        </section>
+      </div>
+
+      <aside>
+        <section class="panel">
+          <div class="panel-title"><span>Member Access</span></div>
+          <div class="panel-body auth-box">
+            <div id="authState" class="auth-state">Checking session…</div>
+            <div id="authActions" class="forum-actions"></div>
+            <div id="profileSetup" class="hidden">
+              <div class="field"><label for="usernameInput">Forum username</label><input id="usernameInput" maxlength="24" autocomplete="username" placeholder="example_user"></div>
+              <div class="field" style="margin-top:8px"><label for="displayNameInput">Display name (optional)</label><input id="displayNameInput" maxlength="60" placeholder="Display name"></div>
+              <button id="saveProfileBtn" class="bbs-btn" type="button" style="margin-top:8px">CREATE PROFILE</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" style="margin-top:12px">
+          <div class="panel-title"><span>Forum Rules</span></div>
+          <div class="panel-body sidebar-list">
+            <div>01 // Label speculation as speculation.</div>
+            <div>02 // User reports are not verified evidence.</div>
+            <div>03 // Cite sources when making factual claims.</div>
+            <div>04 // Respect living religious and Indigenous traditions.</div>
+            <div>05 // No harassment, doxxing, spam, or impersonation.</div>
+            <div class="sidebar-note">Moderation tools and additional anti-spam controls are part of the next forum build stage.</div>
+          </div>
+        </section>
+      </aside>
+    </section>
+
+    <section id="threadView" class="hidden">
+      <div class="panel">
+        <div class="thread-head">
+          <h2 id="threadHeading">Discussion</h2>
+          <div id="threadMeta" class="thread-meta"></div>
+          <div id="threadEntity"></div>
+          <div class="forum-actions" style="margin-top:10px"><button id="bookmarkBtn" type="button" class="bbs-btn secondary">BOOKMARK</button></div>
+        </div>
+        <div id="threadPosts"><div class="empty-state">Loading posts…</div></div>
+      </div>
+
+      <form id="replyForm" class="panel hidden" style="margin-top:12px">
+        <div class="panel-title"><span>Post Reply</span></div>
+        <div class="panel-body">
+          <div class="field"><label for="replyBody">Message</label><textarea id="replyBody" maxlength="20000" required></textarea></div>
+          <div class="forum-actions" style="margin-top:9px"><button class="bbs-btn" type="submit">SUBMIT REPLY</button></div>
+        </div>
+      </form>
+    </section>
+
+    <footer class="footer-note">THE PARANORMAL WIKI COMMUNITY FORUM // COMMUNITY CONTENT IS SEPARATE FROM CANONICAL ARCHIVE RESEARCH</footer>
+  </main>
+
+  <div id="loginModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="Sign in or register">
+    <div class="modal">
+      <div class="modal-header"><h3>Member Access</h3><button class="modal-close" type="button" data-close-modal>CLOSE</button></div>
+      <div class="modal-body">
+        <form id="loginForm" class="panel-body auth-box">
+          <strong>SIGN IN</strong>
+          <div class="field"><label>Email</label><input name="email" type="email" autocomplete="email" required></div>
+          <div class="field"><label>Password</label><input name="password" type="password" autocomplete="current-password" minlength="8" required></div>
+          <button class="bbs-btn" type="submit">SIGN IN</button>
+        </form>
+        <div class="notice">New account? Registration uses email confirmation. After confirming, return to the forum, sign in, and choose your public username.</div>
+        <form id="signupForm" class="panel-body auth-box">
+          <strong>REGISTER</strong>
+          <div class="field"><label>Email</label><input name="email" type="email" autocomplete="email" required></div>
+          <div class="field"><label>Password</label><input name="password" type="password" autocomplete="new-password" minlength="8" required></div>
+          <button class="bbs-btn" type="submit">CREATE ACCOUNT</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="newThreadModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="Create discussion">
+    <div class="modal">
+      <div class="modal-header"><h3>New Discussion</h3><button class="modal-close" type="button" data-close-modal>CLOSE</button></div>
+      <form id="newThreadForm" class="modal-body">
+        <div class="field"><label for="threadCategory">Board</label><select id="threadCategory" required></select></div>
+        <div class="field"><label for="threadTitle">Title</label><input id="threadTitle" maxlength="160" minlength="3" required></div>
+        <div class="field"><label for="threadBody">Opening post</label><textarea id="threadBody" maxlength="20000" required></textarea></div>
+        <div class="notice">Optional archive link: use the archive entity ID and exact entity name only when this discussion directly concerns an existing Paranormal Wiki record.</div>
+        <div class="field"><label for="entityId">Archive entity ID (optional)</label><input id="entityId" maxlength="120"></div>
+        <div class="field"><label for="entityName">Archive entity name (optional)</label><input id="entityName" maxlength="160"></div>
+        <div class="forum-actions"><button class="bbs-btn" type="submit">POST DISCUSSION</button></div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0"></script>
+  <script src="/forum/forum.js" defer></script>
+</body>
+</html>
