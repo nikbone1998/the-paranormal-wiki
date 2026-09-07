@@ -1,6 +1,6 @@
 /* THE PARANORMAL WIKI — Earth regional imagery transport shim.
  * Rewrites only the legacy NASA GIBS Landsat requests emitted by Earth v4.
- * The same-origin endpoint currently serves the validated Sentinel-2 Cloudless 2016 mosaic.
+ * The same-origin endpoint currently serves the validated EOxCloudless 2016 mosaic.
  */
 (()=>{
  'use strict';
@@ -34,8 +34,8 @@
   const credit=document.createElement('div');
   credit.className='ua-earth-imagery-credit';
   credit.setAttribute('aria-label','Earth imagery attribution');
-  credit.style.cssText='position:absolute;z-index:11;right:5px;bottom:4px;max-width:72%;padding:2px 4px;border:1px dotted #333;background:rgba(0,0,0,.72);color:#777;font:7px/1.25 "Courier New",monospace;text-align:right;pointer-events:auto';
-  credit.innerHTML='IMAGERY: <a href="https://s2maps.eu" target="_blank" rel="noopener noreferrer" style="color:#8a8aaa">Sentinel-2 cloudless 2016 / EOX</a> · modified Copernicus Sentinel data 2016 &amp; 2017';
+  credit.style.cssText='position:absolute;z-index:11;right:5px;bottom:4px;max-width:78%;padding:2px 4px;border:1px dotted #333;background:rgba(0,0,0,.72);color:#777;font:7px/1.25 "Courier New",monospace;text-align:right;pointer-events:auto';
+  credit.innerHTML='IMAGERY: <a href="https://cloudless.eox.at" target="_blank" rel="noopener noreferrer" style="color:#8a8aaa">EOxCloudless</a> by EOX IT Services GmbH · Contains modified Copernicus Sentinel data 2016 &amp; 2017';
   root.appendChild(credit);
  }
 
@@ -47,4 +47,4 @@
  window.__paranormalWikiEarthTileShim=true;
 })();
 
-import('./paranormal-earth-engine-v4.js?v=4.0.1-tileproxy');
+import('./paranormal-earth-engine-v4.js?v=4.0.2-tileproxy');
