@@ -6,6 +6,7 @@
   <meta name="color-scheme" content="dark">
   <title>The Paranormal Wiki Forum</title>
   <link rel="stylesheet" href="/forum/forum.css">
+  <link rel="stylesheet" href="/forum/forum-v2.css">
 </head>
 <body>
   <main class="forum-shell">
@@ -17,7 +18,8 @@
     <header class="forum-brand">
       <h1>PARANORMAL WIKI FORUM</h1>
       <p>Community discussion, evidence review, archive research, and user-submitted experiences. Forum posts are user contributions and are not automatically treated as verified archive material.</p>
-      <div class="forum-status"><span class="status-chip">DATABASE: ONLINE</span><span class="status-chip">PUBLIC READ ACCESS</span><span class="status-chip">ACCOUNT REQUIRED TO POST</span></div>
+      <div class="forum-status"><span class="status-chip">DATABASE: ONLINE</span><span class="status-chip">PUBLIC READ ACCESS</span><span class="status-chip">ACCOUNT REQUIRED TO POST</span><span class="status-chip">MODERATION ACTIVE</span></div>
+      <div id="forumStats" class="forum-stats"><div class="forum-stat"><strong>—</strong><span>MEMBERS</span></div><div class="forum-stat"><strong>—</strong><span>THREADS</span></div><div class="forum-stat"><strong>—</strong><span>POSTS</span></div></div>
     </header>
 
     <div id="globalNotice" class="notice hidden" aria-live="polite"></div>
@@ -45,6 +47,7 @@
             <div id="profileSetup" class="hidden">
               <div class="field"><label for="usernameInput">Forum username</label><input id="usernameInput" maxlength="24" autocomplete="username" placeholder="example_user"></div>
               <div class="field" style="margin-top:8px"><label for="displayNameInput">Display name (optional)</label><input id="displayNameInput" maxlength="60" placeholder="Display name"></div>
+              <div class="field-help">Usernames are permanent in the current forum version. Display names can be changed later.</div>
               <button id="saveProfileBtn" class="bbs-btn" type="button" style="margin-top:8px">CREATE PROFILE</button>
             </div>
           </div>
@@ -58,7 +61,7 @@
             <div>03 // Cite sources when making factual claims.</div>
             <div>04 // Respect living religious and Indigenous traditions.</div>
             <div>05 // No harassment, doxxing, spam, or impersonation.</div>
-            <div class="sidebar-note">Moderation tools and additional anti-spam controls are part of the next forum build stage.</div>
+            <div class="sidebar-note">Posting, thread creation, and reporting are rate-limited at the database level. Moderator actions are audit-logged.</div>
           </div>
         </section>
       </aside>
@@ -70,7 +73,8 @@
           <h2 id="threadHeading">Discussion</h2>
           <div id="threadMeta" class="thread-meta"></div>
           <div id="threadEntity"></div>
-          <div class="forum-actions" style="margin-top:10px"><button id="bookmarkBtn" type="button" class="bbs-btn secondary">BOOKMARK</button></div>
+          <div class="forum-actions" style="margin-top:10px"><button id="bookmarkBtn" type="button" class="bbs-btn secondary">BOOKMARK</button><button id="threadReportBtn" type="button" class="bbs-btn secondary">REPORT THREAD</button></div>
+          <div id="staffThreadTools" class="staff-strip hidden"></div>
         </div>
         <div id="threadPosts"><div class="empty-state">Loading posts…</div></div>
       </div>
@@ -79,6 +83,7 @@
         <div class="panel-title"><span>Post Reply</span></div>
         <div class="panel-body">
           <div class="field"><label for="replyBody">Message</label><textarea id="replyBody" maxlength="20000" required></textarea></div>
+          <div class="field-help">Maximum 20,000 characters. Rapid repeat posting is automatically rate-limited.</div>
           <div class="forum-actions" style="margin-top:9px"><button class="bbs-btn" type="submit">SUBMIT REPLY</button></div>
         </div>
       </form>
@@ -118,12 +123,27 @@
         <div class="notice">Optional archive link: use the archive entity ID and exact entity name only when this discussion directly concerns an existing Paranormal Wiki record.</div>
         <div class="field"><label for="entityId">Archive entity ID (optional)</label><input id="entityId" maxlength="120"></div>
         <div class="field"><label for="entityName">Archive entity name (optional)</label><input id="entityName" maxlength="160"></div>
+        <div class="field-help">Maximum 3 new threads per 5 minutes per member.</div>
         <div class="forum-actions"><button class="bbs-btn" type="submit">POST DISCUSSION</button></div>
       </form>
     </div>
   </div>
 
+  <div id="profileModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="Forum profile">
+    <div class="modal">
+      <div class="modal-header"><h3>Member Profile</h3><button class="modal-close" type="button" data-close-modal>CLOSE</button></div>
+      <div id="profileContent" class="modal-body"><div class="staff-empty">Loading profile…</div></div>
+    </div>
+  </div>
+
+  <div id="staffModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="Staff moderation console">
+    <div class="modal" style="max-width:960px">
+      <div class="modal-header"><h3>Forum Staff Console</h3><button class="modal-close" type="button" data-close-modal>CLOSE</button></div>
+      <div id="staffContent" class="modal-body"><div class="staff-empty">Loading moderation queue…</div></div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0"></script>
-  <script src="/forum/forum.js" defer></script>
+  <script src="/forum/forum-v2.js" defer></script>
 </body>
 </html>
