@@ -73,4 +73,78 @@
       }
     }
   }, true);
+
+  // Admin moderation polish: the server-side moderation RPC already supports
+  // both `hide` and `restore`. The main v2 UI always renders HIDE THREAD, so
+  // convert that control to RESTORE THREAD when a staff member opens a hidden
+  // discussion. This keeps moderation reversible from the browser.
+  let moderationSyncRunning = false;
+  let moderationSyncTimer = null;
+
+  async function syncHiddenThreadControls() {
+    if (moderationSyncRunning) return;
+    moderationSyncRunning = true;
+    try {
+      const threadId = new URLSearchParams(location.search).get('thread');
+      const strip = document.querySelector('#staffThreadTools');
+      if (!threadId || !strip || strip.classList.contains('hidden')) return;
+
+      const { data: authData } = await client.auth.getSession();
+      const userId = authData?.session?.user?.id;
+      if (!userId) return;
+
+      const { data: staffProfile } = await client
+        .from('forum_profiles')
+        .select('role')
+        .eq('id', userId)
+        .maybeSingle();
+      if (!staffProfile || !['moderator', 'admin'].includes(staffProfile.role)) return;
+
+      const { data: thread, error } = await client
+        .from('forum_threads')
+        .select('moderation_status')
+        .eq('id', threadId)
+        .maybeSingle();
+      if (error || !thread) return;
+
+      const actionButton = strip.querySelector('[data-mod-thread="hide"], [data-mod-thread="restore"]');
+      if (!actionButton) return;
+
+      let note = strip.querySelector('[data-hidden-thread-note]');
+      if (thread.moderation_status === 'hidden') {
+        actionButton.dataset.modThread = 'restore';
+        actionButton.textContent = 'RESTORE THREAD';
+        actionButton.classList.remove('danger-btn');
+        actionButton.classList.add('success-btn');
+        if (!note) {
+          note = document.createElement('div');
+          note.dataset.hiddenThreadNote = '1';
+          note.className = 'notice';
+          note.textContent = 'STAFF VIEW: This thread is hidden from public listings. Use RESTORE THREAD to make it public again.';
+          strip.appendChild(note);
+        }
+      } else {
+        actionButton.dataset.modThread = 'hide';
+        actionButton.textContent = 'HIDE THREAD';
+        actionButton.classList.remove('success-btn');
+        actionButton.classList.add('danger-btn');
+        note?.remove();
+      }
+    } catch (error) {
+      console.error('Forum hidden-thread control sync failed:', error);
+    } finally {
+      moderationSyncRunning = false;
+    }
+  }
+
+  const scheduleModerationSync = () => {
+    clearTimeout(moderationSyncTimer);
+    moderationSyncTimer = setTimeout(syncHiddenThreadControls, 120);
+  };
+
+  const observer = new MutationObserver(scheduleModerationSync);
+  observer.observe(document.body, { childList: true, subtree: true });
+  window.addEventListener('popstate', scheduleModerationSync);
+  window.addEventListener('pageshow', scheduleModerationSync);
+  setTimeout(syncHiddenThreadControls, 600);
 })();
