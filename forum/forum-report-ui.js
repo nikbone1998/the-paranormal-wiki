@@ -46,6 +46,7 @@
   const status = modal.querySelector('#reportStatus');
   const submit = modal.querySelector('#submitReportBtn');
   const targetLabel = modal.querySelector('#reportTargetLabel');
+  const globalNotice = document.querySelector('#globalNotice');
 
   function setStatus(message, kind = '') {
     status.className = `notice ${kind}`.trim();
@@ -53,8 +54,27 @@
     status.classList.remove('hidden');
   }
 
+  function setGlobal(message, kind = '') {
+    if (!globalNotice) return;
+    globalNotice.className = `notice ${kind}`.trim();
+    globalNotice.textContent = message;
+    globalNotice.classList.remove('hidden');
+  }
+
+  async function getSession() {
+    const { data, error } = await client.auth.getSession();
+    if (error) throw error;
+    return data.session;
+  }
+
   async function openReport(type, id) {
-    const { data: { session } } = await client.auth.getSession();
+    let session;
+    try {
+      session = await getSession();
+    } catch (err) {
+      setGlobal(err?.message || 'Unable to read your forum session.', 'error');
+      return;
+    }
     if (!session) {
       document.querySelector('#loginModal')?.classList.remove('hidden');
       return;
@@ -63,6 +83,8 @@
     reason.value = '';
     details.value = '';
     status.classList.add('hidden');
+    submit.disabled = false;
+    submit.textContent = 'SUBMIT REPORT';
     targetLabel.textContent = `Reporting ${type}`;
     modal.classList.remove('hidden');
   }
@@ -70,6 +92,51 @@
   function closeReport() {
     modal.classList.add('hidden');
     pendingTarget = null;
+  }
+
+  async function submitReportViaRest(session, target, selectedReason, reportDetails) {
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/forum_submit_report`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${session.access_token}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        p_target_type: target.type,
+        p_target_id: target.id,
+        p_reason: selectedReason,
+        p_details: reportDetails || null
+      })
+    });
+
+    const raw = await response.text();
+    let payload = null;
+    try { payload = raw ? JSON.parse(raw) : null; } catch { payload = raw; }
+
+    if (!response.ok) {
+      const message = payload?.message || payload?.error_description || payload?.hint || raw || `Report request failed (${response.status}).`;
+      throw new Error(message);
+    }
+
+    const reportId = typeof payload === 'string' ? payload : payload?.id || payload;
+    if (!reportId || typeof reportId !== 'string') throw new Error('The server did not return a report ID.');
+
+    const verify = await fetch(`${SUPABASE_URL}/rest/v1/forum_reports?id=eq.${encodeURIComponent(reportId)}&select=id,status,target_type`, {
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${session.access_token}`,
+        'Accept': 'application/json'
+      }
+    });
+    const verifyRaw = await verify.text();
+    let rows = [];
+    try { rows = verifyRaw ? JSON.parse(verifyRaw) : []; } catch { rows = []; }
+    if (!verify.ok || !Array.isArray(rows) || rows.length !== 1 || rows[0].status !== 'open') {
+      throw new Error('The report could not be verified in the moderation queue.');
+    }
+    return reportId;
   }
 
   modal.querySelector('#closeReportModal').addEventListener('click', closeReport);
@@ -81,22 +148,24 @@
       setStatus('Choose a reason for the report.', 'error');
       return;
     }
+
     submit.disabled = true;
     submit.textContent = 'SUBMITTING…';
     setStatus('Sending report to forum staff…');
+
     try {
-      const { error } = await client.rpc('forum_submit_report', {
-        p_target_type: pendingTarget.type,
-        p_target_id: pendingTarget.id,
-        p_reason: reason.value,
-        p_details: details.value.trim() || null
-      });
-      if (error) throw error;
-      setStatus('Report submitted. Forum staff will review it.', 'success');
+      const session = await getSession();
+      if (!session) throw new Error('Your forum session expired. Sign in again and retry.');
+      await submitReportViaRest(session, pendingTarget, reason.value, details.value.trim());
+      setStatus('Report submitted and verified in the moderation queue.', 'success');
+      setGlobal('Report submitted successfully. It is now visible to forum staff.', 'success');
       submit.textContent = 'SUBMITTED';
-      setTimeout(closeReport, 900);
+      setTimeout(closeReport, 1100);
     } catch (err) {
-      setStatus(err?.message || 'Unable to submit report.', 'error');
+      console.error('Forum report submission failed:', err);
+      const message = err?.message || 'Unable to submit report.';
+      setStatus(message, 'error');
+      setGlobal(`Report failed: ${message}`, 'error');
       submit.disabled = false;
       submit.textContent = 'SUBMIT REPORT';
     }
@@ -131,7 +200,8 @@
     const observer = new MutationObserver(async () => {
       if (!lastProfileTarget) return;
       if (profileContent.querySelector('#reportProfileBtn')) return;
-      const { data: { session } } = await client.auth.getSession();
+      let session = null;
+      try { session = await getSession(); } catch { return; }
       if (!session || session.user.id === lastProfileTarget) return;
       const actions = profileContent.querySelector('.profile-actions');
       if (!actions) return;
