@@ -97,3 +97,83 @@ function watch(){
 window.UnseenEarth={mount,version:VERSION};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',watch,{once:true});else watch();
 })();
+
+/* Public-brand and global visitor-counter patch.
+   Archive-lore references to "The Unseen Archive" remain intentionally intact. */
+(()=>{
+ 'use strict';
+ const PUBLIC_BRAND='THE PARANORMAL WIKI';
+ const COUNTER_BASELINE=661372;
+const SESSION_KEY='paranormalWikiVisitCounted';
+const LAST_COUNT_KEY='paranormalWikiLastVisitorCount';
+
+ // Compatibility repair for the canonical dossier evidence-table formatter.
+ if(typeof window.stat!=='function')window.stat=value=>{
+  const score=Math.max(0,Math.min(10,Number(value)||0));
+  return '█'.repeat(score)+'░'.repeat(10-score)+' '+score+'/10';
+ };
+
+ function setPublicBrand(){
+  document.title='THE PARANORMAL WIKI — Expanded Research Database';
+  const description=document.querySelector('meta[name="description"]');
+  if(description)description.content='The Paranormal Wiki: a 1997-style paranormal research archive with folklore, cryptozoology, UFO history and modern UAP source review.';
+  const masthead=document.querySelector('.site-title');
+  if(masthead)masthead.textContent=PUBLIC_BRAND;
+  document.querySelector('.since')?.remove();
+  const firstBadge=document.querySelector('.badges .badge');
+  if(firstBadge)firstBadge.innerHTML='THE PARANORMAL<br>WIKI';
+  const footerBrand=document.querySelector('.footer > b');
+  if(footerBrand)footerBrand.textContent=PUBLIC_BRAND;
+ }
+
+ function cleanCurrentView(){
+  const app=document.getElementById('app');
+  if(!app)return;
+  app.querySelectorAll('.center').forEach(node=>{
+   const text=node.textContent.replace(/\s+/g,' ').trim();
+   if(text.includes('THE ARCHIVE HAS BEEN RESEARCHED AGAIN.')||text.includes('THE WEBSITE STILL THINKS IT IS 1997. THE SOURCES DO NOT.'))node.remove();
+  });
+  app.querySelectorAll('.box').forEach(box=>{
+   if(box.querySelector('.box-title')?.textContent.trim()==='ENTITY OF THE WEEK')box.remove();
+  });
+  app.querySelectorAll('.welcome').forEach(heading=>{
+   if(heading.textContent.trim()==='SEARCH THE UNSEEN ARCHIVE')heading.textContent='SEARCH THE PARANORMAL WIKI';
+  });
+ }
+
+ function formatCount(value){
+  const safe=Number.isSafeInteger(value)&&value>=COUNTER_BASELINE?value:COUNTER_BASELINE;
+  return String(safe).padStart(8,'0');
+ }
+
+async function updateVisitorCounter(){
+  const counter=document.getElementById('visitor');
+  if(!counter)return;
+  let remembered=COUNTER_BASELINE;
+  try{
+   localStorage.removeItem('uaResearchVisits');
+   remembered=Number(localStorage.getItem(LAST_COUNT_KEY));
+  }catch(_error){}
+  counter.textContent=formatCount(remembered);
+  let counted=false;
+  try{counted=sessionStorage.getItem(SESSION_KEY)==='1'}catch(_error){}
+  try{
+   const response=await fetch('/api/visitor',{method:counted?'GET':'POST',headers:{Accept:'application/json'},cache:'no-store'});
+   if(!response.ok)throw new Error(`visitor endpoint returned ${response.status}`);
+   const payload=await response.json();
+   const value=Number(payload.count);
+   if(!Number.isSafeInteger(value)||value<COUNTER_BASELINE)throw new Error('invalid visitor count');
+   counter.textContent=formatCount(value);
+   try{
+    localStorage.setItem(LAST_COUNT_KEY,String(value));
+    if(!counted)sessionStorage.setItem(SESSION_KEY,'1');
+   }catch(_error){}
+  }catch(error){console.warn('[PARANORMAL WIKI] visitor counter fallback active',error)}
+ }
+
+ setPublicBrand();
+ cleanCurrentView();
+ const app=document.getElementById('app');
+ if(app)new MutationObserver(cleanCurrentView).observe(app,{childList:true,subtree:true});
+ updateVisitorCounter();
+})();
