@@ -7,6 +7,7 @@
   <title>The Paranormal Wiki Forum</title>
   <link rel="stylesheet" href="/forum/forum.css">
   <link rel="stylesheet" href="/forum/forum-v2.css">
+  <link rel="stylesheet" href="/forum/forum-search.css">
 </head>
 <body>
   <main class="forum-shell">
@@ -35,6 +36,17 @@
         <section class="panel" style="margin-top:12px">
           <div class="panel-title"><span>Recent Discussions</span></div>
           <div id="latestThreads"><div class="empty-state">Loading recent discussions…</div></div>
+        </section>
+
+        <section class="panel" style="margin-top:12px">
+          <div class="panel-title"><span>Search Forum Archive</span><button id="showBookmarksBtn" class="bbs-btn secondary" type="button">MY BOOKMARKS</button></div>
+          <div class="panel-body">
+            <form id="forumSearchForm" class="forum-search-bar">
+              <input id="forumSearchInput" maxlength="120" placeholder="Search thread titles and post text…" aria-label="Search forum">
+              <button class="bbs-btn" type="submit">SEARCH</button>
+            </form>
+          </div>
+          <div id="forumSearchResults"><div class="empty-state">Search community discussions or open your bookmarked threads.</div></div>
         </section>
       </div>
 
@@ -145,5 +157,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0"></script>
   <script src="/forum/forum-v2.js" defer></script>
+  <script src="/forum/forum-search.js" defer></script>
 </body>
 </html>
