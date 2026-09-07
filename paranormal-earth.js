@@ -104,8 +104,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  'use strict';
  const PUBLIC_BRAND='THE PARANORMAL WIKI';
  const COUNTER_BASELINE=0;
-const SESSION_KEY='paranormalWikiVisitCountedV2';
-const LAST_COUNT_KEY='paranormalWikiLastVisitorCountV2';
+const SESSION_KEY='paranormalWikiVisitCountedV3';
+const LAST_COUNT_KEY='paranormalWikiLastVisitorCountV3';
 
  // Compatibility repair for the canonical dossier evidence-table formatter.
  if(typeof window.stat!=='function')window.stat=value=>{
@@ -153,6 +153,7 @@ async function updateVisitorCounter(){
   try{
    localStorage.removeItem('uaResearchVisits');
    localStorage.removeItem('paranormalWikiLastVisitorCount');
+   localStorage.removeItem('paranormalWikiLastVisitorCountV2');
    remembered=Number(localStorage.getItem(LAST_COUNT_KEY));
   }catch(_error){}
   counter.textContent=formatCount(remembered);
