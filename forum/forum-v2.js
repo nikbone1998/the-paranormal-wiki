@@ -28,13 +28,76 @@
     client.from('forum_posts').select('*',{count:'exact',head:true})
   ]);els.forumStats.innerHTML=`<div class="forum-stat"><strong>${members.count??0}</strong><span>MEMBERS</span></div><div class="forum-stat"><strong>${threads.count??0}</strong><span>THREADS</span></div><div class="forum-stat"><strong>${posts.count??0}</strong><span>POSTS</span></div>`}
 
-  async function loadLatestThreads(){els.latest.innerHTML='<div class="empty-state">Loading recent discussions…</div>';const{data,error}=await client.from('forum_threads').select('id,title,category_id,author_id,created_at,last_post_at,is_pinned,is_locked,forum_profiles(username,display_name,role),forum_categories(name,slug)').order('last_post_at',{ascending:false}).limit(12);if(error){els.latest.innerHTML='<div class="empty-state">Recent discussions are temporarily unavailable.</div>';return}renderThreadRows(data||[],els.latest)}
+  async function hydrateThreads(rows){
+    if(!rows?.length)return[];
+    const authorIds=[...new Set(rows.map(r=>r.author_id).filter(Boolean))];
+    const categoryIds=[...new Set(rows.map(r=>r.category_id).filter(v=>v!==null&&v!==undefined))];
+    const [profilesResult,categoriesResult]=await Promise.all([
+      authorIds.length?client.from('forum_profiles').select('id,username,display_name,role').in('id',authorIds):Promise.resolve({data:[],error:null}),
+      categoryIds.length?client.from('forum_categories').select('id,name,slug').in('id',categoryIds):Promise.resolve({data:[],error:null})
+    ]);
+    if(profilesResult.error)throw profilesResult.error;
+    if(categoriesResult.error)throw categoriesResult.error;
+    const profileMap=new Map((profilesResult.data||[]).map(p=>[p.id,p]));
+    const categoryMap=new Map((categoriesResult.data||[]).map(c=>[String(c.id),c]));
+    return rows.map(t=>({...t,forum_profiles:profileMap.get(t.author_id)||null,forum_categories:categoryMap.get(String(t.category_id))||null}));
+  }
+
+  async function hydratePosts(rows){
+    if(!rows?.length)return[];
+    const authorIds=[...new Set(rows.map(r=>r.author_id).filter(Boolean))];
+    const profilesResult=authorIds.length?await client.from('forum_profiles').select('id,username,display_name,role,created_at').in('id',authorIds):{data:[],error:null};
+    if(profilesResult.error)throw profilesResult.error;
+    const profileMap=new Map((profilesResult.data||[]).map(p=>[p.id,p]));
+    return rows.map(p=>({...p,forum_profiles:profileMap.get(p.author_id)||null}));
+  }
+
+  async function loadLatestThreads(){
+    els.latest.innerHTML='<div class="empty-state">Loading recent discussions…</div>';
+    try{
+      const{data,error}=await client.from('forum_threads').select('id,title,category_id,author_id,created_at,last_post_at,is_pinned,is_locked').order('last_post_at',{ascending:false}).limit(12);
+      if(error)throw error;
+      renderThreadRows(await hydrateThreads(data||[]),els.latest);
+    }catch(error){console.error('Recent thread load failed',error);els.latest.innerHTML='<div class="empty-state">Recent discussions are temporarily unavailable.</div>'}
+  }
   function renderThreadRows(rows,target){if(!rows.length){target.innerHTML='<div class="empty-state">No discussions yet. The archive is quiet.</div>';return}target.innerHTML=rows.map(t=>{const author=t.forum_profiles?.display_name||t.forum_profiles?.username||'Unknown member';const flags=`${t.is_pinned?'<span class="thread-flag pin">PINNED</span>':''}${t.is_locked?'<span class="thread-flag lock">LOCKED</span>':''}`;return `<div class="thread-row"><div class="thread-title-wrap"><button class="thread-link thread-title" type="button" data-thread="${t.id}">${esc(t.title)}</button><span class="thread-flags">${flags}</span></div><div class="thread-meta">${esc(t.forum_categories?.name||'Forum')} · ${esc(author)}${roleBadge(t.forum_profiles?.role)} · last activity ${esc(fmt(t.last_post_at))}</div></div>`}).join('');target.querySelectorAll('[data-thread]').forEach(b=>b.addEventListener('click',()=>openThread(b.dataset.thread)))}
 
-  async function loadCategory(slug,push=true){const c=categories.find(x=>x.slug===slug);if(!c)return;if(push)history.pushState({category:slug},'',`/forum/?category=${encodeURIComponent(slug)}`);els.mainTitle.textContent=c.name;els.categories.innerHTML='<div class="empty-state">Loading discussions…</div>';const{data,error}=await client.from('forum_threads').select('id,title,category_id,author_id,created_at,last_post_at,is_pinned,is_locked,forum_profiles(username,display_name,role),forum_categories(name,slug)').eq('category_id',c.id).order('is_pinned',{ascending:false}).order('last_post_at',{ascending:false}).limit(60);if(error){els.categories.innerHTML='<div class="empty-state">Unable to load this board.</div>';return}renderThreadRows(data||[],els.categories);renderBreadcrumbs([{label:'Forum',action:showHome},{label:c.name}])}
+  async function loadCategory(slug,push=true){
+    const c=categories.find(x=>x.slug===slug);if(!c)return;
+    if(push)history.pushState({category:slug},'',`/forum/?category=${encodeURIComponent(slug)}`);
+    els.threadView.classList.add('hidden');els.forumHome.classList.remove('hidden');
+    els.mainTitle.textContent=c.name;els.categories.innerHTML='<div class="empty-state">Loading discussions…</div>';
+    try{
+      const{data,error}=await client.from('forum_threads').select('id,title,category_id,author_id,created_at,last_post_at,is_pinned,is_locked').eq('category_id',c.id).order('is_pinned',{ascending:false}).order('last_post_at',{ascending:false}).limit(60);
+      if(error)throw error;
+      renderThreadRows(await hydrateThreads(data||[]),els.categories);
+      renderBreadcrumbs([{label:'Forum',action:showHome},{label:c.name}]);
+    }catch(error){console.error('Board thread load failed',error);els.categories.innerHTML='<div class="empty-state">Unable to load this board.</div>'}
+  }
   function renderBreadcrumbs(items){els.breadcrumbs.innerHTML='';items.forEach((item,i)=>{if(i)els.breadcrumbs.append(document.createTextNode(' / '));if(item.action){const b=document.createElement('button');b.type='button';b.textContent=item.label;b.addEventListener('click',item.action);els.breadcrumbs.append(b)}else{const s=document.createElement('span');s.textContent=item.label;els.breadcrumbs.append(s)}})}
 
-  async function openThread(id,push=true){if(push)history.pushState({thread:id},'',`/forum/?thread=${encodeURIComponent(id)}`);els.forumHome.classList.add('hidden');els.threadView.classList.remove('hidden');els.threadPosts.innerHTML='<div class="empty-state">Opening discussion…</div>';const{data:t,error}=await client.from('forum_threads').select('id,title,category_id,author_id,created_at,last_post_at,is_locked,is_pinned,moderation_status,forum_profiles(id,username,display_name,role),forum_categories(name,slug)').eq('id',id).single();if(error||!t){els.threadPosts.innerHTML='<div class="empty-state">This discussion could not be found.</div>';return}activeThread=t;els.threadHeading.textContent=t.title;const author=t.forum_profiles?.display_name||t.forum_profiles?.username||'Unknown member';els.threadMeta.innerHTML=`${esc(t.forum_categories?.name||'Forum')} · started by <button class="profile-link" data-profile="${t.author_id}">${esc(author)}</button>${roleBadge(t.forum_profiles?.role)} · ${esc(fmt(t.created_at))}`;els.replyForm.classList.toggle('hidden',!session||!profile||t.is_locked);els.threadReportBtn.disabled=!session||!profile;renderStaffThreadTools();const{data:links}=await client.from('forum_entity_links').select('entity_id,entity_name').eq('thread_id',id);els.threadEntity.innerHTML=(links||[]).map(l=>`<span class="entity-tag" title="Archive entity ID: ${esc(l.entity_id)}">ARCHIVE LINK: ${esc(l.entity_name)}</span>`).join('');const{data:posts,error:pe}=await client.from('forum_posts').select('id,body,author_id,reply_to_id,created_at,updated_at,moderation_status,forum_profiles(id,username,display_name,role,created_at)').eq('thread_id',id).order('created_at');if(pe){els.threadPosts.innerHTML='<div class="empty-state">Posts could not be loaded.</div>';return}activePosts=posts||[];await renderPosts(activePosts);renderBreadcrumbs([{label:'Forum',action:showHome},{label:t.forum_categories?.name||'Board',action:()=>loadCategory(t.forum_categories?.slug)},{label:t.title}]);await updateBookmarkState();wireProfileLinks(els.threadMeta)}
+  async function openThread(id,push=true){
+    if(push)history.pushState({thread:id},'',`/forum/?thread=${encodeURIComponent(id)}`);
+    els.forumHome.classList.add('hidden');els.threadView.classList.remove('hidden');els.threadPosts.innerHTML='<div class="empty-state">Opening discussion…</div>';
+    try{
+      const{data:rawThread,error}=await client.from('forum_threads').select('id,title,category_id,author_id,created_at,last_post_at,is_locked,is_pinned,moderation_status').eq('id',id).single();
+      if(error||!rawThread)throw error||new Error('Thread not found');
+      const hydrated=await hydrateThreads([rawThread]);
+      const t=hydrated[0];
+      activeThread=t;els.threadHeading.textContent=t.title;
+      const author=t.forum_profiles?.display_name||t.forum_profiles?.username||'Unknown member';
+      els.threadMeta.innerHTML=`${esc(t.forum_categories?.name||'Forum')} · started by <button class="profile-link" data-profile="${t.author_id}">${esc(author)}</button>${roleBadge(t.forum_profiles?.role)} · ${esc(fmt(t.created_at))}`;
+      els.replyForm.classList.toggle('hidden',!session||!profile||t.is_locked);els.threadReportBtn.disabled=!session||!profile;renderStaffThreadTools();
+      const{data:links}=await client.from('forum_entity_links').select('entity_id,entity_name').eq('thread_id',id);
+      els.threadEntity.innerHTML=(links||[]).map(l=>`<span class="entity-tag" title="Archive entity ID: ${esc(l.entity_id)}">ARCHIVE LINK: ${esc(l.entity_name)}</span>`).join('');
+      const{data:rawPosts,error:pe}=await client.from('forum_posts').select('id,body,author_id,reply_to_id,created_at,updated_at,moderation_status').eq('thread_id',id).order('created_at');
+      if(pe)throw pe;
+      activePosts=await hydratePosts(rawPosts||[]);
+      await renderPosts(activePosts);
+      renderBreadcrumbs([{label:'Forum',action:showHome},{label:t.forum_categories?.name||'Board',action:()=>loadCategory(t.forum_categories?.slug)},{label:t.title}]);
+      await updateBookmarkState();wireProfileLinks(els.threadMeta);
+    }catch(error){console.error('Thread load failed',error);els.threadPosts.innerHTML='<div class="empty-state">This discussion could not be loaded.</div>'}
+  }
 
   async function renderPosts(posts){let reactionMap={};if(posts.length){const{data}=await client.from('forum_reactions').select('post_id,user_id,reaction').in('post_id',posts.map(p=>p.id));(data||[]).forEach(r=>{reactionMap[r.post_id]??={like:0,interesting:0,mine:new Set()};reactionMap[r.post_id][r.reaction]=(reactionMap[r.post_id][r.reaction]||0)+1;if(session&&r.user_id===session.user.id)reactionMap[r.post_id].mine.add(r.reaction)})}
     els.threadPosts.innerHTML=posts.map((p,index)=>{const name=p.forum_profiles?.display_name||p.forum_profiles?.username||'Unknown member';const joined=p.forum_profiles?.created_at?new Date(p.forum_profiles.created_at).toLocaleDateString():'';const rx=reactionMap[p.id]||{like:0,interesting:0,mine:new Set()};const staffButtons=isStaff()?`<button type="button" class="mini-btn ${p.moderation_status==='visible'?'danger-btn':'success-btn'}" data-mod-post="${p.id}:${p.moderation_status==='visible'?'hide':'restore'}">${p.moderation_status==='visible'?'HIDE':'RESTORE'}</button>`:'';return `<article class="post ${p.moderation_status!=='visible'?'staff-hidden':''}" id="post-${p.id}"><aside class="post-author"><div><button type="button" class="profile-link" data-profile="${p.author_id}"><strong>${esc(name)}</strong></button>${roleBadge(p.forum_profiles?.role)}<span>${esc(p.forum_profiles?.username?'@'+p.forum_profiles.username:'')}</span></div><span>JOINED ${esc(joined)}</span></aside><div class="post-body"><div class="post-text">${esc(p.body)}</div><div class="post-tools"><button type="button" class="mini-btn" data-react="${p.id}:like">${rx.mine.has('like')?'UNLIKE':'LIKE'} (${rx.like||0})</button><button type="button" class="mini-btn" data-react="${p.id}:interesting">${rx.mine.has('interesting')?'REMOVE INTEREST':'INTERESTING'} (${rx.interesting||0})</button><button type="button" class="mini-btn" data-report-post="${p.id}">REPORT</button>${staffButtons}<span class="thread-meta">#${index+1} · ${esc(fmt(p.created_at))}${p.moderation_status!=='visible'?' · HIDDEN':''}</span></div></div></article>`}).join('');
