@@ -49,10 +49,7 @@
       if(!threads.length&&!posts.length){results.innerHTML='<div class="empty-state">No matching discussions or posts.</div>';return}
       results.innerHTML=`${threads.length?'<div class="search-section-label">THREAD TITLES</div>'+threads.map(t=>`<button class="search-result" data-search-thread="${t.id}" type="button"><strong>${esc(t.title)}</strong><span>${esc(categoryMap.get(String(t.category_id))?.name||'Forum')}</span></button>`).join(''):''}${posts.length?'<div class="search-section-label">POST TEXT</div>'+posts.map(p=>{const t=postThreadMap.get(p.thread_id);return `<button class="search-result" data-search-thread="${p.thread_id}" type="button"><strong>${esc(t?.title||'Discussion')}</strong><span>${esc(clip(p.body))}</span></button>`}).join(''):''}`;
       wireResults();
-    }catch(error){
-      console.error('Forum search failed',error);
-      results.innerHTML='<div class="empty-state">Search is temporarily unavailable.</div>';
-    }
+    }catch(error){console.error('Forum search failed',error);results.innerHTML='<div class="empty-state">Search is temporarily unavailable.</div>'}
   }
 
   async function showBookmarks(){
@@ -68,24 +65,17 @@
       if(!visible.length){results.innerHTML='<div class="empty-state">You have no currently visible bookmarked discussions.</div>';return}
       results.innerHTML='<div class="search-section-label">YOUR BOOKMARKS</div>'+visible.map(({bookmark,thread:t})=>`<button class="search-result" data-search-thread="${bookmark.thread_id}" type="button"><strong>${esc(t.title||'Discussion')}</strong><span>${esc(t.category?.name||'Forum')}</span></button>`).join('');
       wireResults();
-    }catch(error){
-      console.error('Forum bookmark load failed',error);
-      results.innerHTML='<div class="empty-state">Bookmarks are temporarily unavailable.</div>';
-    }
+    }catch(error){console.error('Forum bookmark load failed',error);results.innerHTML='<div class="empty-state">Bookmarks are temporarily unavailable.</div>'}
   }
 
   form?.addEventListener('submit',searchForum);
   bookmarkBtn?.addEventListener('click',showBookmarks);
 
-  // Load non-core polish extensions after the forum DOM and Supabase client are ready.
   const loadExtension=(src,id)=>{
     if(document.getElementById(id))return;
     const script=document.createElement('script');
-    script.id=id;
-    script.src=src;
-    script.async=false;
-    document.body.appendChild(script);
+    script.id=id;script.src=src;script.async=false;document.body.appendChild(script);
   };
-  loadExtension('/forum/forum-entity-links.js?v=20260907-entity1','forumEntityLinksExtension');
+  loadExtension('/forum/forum-entity-links-v2.js?v=20260907-entity2','forumEntityLinksExtension');
   loadExtension('/forum/forum-post-polish.js?v=20260907-postpolish1','forumPostPolishExtension');
 })();
