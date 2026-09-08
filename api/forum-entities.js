@@ -15,25 +15,30 @@ function extractCanonicalEntities(html){
   const existing=bySlug.get(slug);
   if(!existing||(!existing.id&&id))bySlug.set(slug,{id:id||'',name,slug});
  };
-
  let match;
  const anchorRe=/<a\b([^>]*?href=["'][^"']*#entity\/([^"'#?]+)[^"']*["'][^>]*)>([\s\S]*?)<\/a>/gi;
  while((match=anchorRe.exec(html))){
-  const attrs=match[1]||'';
-  const inner=match[3]||'';
+  const attrs=match[1]||'',inner=match[3]||'';
   const name=attrs.match(/data-entity-name=["']([^"']+)["']/i)?.[1]||attrs.match(/aria-label=["']([^"']+)["']/i)?.[1]||attrs.match(/title=["']([^"']+)["']/i)?.[1]||inner;
   const id=attrs.match(/data-entity-id=["']([^"']+)["']/i)?.[1]||'';
   add(match[2],name,id);
  }
-
  const dataRe=/data-entity-slug=["']([^"']+)["'][^>]{0,500}?data-entity-name=["']([^"']+)["'][^>]*>/gi;
  while((match=dataRe.exec(html))){
-  const tag=match[0];
-  const id=tag.match(/data-entity-id=["']([^"']+)["']/i)?.[1]||'';
+  const tag=match[0],id=tag.match(/data-entity-id=["']([^"']+)["']/i)?.[1]||'';
   add(match[1],match[2],id);
  }
-
  return [...bySlug.values()].sort((a,b)=>a.name.localeCompare(b.name));
+}
+
+async function loadArchiveHtml(){
+ const local=path.join(process.cwd(),'index.html');
+ try{return fs.readFileSync(local,'utf8')}catch{}
+ const ref=process.env.VERCEL_GIT_COMMIT_SHA||process.env.VERCEL_GIT_COMMIT_REF||'main';
+ const raw=`https://raw.githubusercontent.com/nikbone1998/the-paranormal-wiki/${encodeURIComponent(ref)}/index.html`;
+ const response=await fetch(raw,{headers:{'User-Agent':'the-paranormal-wiki-forum-index'}});
+ if(!response.ok)throw new Error(`archive source returned ${response.status}`);
+ return response.text();
 }
 
 function send(res,status,body){
@@ -50,8 +55,7 @@ module.exports=async function forumEntities(req,res){
  }
  try{
   if(!cached){
-   const file=path.join(process.cwd(),'index.html');
-   const html=fs.readFileSync(file,'utf8');
+   const html=await loadArchiveHtml();
    const entries=extractCanonicalEntities(html);
    if(entries.length<800)throw new Error(`canonical entity extraction returned only ${entries.length} routes`);
    cached={count:entries.length,entries};
