@@ -139,11 +139,14 @@ function scheduleVisibleDmRestore(){
   },180);
 }
 const callModalObserver=new MutationObserver(scheduleVisibleDmRestore);
-queueMicrotask(()=>{
+function attachCallObservers(){
+  callModalObserver.disconnect();
   const incoming=$('#incomingCallModal'),video=$('#videoCallModal');
   if(incoming)callModalObserver.observe(incoming,{attributes:true,attributeFilter:['class']});
   if(video)callModalObserver.observe(video,{attributes:true,attributeFilter:['class']});
-});
+}
+const baseSocialInit=S.init.bind(S);
+S.init=async function(){await baseSocialInit();attachCallObservers()};
 
 // Keep the expanded private account menu usable on short phones / landscape mode.
 const menuStyle=document.createElement('style');
