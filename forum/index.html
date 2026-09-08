@@ -2,168 +2,152 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#050705">
   <title>The Paranormal Wiki Forum</title>
-  <link rel="stylesheet" href="/forum/forum.css">
-  <link rel="stylesheet" href="/forum/forum-v2.css">
-  <link rel="stylesheet" href="/forum/forum-search.css">
-  <link rel="stylesheet" href="/forum/forum-polish.css?v=20260907-polish1">
-  <link rel="stylesheet" href="/forum/forum-community.css?v=20260908-community1">
+  <link rel="stylesheet" href="/forum/forum-app.css?v=20260908-ia1">
 </head>
 <body>
+  <a class="skip-link" href="#forumContent">Skip to forum content</a>
   <main class="forum-shell">
-    <div class="forum-topbar">
-      <div><strong>THE PARANORMAL WIKI // COMMUNITY FORUM</strong></div>
-      <div class="forum-actions"><button class="bbs-btn secondary" id="forumHomeBtn" type="button">FORUM INDEX</button><a class="bbs-btn secondary" href="/#home">RETURN TO ARCHIVE</a></div>
+    <div class="utility-bar">
+      <a class="utility-brand" href="/forum/">THE PARANORMAL WIKI // COMMUNITY FORUM</a>
+      <span>PUBLIC DISCUSSION NETWORK</span>
+      <a class="utility-return" href="/#home">RETURN TO ARCHIVE</a>
     </div>
 
-    <header class="forum-brand">
-      <h1>PARANORMAL WIKI FORUM</h1>
-      <p>Community discussion, evidence review, archive research, and user-submitted experiences. Forum posts are user contributions and are not automatically treated as verified archive material.</p>
-      <div class="forum-status"><span class="status-chip">DATABASE: ONLINE</span><span class="status-chip">PUBLIC READ ACCESS</span><span class="status-chip">ACCOUNT REQUIRED TO POST</span><span class="status-chip">MODERATION ACTIVE</span></div>
-      <div id="forumStats" class="forum-stats"><div class="forum-stat"><strong>—</strong><span>MEMBERS</span></div><div class="forum-stat"><strong>—</strong><span>THREADS</span></div><div class="forum-stat"><strong>—</strong><span>POSTS</span></div></div>
+    <header class="masthead">
+      <div>
+        <div class="eyebrow">COMMUNITY NODE // ESTABLISHED FOR ARCHIVE DISCUSSION</div>
+        <h1>PARANORMAL WIKI FORUM</h1>
+        <p>Community discussion, evidence review, archive research, and user-submitted experiences. Forum posts are community contributions and are not automatically treated as verified archive material.</p>
+      </div>
+      <div id="accountBar" class="account-bar" aria-live="polite">
+        <div class="auth-top"><button class="bbs-btn secondary" type="button" data-auth-open="signin">SIGN IN</button><button class="bbs-btn primary" type="button" data-auth-open="register">REGISTER</button></div>
+      </div>
     </header>
 
+    <nav id="forumTabs" class="forum-tabs" role="tablist" aria-label="Forum sections">
+      <a class="forum-tab" role="tab" aria-selected="true" data-nav-view="home" href="/forum/">FORUM HOME</a>
+      <a class="forum-tab" role="tab" aria-selected="false" data-nav-view="boards" href="/forum/?view=boards">BOARDS</a>
+      <a class="forum-tab" role="tab" aria-selected="false" data-nav-view="latest" href="/forum/?view=latest">LATEST</a>
+      <a class="forum-tab" role="tab" aria-selected="false" data-nav-view="search" href="/forum/?view=search">SEARCH</a>
+      <a id="bookmarksTab" class="forum-tab hidden" role="tab" aria-selected="false" data-nav-view="bookmarks" href="/forum/?view=bookmarks">BOOKMARKS</a>
+    </nav>
+
     <div id="globalNotice" class="notice hidden" aria-live="polite"></div>
-    <nav id="breadcrumbs" class="crumbs" aria-label="Forum breadcrumb"><span>Forum</span></nav>
+    <nav id="breadcrumbs" class="breadcrumbs" aria-label="Breadcrumb"><span aria-current="page">Forum</span></nav>
 
-    <section id="forumHome" class="forum-grid">
-      <div>
-        <section class="panel">
-          <div class="panel-title"><span id="mainTitle">Archive Boards</span><button id="newThreadBtn" class="bbs-btn" type="button" disabled>NEW DISCUSSION</button></div>
-          <div id="categories"><div class="empty-state">Loading boards…</div></div>
+    <div class="forum-layout">
+      <section id="forumContent" class="forum-content" tabindex="-1"><div class="loading-state">CONNECTING TO COMMUNITY ARCHIVE…</div></section>
+      <aside class="forum-sidebar" aria-label="Forum information">
+        <section class="side-panel">
+          <div class="side-title">COMMUNITY STATUS</div>
+          <div id="forumStats" class="forum-stats"><div><strong>—</strong><span>MEMBERS</span></div><div><strong>—</strong><span>THREADS</span></div><div><strong>—</strong><span>POSTS</span></div></div>
         </section>
-
-        <section class="panel" style="margin-top:12px">
-          <div class="panel-title"><span>Recent Discussions</span></div>
-          <div id="latestThreads"><div class="empty-state">Loading recent discussions…</div></div>
-        </section>
-
-        <section class="panel" style="margin-top:12px">
-          <div class="panel-title"><span>Search Forum Archive</span><button id="showBookmarksBtn" class="bbs-btn secondary" type="button">MY BOOKMARKS</button></div>
-          <div class="panel-body">
-            <form id="forumSearchForm" class="forum-search-bar">
-              <input id="forumSearchInput" maxlength="120" placeholder="Search thread titles and post text…" aria-label="Search forum">
-              <button class="bbs-btn" type="submit">SEARCH</button>
-            </form>
-          </div>
-          <div id="forumSearchResults"><div class="empty-state">Search community discussions or open your bookmarked threads.</div></div>
-        </section>
-      </div>
-
-      <aside>
-        <section class="panel">
-          <div class="panel-title"><span>Member Access</span></div>
-          <div class="panel-body auth-box">
-            <div id="authState" class="auth-state">Checking session…</div>
-            <div id="authActions" class="forum-actions"></div>
-            <div id="profileSetup" class="hidden">
-              <div class="field"><label for="usernameInput">Forum username</label><input id="usernameInput" maxlength="24" autocomplete="username" placeholder="example_user"></div>
-              <div class="field" style="margin-top:8px"><label for="displayNameInput">Display name (optional)</label><input id="displayNameInput" maxlength="60" placeholder="Display name"></div>
-              <div class="field-help">Usernames are permanent in the current forum version. Display names can be changed later.</div>
-              <button id="saveProfileBtn" class="bbs-btn" type="button" style="margin-top:8px">CREATE PROFILE</button>
-            </div>
+        <section class="side-panel">
+          <div class="side-title">FORUM RULES</div>
+          <div class="rules-list">
+            <div><b>01</b><span>Label speculation as speculation.</span></div>
+            <div><b>02</b><span>User reports are not verified evidence.</span></div>
+            <div><b>03</b><span>Cite sources for factual claims when possible.</span></div>
+            <div><b>04</b><span>Respect living religious and Indigenous traditions.</span></div>
+            <div><b>05</b><span>No harassment, doxxing, spam, or impersonation.</span></div>
           </div>
         </section>
-
-        <section class="panel" style="margin-top:12px">
-          <div class="panel-title"><span>Forum Rules</span></div>
-          <div class="panel-body sidebar-list">
-            <div>01 // Label speculation as speculation.</div>
-            <div>02 // User reports are not verified evidence.</div>
-            <div>03 // Cite sources when making factual claims.</div>
-            <div>04 // Respect living religious and Indigenous traditions.</div>
-            <div>05 // No harassment, doxxing, spam, or impersonation.</div>
-            <div class="sidebar-note">Posting, thread creation, and reporting are rate-limited at the database level. Moderator actions are audit-logged.</div>
-          </div>
+        <section class="side-panel archive-note">
+          <div class="side-title">ARCHIVE NOTICE</div>
+          <p>Community content remains separate from canonical Paranormal Wiki research. Posting does not add a claim to an entity dossier.</p>
         </section>
       </aside>
-    </section>
+    </div>
 
-    <section id="threadView" class="hidden">
-      <div class="panel">
-        <div class="thread-head">
-          <h2 id="threadHeading">Discussion</h2>
-          <div id="threadMeta" class="thread-meta"></div>
-          <div id="threadEntity"></div>
-          <div class="forum-actions" style="margin-top:10px"><button id="bookmarkBtn" type="button" class="bbs-btn secondary">BOOKMARK</button><button id="threadReportBtn" type="button" class="bbs-btn secondary">REPORT THREAD</button></div>
-          <div id="staffThreadTools" class="staff-strip hidden"></div>
-        </div>
-        <div id="threadPosts"><div class="empty-state">Loading posts…</div></div>
-      </div>
-
-      <form id="replyForm" class="panel hidden" style="margin-top:12px">
-        <div class="panel-title"><span>Post Reply</span></div>
-        <div class="panel-body">
-          <div class="field"><label for="replyBody">Message</label><textarea id="replyBody" maxlength="20000" required></textarea></div>
-          <div class="field-help">Maximum 20,000 characters. Rapid repeat posting is automatically rate-limited.</div>
-          <div class="forum-actions" style="margin-top:9px"><button class="bbs-btn" type="submit">SUBMIT REPLY</button></div>
-        </div>
-      </form>
-    </section>
-
-    <footer class="footer-note">THE PARANORMAL WIKI COMMUNITY FORUM // COMMUNITY CONTENT IS SEPARATE FROM CANONICAL ARCHIVE RESEARCH</footer>
+    <footer class="forum-footer">THE PARANORMAL WIKI COMMUNITY FORUM // COMMUNITY CONTENT IS SEPARATE FROM CANONICAL ARCHIVE RESEARCH</footer>
   </main>
 
-  <div id="loginModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="Sign in or register">
-    <div class="modal">
-      <div class="modal-header"><h3>Member Access</h3><button class="modal-close" type="button" data-close-modal>CLOSE</button></div>
-      <div class="modal-body">
-        <form id="loginForm" class="panel-body auth-box">
-          <strong>SIGN IN</strong>
-          <div class="field"><label>Email</label><input name="email" type="email" autocomplete="email" required></div>
-          <div class="field"><label>Password</label><input name="password" type="password" autocomplete="current-password" minlength="8" required></div>
-          <button class="bbs-btn" type="submit">SIGN IN</button>
-        </form>
-        <div class="notice">New account? Registration uses email confirmation. After confirming, return to the forum, sign in, and choose your public username.</div>
-        <form id="signupForm" class="panel-body auth-box">
-          <strong>REGISTER</strong>
-          <div class="field"><label>Email</label><input name="email" type="email" autocomplete="email" required></div>
-          <div class="field"><label>Password</label><input name="password" type="password" autocomplete="new-password" minlength="8" required></div>
-          <button class="bbs-btn" type="submit">CREATE ACCOUNT</button>
-        </form>
-      </div>
-    </div>
-  </div>
+  <div id="accountMenu" class="account-menu hidden" role="menu" aria-label="Account menu"></div>
 
-  <div id="newThreadModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="Create discussion">
+  <div id="authModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="authTitle">
     <div class="modal">
-      <div class="modal-header"><h3>New Discussion</h3><button class="modal-close" type="button" data-close-modal>CLOSE</button></div>
-      <form id="newThreadForm" class="modal-body">
-        <div class="field"><label for="threadCategory">Board</label><select id="threadCategory" required></select></div>
-        <div class="field"><label for="threadTitle">Title</label><input id="threadTitle" maxlength="160" minlength="3" required></div>
-        <div class="field"><label for="threadBody">Opening post</label><textarea id="threadBody" maxlength="20000" required></textarea></div>
-        <div class="notice">Optional archive link: use the archive entity ID and exact entity name only when this discussion directly concerns an existing Paranormal Wiki record.</div>
-        <div class="field"><label for="entityId">Archive entity ID (optional)</label><input id="entityId" maxlength="120"></div>
-        <div class="field"><label for="entityName">Archive entity name (optional)</label><input id="entityName" maxlength="160"></div>
-        <div class="field-help">Maximum 3 new threads per 5 minutes per member.</div>
-        <div class="forum-actions"><button class="bbs-btn" type="submit">POST DISCUSSION</button></div>
+      <div class="modal-header"><h2 id="authTitle">MEMBER ACCESS</h2><button class="modal-close" type="button" data-close-modal>CLOSE</button></div>
+      <div class="auth-tabs" role="tablist" aria-label="Member access">
+        <button id="signinTab" class="auth-tab" type="button" role="tab" aria-selected="true" aria-controls="signinPanel" data-auth-tab="signin">SIGN IN</button>
+        <button id="registerTab" class="auth-tab" type="button" role="tab" aria-selected="false" aria-controls="registerPanel" data-auth-tab="register">REGISTER</button>
+      </div>
+      <form id="signinPanel" class="auth-panel form-stack" role="tabpanel" aria-labelledby="signinTab">
+        <div class="field"><label for="signinEmail">Email</label><input id="signinEmail" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="signinPassword">Password</label><input id="signinPassword" name="password" type="password" autocomplete="current-password" minlength="8" required></div>
+        <button class="bbs-btn primary" type="submit">SIGN IN</button>
+      </form>
+      <form id="registerPanel" class="auth-panel form-stack hidden" role="tabpanel" aria-labelledby="registerTab">
+        <div class="field"><label for="registerEmail">Email</label><input id="registerEmail" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="registerPassword">Password</label><input id="registerPassword" name="password" type="password" autocomplete="new-password" minlength="8" required></div>
+        <div class="field-help">Registration requires email confirmation before posting.</div>
+        <button class="bbs-btn primary" type="submit">CREATE ACCOUNT</button>
+        <button id="resendConfirmationBtn" class="bbs-btn secondary" type="button">RESEND CONFIRMATION</button>
       </form>
     </div>
   </div>
 
-  <div id="profileModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="Forum profile">
+  <div id="profileSetupModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="profileSetupTitle">
     <div class="modal">
-      <div class="modal-header"><h3>Member Profile</h3><button class="modal-close" type="button" data-close-modal>CLOSE</button></div>
-      <div id="profileContent" class="modal-body"><div class="staff-empty">Loading profile…</div></div>
+      <div class="modal-header"><h2 id="profileSetupTitle">CREATE FORUM PROFILE</h2><button class="modal-close" type="button" data-close-modal>CLOSE</button></div>
+      <form id="profileSetupForm" class="modal-body form-stack">
+        <div class="field"><label for="setupUsername">Forum username</label><input id="setupUsername" maxlength="24" autocomplete="username" placeholder="example_user" required></div>
+        <div class="field"><label for="setupDisplayName">Display name (optional)</label><input id="setupDisplayName" maxlength="60" placeholder="Display name"></div>
+        <div class="field-help">Usernames are permanent. Use 3–24 lowercase letters, numbers, or underscores.</div>
+        <button class="bbs-btn primary" type="submit">CREATE PROFILE</button>
+      </form>
     </div>
   </div>
 
-  <div id="staffModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="Staff moderation console">
-    <div class="modal" style="max-width:960px">
-      <div class="modal-header"><h3>Forum Staff Console</h3><button class="modal-close" type="button" data-close-modal>CLOSE</button></div>
-      <div id="staffContent" class="modal-body"><div class="staff-empty">Loading moderation queue…</div></div>
+  <div id="newThreadModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="newThreadTitle">
+    <div class="modal modal-wide">
+      <div class="modal-header"><h2 id="newThreadTitle">NEW DISCUSSION</h2><button class="modal-close" type="button" data-close-modal>CLOSE</button></div>
+      <form id="newThreadForm" class="modal-body form-stack">
+        <div class="field"><label for="threadCategory">Board</label><select id="threadCategory" required></select></div>
+        <div class="field"><label for="threadTitleInput">Title</label><input id="threadTitleInput" maxlength="160" minlength="3" required></div>
+        <div class="field"><label for="threadBodyInput">Opening post</label><textarea id="threadBodyInput" maxlength="20000" required></textarea></div>
+        <div class="field canonical-entity-picker"><label for="canonicalEntitySearch">Canonical archive entity (optional)</label><input id="canonicalEntitySearch" maxlength="160" autocomplete="off" placeholder="Start typing an entity name…"><div id="canonicalEntitySuggestions"></div><div id="canonicalEntityStatus" class="field-help">Optional. Exact canonical matches only.</div></div>
+        <input id="entityId" type="hidden"><input id="entityName" type="hidden">
+        <div class="field-help">Maximum 3 new discussions per 5 minutes. Maximum post length: 20,000 characters.</div>
+        <button class="bbs-btn primary" type="submit">POST DISCUSSION</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="profileModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="profileModalTitle">
+    <div class="modal modal-wide">
+      <div class="modal-header"><h2 id="profileModalTitle">MEMBER PROFILE</h2><button class="modal-close" type="button" data-close-modal>CLOSE</button></div>
+      <div id="profileContent" class="modal-body"><div class="loading-state">LOADING PROFILE…</div></div>
+    </div>
+  </div>
+
+  <div id="reportModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="reportTitle">
+    <div class="modal">
+      <div class="modal-header"><h2 id="reportTitle">REPORT COMMUNITY CONTENT</h2><button class="modal-close" type="button" data-close-modal>CLOSE</button></div>
+      <form id="reportForm" class="modal-body form-stack">
+        <div class="field"><label for="reportReason">Reason</label><select id="reportReason" required><option value="">Choose a reason…</option><option>Spam or advertising</option><option>Harassment or threats</option><option>Private information or doxxing</option><option>Impersonation</option><option>Fabricated evidence or deceptive sourcing</option><option>Dangerous or illegal content</option><option>Off-topic or disruptive behavior</option><option>Other</option></select></div>
+        <div class="field"><label for="reportDetails">Details (optional)</label><textarea id="reportDetails" maxlength="2000" placeholder="Briefly explain what staff should review."></textarea></div>
+        <div id="reportTargetLabel" class="field-help">No target selected.</div>
+        <button class="bbs-btn primary" type="submit">SUBMIT REPORT</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="staffModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="staffTitle">
+    <div class="modal modal-staff">
+      <div class="modal-header"><h2 id="staffTitle">FORUM STAFF CONSOLE</h2><button class="modal-close" type="button" data-close-modal>CLOSE</button></div>
+      <div id="staffContent" class="modal-body"><div class="loading-state">LOADING MODERATION QUEUE…</div></div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0"></script>
-  <script src="/forum/forum-v2.js?v=20260907-flat1" defer></script>
-  <script src="/forum/forum-thread-submit-fix.js" defer></script>
-  <script src="/forum/forum-auth-fix.js" defer></script>
-  <script src="/forum/forum-search.js?v=20260907-flat2" defer></script>
-  <script src="/forum/forum-report-ui.js?v=20260907-report1" defer></script>
-  <script src="/forum/forum-polish.js?v=20260907-polish1" defer></script>
-  <script src="/forum/forum-community-v2.js?v=20260908-community1" defer></script>
+  <script src="/forum/forum-core.js?v=20260908-ia1" defer></script>
+  <script src="/forum/forum-views.js?v=20260908-ia1" defer></script>
+  <script src="/forum/forum-thread.js?v=20260908-ia1" defer></script>
+  <script src="/forum/forum-community.js?v=20260908-ia1" defer></script>
+  <script src="/forum/forum-app.js?v=20260908-ia1" defer></script>
 </body>
 </html>
