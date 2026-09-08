@@ -6,7 +6,7 @@
   const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
   const POST_PAGE_SIZE=15;
   const AVATAR_BUCKET='forum-avatars';
-  const MAX_AVATAR_BYTES=2*1024*1024;
+  const MAX_AVATAR_BYTES=10*1024*1024;
   const ALLOWED_AVATAR_TYPES=new Set(['image/jpeg','image/png','image/webp']);
 
   let currentUserId=null;
@@ -218,7 +218,7 @@
 
   function renderRichProfileEditor(profile){
     const area=$('#profileEditArea');if(!area||currentUserId!==profile.id)return;
-    area.innerHTML=`<div class="profile-editor-rich"><div class="profile-editor-avatar">${avatarHtml(profile,'lg')}<div><label class="bbs-btn secondary avatar-upload-label">CHOOSE AVATAR<input id="profileAvatarFile" type="file" accept="image/png,image/jpeg,image/webp" hidden></label><button type="button" class="mini-btn" id="removeAvatarBtn" ${profile.avatar_url?'':'disabled'}>REMOVE AVATAR</button><div class="field-help">PNG, JPG or WebP · maximum 2 MB.</div></div></div><div class="field"><label>Display name</label><input id="richDisplayName" maxlength="60" value="${esc(profile.display_name||'')}"></div><div class="field"><label>Bio</label><textarea id="richBio" maxlength="500">${esc(profile.bio||'')}</textarea><div class="field-help"><span id="bioCount">${String(profile.bio||'').length}</span>/500 characters</div></div><div class="field-help">@${esc(profile.username)} is permanent. Your role cannot be changed from profile settings.</div><button type="button" class="bbs-btn" id="saveRichProfile">SAVE PROFILE</button></div>`;
+    area.innerHTML=`<div class="profile-editor-rich"><div class="profile-editor-avatar">${avatarHtml(profile,'lg')}<div><label class="bbs-btn secondary avatar-upload-label">CHOOSE AVATAR<input id="profileAvatarFile" type="file" accept="image/png,image/jpeg,image/webp" hidden></label><button type="button" class="mini-btn" id="removeAvatarBtn" ${profile.avatar_url?'':'disabled'}>REMOVE AVATAR</button><div class="field-help">PNG, JPG or WebP · maximum 10 MB.</div></div></div><div class="field"><label>Display name</label><input id="richDisplayName" maxlength="60" value="${esc(profile.display_name||'')}"></div><div class="field"><label>Bio</label><textarea id="richBio" maxlength="500">${esc(profile.bio||'')}</textarea><div class="field-help"><span id="bioCount">${String(profile.bio||'').length}</span>/500 characters</div></div><div class="field-help">@${esc(profile.username)} is permanent. Your role cannot be changed from profile settings.</div><button type="button" class="bbs-btn" id="saveRichProfile">SAVE PROFILE</button></div>`;
     $('#richBio')?.addEventListener('input',e=>{$('#bioCount').textContent=String(e.target.value.length)});
     $('#removeAvatarBtn')?.addEventListener('click',()=>{area.dataset.removeAvatar='1';$('#removeAvatarBtn').textContent='AVATAR WILL BE REMOVED';$('#removeAvatarBtn').disabled=true});
     $('#saveRichProfile')?.addEventListener('click',()=>saveRichProfile(profile));
@@ -227,7 +227,7 @@
   async function saveRichProfile(profile){
     const button=$('#saveRichProfile'),display=$('#richDisplayName')?.value.trim()||'',bio=$('#richBio')?.value.trim()||'',file=$('#profileAvatarFile')?.files?.[0]||null;
     if(bio.length>500)return flash('Bio is limited to 500 characters.','error');
-    if(file&&(file.size>MAX_AVATAR_BYTES||!ALLOWED_AVATAR_TYPES.has(file.type)))return flash('Avatar must be PNG, JPG or WebP and no larger than 2 MB.','error');
+    if(file&&(file.size>MAX_AVATAR_BYTES||!ALLOWED_AVATAR_TYPES.has(file.type)))return flash('Avatar must be PNG, JPG or WebP and no larger than 10 MB.','error');
     button.disabled=true;button.textContent='SAVING…';
     let avatarUrl=profile.avatar_url||null,newPath=null;
     try{
