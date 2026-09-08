@@ -76,4 +76,16 @@
 
   form?.addEventListener('submit',searchForum);
   bookmarkBtn?.addEventListener('click',showBookmarks);
+
+  // Load non-core polish extensions after the forum DOM and Supabase client are ready.
+  const loadExtension=(src,id)=>{
+    if(document.getElementById(id))return;
+    const script=document.createElement('script');
+    script.id=id;
+    script.src=src;
+    script.async=false;
+    document.body.appendChild(script);
+  };
+  loadExtension('/forum/forum-entity-links.js?v=20260907-entity1','forumEntityLinksExtension');
+  loadExtension('/forum/forum-post-polish.js?v=20260907-postpolish1','forumPostPolishExtension');
 })();
