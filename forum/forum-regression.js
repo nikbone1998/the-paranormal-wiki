@@ -2,6 +2,14 @@
 const C=window.ForumCore,T=window.ForumThread,S=window.ForumSocial,M=window.ForumCommunity;
 const {db,state,$,esc,fmt,urlFor,flash}=C;
 
+// Public sidebar counts must not change just because a staff account can see hidden content.
+C.refreshStats=async function(){
+  const{data,error}=await db.rpc('forum_public_stats');
+  if(error)throw error;
+  const row=Array.isArray(data)?data[0]:data;
+  $('#forumStats').innerHTML=`<div><strong>${Number(row?.member_count||0)}</strong><span>MEMBERS</span></div><div><strong>${Number(row?.thread_count||0)}</strong><span>CONVERSATIONS</span></div><div><strong>${Number(row?.post_count||0)}</strong><span>POSTS</span></div>`;
+};
+
 // Keep staff replies on the page that actually contains the newly-created post.
 T.submitReply=async function(form){
   const body=$('#replyBody')?.value.trim();
