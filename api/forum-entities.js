@@ -1,6 +1,6 @@
 const fs=require('fs');
 const path=require('path');
-
+const EXPECTED_ENTRIES=913;
 let cached=null;
 
 function normalize(value){return String(value??'').replace(/\s+/g,' ').trim()}
@@ -57,7 +57,7 @@ module.exports=async function forumEntities(req,res){
   if(!cached){
    const html=await loadArchiveHtml();
    const entries=extractCanonicalEntities(html);
-   if(entries.length<800)throw new Error(`canonical entity extraction returned only ${entries.length} routes`);
+   if(entries.length!==EXPECTED_ENTRIES)throw new Error(`canonical entity extraction returned ${entries.length} routes; expected exactly ${EXPECTED_ENTRIES}`);
    cached={count:entries.length,entries};
   }
   return send(res,200,cached);
