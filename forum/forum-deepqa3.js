@@ -10,6 +10,20 @@ function signedOutView(){
 function guard(name){const base=N[name]?.bind(N);if(!base)return;N[name]=async function(...args){if(!signedIn())return signedOutView();return base(...args)}}
 ['renderOverview','renderRequests','renderMemberProfile','renderActivity','renderSettings','renderMessages','renderFriends','renderConversation'].forEach(guard);
 
+// If an existing DM becomes disallowed because of blocking/friend/privacy changes,
+// remove the misleading composer before the user types a message that the server will reject.
+const baseConversation=S.renderConversation.bind(S);
+S.renderConversation=async function(id,...args){
+  const result=await baseConversation(id,...args);if(!signedIn())return result;
+  try{
+    const{data:c,error}=await C.db.from('forum_direct_conversations').select('user_one,user_two,status').eq('id',id).maybeSingle();if(error||!c)return result;
+    const other=c.user_one===state.profile.id?c.user_two:c.user_one,{data:allowed,error:pe}=await C.db.rpc('forum_can_message_member',{p_target:other});if(pe||allowed!==false)return result;
+    $('#dmComposer')?.remove();
+    if(!$('#dmPermissionBanner')){const messages=$('#dmMessages');messages?.insertAdjacentHTML('beforebegin','<div id="dmPermissionBanner" class="dm-request-banner"><strong>PRIVATE MESSAGING UNAVAILABLE</strong><span>This conversation is currently read-only because the relationship, block, suspension, or privacy state no longer permits new messages.</span></div>')}
+  }catch{}
+  return result;
+};
+
 // A hard reload on sign-out guarantees camera/microphone, WebRTC peers, presence, typing,
 // stale private DOM and account-specific JS caches cannot survive into the signed-out state.
 M.signOut=async function(){
