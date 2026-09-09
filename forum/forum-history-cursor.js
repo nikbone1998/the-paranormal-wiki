@@ -51,4 +51,5 @@ document.addEventListener('click',async e=>{
  try{await cursorPage(id,h,box)}catch(err){flash(err.message||'Unable to load earlier messages.','error')}
  finally{h.busy=false;try{await sync(id,true)}catch{}updateUi(id)}
 },true);
+const phoneStyle=document.createElement('style');phoneStyle.textContent=`@media(max-width:560px){.utility-bar{flex-wrap:wrap;align-items:flex-start}.utility-brand{flex:1 1 210px;min-width:0;overflow-wrap:anywhere}.utility-return{flex:0 0 auto;margin-left:auto;white-space:nowrap}.utility-bar>span{order:3;flex:1 0 100%;overflow-wrap:anywhere}.thread-last{white-space:normal;overflow-wrap:anywhere}.dm-file-preview span{min-width:0;overflow-wrap:anywhere}}`;document.head.append(phoneStyle);
 })();
