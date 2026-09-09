@@ -19,14 +19,23 @@ S.renderConversation=async function(id,...args){try{const result=await baseConve
 const baseThread=T.renderThread.bind(T);
 T.renderThread=async function(id,page=1,hash=''){if(hash?.startsWith('#post-')){let post='';try{post=decodeURIComponent(hash.slice(6))}catch{}if(!UUID_RE.test(post))hash=''}return baseThread(id,page,hash)};
 async function cursorPage(id,h,box){for(let attempt=0;attempt<4;attempt++){
+  if(new URLSearchParams(location.search).get('dm')!==id||!box.isConnected)return[];
   h.invalidated=false;
   const before=oldestVisible(box);h.beforeId=before;if(!before)return[];
   const{data,error}=await db.rpc('forum_private_message_history',{p_conversation:id,p_before_id:before,p_limit:200});if(error)throw error;
-  if(h.invalidated)continue;
+  if(h.invalidated||new URLSearchParams(location.search).get('dm')!==id||!box.isConnected)continue;
   const existing=new Set([...box.querySelectorAll('.dm-message[id^="dm-message-"]')].map(messageId));
   const rows=(data||[]).reverse().filter(m=>!existing.has(String(m.id)));
   const anchor=box.querySelector('.dm-message[id^="dm-message-"]');
-  if(rows.length){box.insertAdjacentHTML('afterbegin',rows.map(bubble).join(''));await resolveMedia(box);if(h.invalidated)continue;anchor?.scrollIntoView({block:'start'})}
+  if(rows.length){
+    h.observer?.disconnect();
+    box.insertAdjacentHTML('afterbegin',rows.map(bubble).join(''));
+    await resolveMedia(box);
+    const replaced=!box.isConnected||new URLSearchParams(location.search).get('dm')!==id||(anchor&&!anchor.isConnected);
+    if(box.isConnected&&new URLSearchParams(location.search).get('dm')===id)observe(id,box);
+    if(replaced){h.invalidated=true;continue}
+    anchor?.scrollIntoView({block:'start'});
+  }
   await sync(id,true);
   return rows;
  }
