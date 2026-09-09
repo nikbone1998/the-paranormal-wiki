@@ -11,6 +11,18 @@ function signedOutView(){
 function guardPrivateView(name){const base=N[name]?.bind(N);if(!base)return;N[name]=async function(...args){if(!signedIn())return signedOutView();return base(...args)}}
 ['renderOverview','renderRequests','renderMemberProfile','renderActivity','renderSettings','renderMessages','renderFriends','renderConversation'].forEach(guardPrivateView);
 
+// The database treats a suspended moderator as non-staff. Mirror that state in the browser so
+// staff-only controls and hidden-content views do not remain visible while their RPCs are denied.
+const baseRefreshAuth=C.refreshAuth.bind(C);
+C.refreshAuth=async function(){
+  await baseRefreshAuth();
+  if(!state.session||!state.profile||!['moderator','admin'].includes(state.profile.role))return;
+  try{
+    const{data,error}=await db.rpc('forum_current_user_is_suspended');
+    if(!error&&data===true){state.profile={...state.profile,suspended_staff_role:state.profile.role,role:'member'};C.renderAccount()}
+  }catch{}
+};
+
 // Refresh Realtime authorization even when an existing channel is reused. If the signed-in
 // account changes in-place, remove the previous account's DM channel and stop any borrowed media.
 let realtimeUserId=state.profile?.id||null;
