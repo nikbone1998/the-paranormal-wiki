@@ -1,6 +1,7 @@
 (()=>{'use strict';
-const C=window.ForumCore,S=window.ForumSocial;
+const C=window.ForumCore,S=window.ForumSocial,T=window.ForumThread;
 const{db,state,$,esc,fmt,flash}=C;
+const UUID_RE=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const history=new Map();
 const timers=new Map();
 function messageId(el){const id=el?.id||'';return id.startsWith('dm-message-')?id.slice(11):null}
@@ -13,8 +14,10 @@ function updateUi(id){const h=history.get(id),btn=$('[data-load-older-dm]'),stat
 async function sync(id,reset=false){const h=history.get(id),box=$('#dmMessages');if(!h||!box||new URLSearchParams(location.search).get('dm')!==id)return;h.total=await totalFor(id);h.loaded=visibleCount(box);h.beforeId=oldestVisible(box);if(reset)h.invalidated=false;updateUi(id)}
 function observe(id,box){const h=history.get(id);h.observer?.disconnect();h.observer=new MutationObserver(records=>{if(!records.some(r=>r.target===box&&r.type==='childList'))return;if(h.busy){h.invalidated=true;return}clearTimeout(timers.get(id));timers.set(id,setTimeout(()=>sync(id,true).catch(()=>{}),140))});h.observer.observe(box,{childList:true})}
 async function install(id){const box=$('#dmMessages'),btn=$('[data-load-older-dm]');if(!box||!btn){history.get(id)?.observer?.disconnect();history.delete(id);return}const total=await totalFor(id);const h=history.get(id)||{};h.total=total;h.loaded=visibleCount(box);h.beforeId=oldestVisible(box);h.busy=false;h.invalidated=false;history.set(id,h);observe(id,box);updateUi(id)}
-const base=S.renderConversation.bind(S);
-S.renderConversation=async function(id,...args){try{const result=await base(id,...args);try{await install(id)}catch{}return result}catch(err){const msg=String(err?.message||'');if(msg.includes('Private conversation unavailable')||msg.includes('other member profile is unavailable')){C.renderNotFound('This private conversation is unavailable.');return}throw err}};
+const baseConversation=S.renderConversation.bind(S);
+S.renderConversation=async function(id,...args){try{const result=await baseConversation(id,...args);try{await install(id)}catch{}return result}catch(err){const msg=String(err?.message||'');if(msg.includes('Private conversation unavailable')||msg.includes('other member profile is unavailable')){C.renderNotFound('This private conversation is unavailable.');return}throw err}};
+const baseThread=T.renderThread.bind(T);
+T.renderThread=async function(id,page=1,hash=''){if(hash?.startsWith('#post-')){let post='';try{post=decodeURIComponent(hash.slice(6))}catch{}if(!UUID_RE.test(post))hash=''}return baseThread(id,page,hash)};
 async function cursorPage(id,h,box){for(let attempt=0;attempt<4;attempt++){
   h.invalidated=false;
   const before=oldestVisible(box);h.beforeId=before;if(!before)return[];
