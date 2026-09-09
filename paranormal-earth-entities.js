@@ -46,6 +46,6 @@
   root.querySelector('.ua-globe-future').textContent='ENTITY COORDINATES: '+records.length+' POINTS / '+new Set(records.map(r=>r.entity.id)).size+' ENTITIES';
   root.querySelector('.ua-globe-status').innerHTML='EARTH ENGINE <b>ONLINE</b><br>ENTITY LAYER: <b>ONLINE</b><br>RENDER: <span class="ua-globe-quality">...</span>';
  }
- async function boot(){for(let i=0;i<120;i++){const root=document.querySelector('[data-unseen-earth]'),api=root&&window.UnseenEarth?.get(root);if(root&&api?.getObservationState){mount(root,api);return;}await wait(500);}}
+ async function boot(){for(let i=0;i<120;i++){const root=document.querySelector('[data-unseen-earth]');if(root){const bridge={getObservationState:()=>window.UnseenEarth?.get(root)?.getObservationState?.()||{center:{lat:13,lon:25},altitudeKm:12000},flyTo:options=>window.UnseenEarth?.get(root)?.flyTo?.(options)};mount(root,bridge);return;}await wait(500);}}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
