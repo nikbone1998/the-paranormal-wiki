@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#050705">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Reset Password // Paranormal Wiki Forum</title>
+  <style>
+    :root{color-scheme:dark;font-family:"Courier New",monospace;background:#050705;color:#d7e4d0}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100dvh;background:radial-gradient(circle at 50% 0,#121a12 0,#070a07 42%,#020302 100%);display:grid;place-items:center;padding:22px}
+    .shell{width:min(560px,100%);border:1px solid #334333;background:rgba(5,8,5,.96);box-shadow:0 0 0 1px #101810,0 20px 60px #000;padding:0}
+    header{border-bottom:1px solid #334333;padding:18px 20px;background:#0b100b}
+    .kicker{font-size:11px;letter-spacing:.18em;color:#8ea48b;margin-bottom:7px}
+    h1{font-size:22px;line-height:1.15;margin:0;color:#e8f2e4}
+    main{padding:20px}
+    p{line-height:1.6;color:#afbfaa;margin:0 0 16px}
+    label{display:block;font-size:12px;letter-spacing:.08em;color:#c9d8c4;margin-bottom:6px}
+    input{width:100%;min-height:46px;border:1px solid #3c4d3b;background:#030503;color:#edf6e9;padding:11px 12px;font:inherit;border-radius:0;outline:none}
+    input:focus{border-color:#8cab87;box-shadow:0 0 0 1px #8cab87}
+    .field{margin-bottom:14px}
+    button,.return{display:inline-flex;align-items:center;justify-content:center;min-height:44px;border:1px solid #61775e;background:#172016;color:#edf6e9;padding:10px 14px;font:700 12px/1 "Courier New",monospace;letter-spacing:.08em;text-decoration:none;cursor:pointer}
+    button:hover,.return:hover{background:#202c1f}
+    button:disabled{opacity:.55;cursor:wait}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .status{min-height:20px;margin-top:16px;padding:10px 12px;border:1px solid #344434;background:#090d09;color:#b8c7b3;font-size:12px;line-height:1.5}
+    .status.error{border-color:#71423d;color:#f2c1ba;background:#170908}
+    .status.success{border-color:#4c6d49;color:#c8e5c4;background:#091409}
+    .small{font-size:11px;color:#7f917c;margin-top:14px;line-height:1.5}
+  </style>
+</head>
+<body>
+  <section class="shell" aria-labelledby="resetTitle">
+    <header>
+      <div class="kicker">THE PARANORMAL WIKI // COMMUNITY ACCESS</div>
+      <h1 id="resetTitle">CHOOSE A NEW PASSWORD</h1>
+    </header>
+    <main>
+      <p id="intro">Checking your recovery link…</p>
+      <form id="resetForm" hidden>
+        <div class="field"><label for="newPassword">New password</label><input id="newPassword" type="password" minlength="8" autocomplete="new-password" required></div>
+        <div class="field"><label for="confirmPassword">Confirm new password</label><input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" required></div>
+        <div class="small">Use at least 8 characters. After the change, all Supabase refresh sessions for this account are signed out and you will sign in again with the new password.</div>
+        <div class="actions"><button id="savePassword" type="submit">UPDATE PASSWORD</button><a class="return" href="/forum/">CANCEL</a></div>
+      </form>
+      <div id="status" class="status" role="status" aria-live="polite">Verifying recovery session…</div>
+    </main>
+  </section>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0"></script>
+  <script>
+  (()=>{'use strict';
+    const SUPABASE_URL='https://waqobihznhkbspdchjbb.supabase.co';
+    const SUPABASE_KEY='sb_publishable_uPGjlkbauGtisASevhnTLA_jIJDhzZG';
+    const hash=new URLSearchParams(location.hash.replace(/^#/,''));
+    const query=new URLSearchParams(location.search);
+    const recoveryMarker=hash.get('type')==='recovery'||query.get('type')==='recovery';
+    const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+    const form=document.getElementById('resetForm'),status=document.getElementById('status'),intro=document.getElementById('intro'),button=document.getElementById('savePassword');
+    let recoveryReady=false;
+    function showReady(){if(recoveryReady)return;recoveryReady=true;form.hidden=false;intro.textContent='Enter a new password for your forum account.';status.textContent='Recovery link verified. You may choose a new password.';status.className='status success';document.getElementById('newPassword').focus()}
+    function showInvalid(){if(recoveryReady)return;form.hidden=true;intro.textContent='This recovery link is invalid, expired, or has already been used.';status.innerHTML='Return to the forum and request a new password-reset email.';status.className='status error'}
+    db.auth.onAuthStateChange((event,session)=>{if(event==='PASSWORD_RECOVERY'&&session)showReady();else if(recoveryMarker&&event==='SIGNED_IN'&&session)showReady()});
+    async function checkSession(){try{const{data,error}=await db.auth.getSession();if(error)throw error;if(recoveryMarker&&data.session)showReady()}catch{}setTimeout(()=>{if(!recoveryReady)showInvalid()},1300)}
+    form.addEventListener('submit',async e=>{e.preventDefault();if(!recoveryReady)return showInvalid();const password=document.getElementById('newPassword').value,confirm=document.getElementById('confirmPassword').value;if(password.length<8){status.textContent='Password must contain at least 8 characters.';status.className='status error';return}if(password!==confirm){status.textContent='The two passwords do not match.';status.className='status error';return}button.disabled=true;button.textContent='UPDATING…';status.textContent='Updating password…';status.className='status';try{const{error}=await db.auth.updateUser({password});if(error)throw error;status.textContent='Password updated. Signing out old sessions…';status.className='status success';await db.auth.signOut();setTimeout(()=>location.replace('/forum/?passwordReset=1'),900)}catch(err){status.textContent=err?.message||'Password could not be updated. Request a new recovery email and try again.';status.className='status error';button.disabled=false;button.textContent='UPDATE PASSWORD'}});
+    checkSession();
+  })();
+  </script>
+</body>
+</html>
