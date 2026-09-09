@@ -16,6 +16,8 @@ function observe(id,box){const h=history.get(id);h.observer?.disconnect();h.obse
 async function install(id){const box=$('#dmMessages'),btn=$('[data-load-older-dm]');if(!box||!btn){history.get(id)?.observer?.disconnect();history.delete(id);return}const total=await totalFor(id);const h=history.get(id)||{};h.total=total;h.loaded=visibleCount(box);h.beforeId=oldestVisible(box);h.busy=false;h.invalidated=false;history.set(id,h);observe(id,box);updateUi(id)}
 const baseConversation=S.renderConversation.bind(S);
 S.renderConversation=async function(id,...args){try{const result=await baseConversation(id,...args);try{await install(id)}catch{}return result}catch(err){const msg=String(err?.message||'');if(msg.includes('Private conversation unavailable')||msg.includes('other member profile is unavailable')){C.renderNotFound('This private conversation is unavailable.');return}throw err}};
+const baseRouteLeave=S.onRouteLeave.bind(S);
+S.onRouteLeave=async function(...args){for(const[id,h]of history){h.observer?.disconnect();clearTimeout(timers.get(id))}history.clear();timers.clear();return baseRouteLeave(...args)};
 const baseThread=T.renderThread.bind(T);
 T.renderThread=async function(id,page=1,hash=''){if(hash?.startsWith('#post-')){let post='';try{post=decodeURIComponent(hash.slice(6))}catch{}if(!UUID_RE.test(post))hash=''}return baseThread(id,page,hash)};
 async function cursorPage(id,h,box){for(let attempt=0;attempt<4;attempt++){
