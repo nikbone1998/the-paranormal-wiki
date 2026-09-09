@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#050705">
+  <title>The Paranormal Wiki Forum</title>
+  <link rel="stylesheet" href="/forum/forum-app.css?v=20260909-qa3">
+  <link rel="stylesheet" href="/forum/forum-social.css?v=20260909-qa2">
+  <link rel="stylesheet" href="/forum/forum-member.css?v=20260909-qa3">
+  <link rel="stylesheet" href="/forum/forum-ia.css?v=20260909-qa6">
+</head>
+<body>
+  <a class="skip-link" href="#forumContent">Skip to forum content</a>
+  <main class="forum-shell">
+    <div class="utility-bar">
+      <a class="utility-brand" href="/forum/">THE PARANORMAL WIKI // COMMUNITY FORUM</a>
+      <span>PARANORMAL STORIES · SIGHTINGS · DISCUSSION</span>
+      <a class="utility-return" href="/#home">RETURN TO ARCHIVE</a>
+    </div>
+
+    <header class="masthead">
+      <div>
+        <div class="eyebrow">PARANORMAL COMMUNITY // TELL US WHAT HAPPENED</div>
+        <h1>PARANORMAL WIKI FORUM</h1>
+        <p>Share your own ghost stories, hauntings, sightings, strange encounters, UFO/UAP experiences, cryptid reports, unexplained events, and questions. Talk with people who have experienced something similar—or who may have another explanation.</p>
+      </div>
+      <div id="accountBar" class="account-bar" aria-live="polite">
+        <div class="auth-top"><button class="bbs-btn secondary" type="button" data-auth-open="signin">SIGN IN</button><button class="bbs-btn primary" type="button" data-auth-open="register">JOIN COMMUNITY</button></div>
+      </div>
+    </header>
+
+    <nav id="forumTabs" class="forum-tabs" aria-label="Forum sections">
+      <a class="forum-tab ia-archive-tab" href="/#home">ARCHIVE</a>
+      <a class="forum-tab" data-nav-view="home" href="/forum/">COMMUNITY</a>
+      <a class="forum-tab" data-nav-view="latest" href="/forum/?view=latest">LATEST</a>
+      <a class="forum-tab" data-nav-view="search" href="/forum/?view=search">SEARCH</a>
+      <a id="memberAreaTab" class="forum-tab" data-nav-view="member" href="/forum/?view=member">ACCOUNT</a>
+      <a id="bookmarksTab" class="forum-tab hidden" data-nav-view="bookmarks" href="/forum/?view=bookmarks">BOOKMARKS</a>
+    </nav>
+
+    <div id="globalNotice" class="notice hidden" aria-live="polite"></div>
+    <nav id="breadcrumbs" class="breadcrumbs" aria-label="Breadcrumb"><span aria-current="page">Forum</span></nav>
+
+    <div class="forum-layout">
+      <section id="forumContent" class="forum-content" tabindex="-1"><div class="loading-state">CONNECTING TO PARANORMAL COMMUNITY…</div></section>
+      <aside class="forum-sidebar" aria-label="Forum information">
+        <section class="side-panel">
+          <div class="side-title">COMMUNITY STATUS</div>
+          <div id="forumStats" class="forum-stats"><div><strong>—</strong><span>MEMBERS</span></div><div><strong>—</strong><span>CONVERSATIONS</span></div><div><strong>—</strong><span>POSTS</span></div></div>
+        </section>
+        <section class="side-panel">
+          <div class="side-title">COMMUNITY GUIDELINES</div>
+          <div class="rules-list">
+            <div><b>01</b><span>Tell your experience as accurately as you remember it.</span></div>
+            <div><b>02</b><span>Respect other members. Questions and skepticism are welcome; ridicule and harassment are not.</span></div>
+            <div><b>03</b><span>Separate what you personally saw, heard, or felt from what you think caused it.</span></div>
+            <div><b>04</b><span>Photos, audio, video, sketches, and context are welcome. Protect private information.</span></div>
+            <div><b>05</b><span>Personal stories are member reports, not automatically verified facts.</span></div>
+          </div>
+        </section>
+        <section class="side-panel archive-note">
+          <div class="side-title">ABOUT MEMBER STORIES</div>
+          <p>Your experience belongs to the community discussion. Sharing it here does not automatically add it to a canonical Paranormal Wiki dossier.</p>
+        </section>
+      </aside>
+    </div>
+
+    <footer class="forum-footer">THE PARANORMAL WIKI COMMUNITY FORUM // SHARE EXPERIENCES · ASK QUESTIONS · COMPARE STORIES · DISCUSS THE UNEXPLAINED</footer>
+  </main>
+
+  <nav id="iaMobileNav" class="ia-mobile-nav" aria-label="Mobile forum navigation">
+    <a data-route data-mobile-view="home" href="/forum/"><b>⌂</b><span>HOME</span></a>
+    <a data-route data-mobile-view="boards" href="/forum/?view=boards"><b>▦</b><span>BROWSE</span></a>
+    <button type="button" class="ia-mobile-primary" data-new-thread><b>＋</b><span>NEW POST</span></button>
+    <a data-route data-mobile-view="latest" href="/forum/?view=latest"><b>≡</b><span>LATEST</span></a>
+    <a data-route data-mobile-view="member" href="/forum/?view=member"><b>◎</b><span>ACCOUNT</span></a>
+  </nav>
+
+  <div id="accountMenu" class="account-menu hidden" role="menu" aria-label="Account menu"></div>
+
+  <div id="authModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <div class="modal">
+      <div class="modal-header"><h2 id="authTitle">JOIN THE COMMUNITY</h2><button class="modal-close" type="button" data-close-modal>CLOSE</button></div>
+      <div class="auth-tabs" role="tablist" aria-label="Member access">
+        <button id="signinTab" class="auth-tab" type="button" role="tab" aria-selected="true" aria-controls="signinPanel" data-auth-tab="signin">SIGN IN</button>
+        <button id="registerTab" class="auth-tab" type="button" role="tab" aria-selected="false" aria-controls="registerPanel" data-auth-tab="register">REGISTER</button>
+      </div>
+      <form id="signinPanel" class="auth-panel form-stack" role="tabpanel" aria-labelledby="signinTab">
+        <div class="field"><label for="signinEmail">Email</label><input id="signinEmail" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="signinPassword">Password</label><input id="signinPassword" name="password" type="password" autocomplete="current-password" minlength="8" required></div>
+        <button class="bbs-btn primary" type="submit">SIGN IN</button>
+      </form>
+      <form id="registerPanel" class="auth-panel form-stack hidden" role="tabpanel" aria-labelledby="registerTab">
+        <div class="field"><label for="registerEmail">Email</label><input id="registerEmail" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="registerPassword">Password</label><input id="registerPassword" name="password" type="password" autocomplete="new-password" minlength="8" required></div>
+        <div class="field-help">Registration requires email confirmation before posting.</div>
+        <button class="bbs-btn primary" type="submit">CREATE ACCOUNT</button>
+        <button id="resendConfirmationBtn" class="bbs-btn secondary" type="button">RESEND CONFIRMATION</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="profileSetupModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="profileSetupTitle">
+    <div class="modal">
+      <div class="modal-header"><h2 id="profileSetupTitle">CREATE YOUR FORUM PROFILE</h2><button class="modal-close" type="button" data-close-modal>CLOSE</button></div>
+      <form id="profileSetupForm" class="modal-body form-stack">
+        <div class="field"><label for="setupUsername">Forum username</label><input id="setupUsername" maxlength="24" autocomplete="username" placeholder="example_user" required></div>
+        <div class="field"><label for="setupDisplayName">Display name (optional)</label><input id="setupDisplayName" maxlength="60" placeholder="Display name"></div>
+        <div class="field-help">Usernames are permanent. Use 3–24 lowercase letters, numbers, or underscores.</div>
+        <button class="bbs-btn primary" type="submit">CREATE PROFILE</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="newThreadModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="newThreadTitle">
+    <div class="modal modal-wide">
+      <div class="modal-header"><h2 id="newThreadTitle">START A DISCUSSION</h2><button class="modal-close" type="button" data-close-modal>CLOSE</button></div>
+      <form id="newThreadForm" class="modal-body form-stack">
+        <div id="experienceGuidance" class="notice hidden"><strong>SHARE WHAT YOU REMEMBER.</strong><br>There is no required format. Helpful details can include what you saw, heard, felt, or noticed; where you were; roughly when it happened; who else was there; how long it lasted; whether it happened again; and what you personally think it might have been.</div>
+        <div class="field"><label for="threadCategory">Community board</label><select id="threadCategory" required></select></div>
+        <div class="field"><label for="threadTitleInput">Title</label><input id="threadTitleInput" maxlength="160" minlength="3" placeholder="What do you want to talk about?" required></div>
+        <div class="field"><label for="threadBodyInput">Tell the community</label><textarea id="threadBodyInput" maxlength="20000" placeholder="Start the conversation…" required></textarea></div>
+        <div class="field canonical-entity-picker"><label for="canonicalEntitySearch">Related Paranormal Wiki topic (optional)</label><input id="canonicalEntitySearch" maxlength="160" autocomplete="off" placeholder="Start typing an entity name…"><div id="canonicalEntitySuggestions"></div><div id="canonicalEntityStatus" class="field-help">Optional. Link your conversation to an existing wiki topic when there is an exact match.</div></div>
+        <input id="entityId" type="hidden"><input id="entityName" type="hidden">
+        <div class="field-help">Maximum 3 new discussions per 5 minutes. Maximum post length: 20,000 characters.</div>
+        <button class="bbs-btn primary" type="submit">POST DISCUSSION</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="profileModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="profileModalTitle">
+    <div class="modal modal-wide">
+      <div class="modal-header"><h2 id="profileModalTitle">MEMBER PROFILE</h2><button class="modal-close" type="button" data-close-modal>CLOSE</button></div>
+      <div id="profileContent" class="modal-body"><div class="loading-state">LOADING PROFILE…</div></div>
+    </div>
+  </div>
+
+  <div id="reportModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="reportTitle">
+    <div class="modal">
+      <div class="modal-header"><h2 id="reportTitle">REPORT COMMUNITY CONTENT</h2><button class="modal-close" type="button" data-close-modal>CLOSE</button></div>
+      <form id="reportForm" class="modal-body form-stack">
+        <div class="field"><label for="reportReason">Reason</label><select id="reportReason" required><option value="">Choose a reason…</option><option>Spam or advertising</option><option>Harassment or threats</option><option>Private information or doxxing</option><option>Impersonation</option><option>Fabricated evidence or deceptive sourcing</option><option>Dangerous or illegal content</option><option>Off-topic or disruptive behavior</option><option>Other</option></select></div>
+        <div class="field"><label for="reportDetails">Details (optional)</label><textarea id="reportDetails" maxlength="2000" placeholder="Briefly explain what staff should review."></textarea></div>
+        <div id="reportTargetLabel" class="field-help">No target selected.</div>
+        <button class="bbs-btn primary" type="submit">SUBMIT REPORT</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="staffModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="staffTitle">
+    <div class="modal modal-staff">
+      <div class="modal-header"><h2 id="staffTitle">FORUM STAFF CONSOLE</h2><button class="modal-close" type="button" data-close-modal>CLOSE</button></div>
+      <div id="staffContent" class="modal-body"><div class="loading-state">LOADING MODERATION QUEUE…</div></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0"></script>
+  <script src="/forum/forum-core.js?v=20260909-qa2" defer></script>
+  <script src="/forum/forum-views.js?v=20260909-qa2" defer></script>
+  <script src="/forum/forum-thread.js?v=20260909-qa2" defer></script>
+  <script src="/forum/forum-community.js?v=20260909-qa2" defer></script>
+  <script src="/forum/forum-social.js?v=20260909-qa2" defer></script>
+  <script src="/forum/forum-member.js?v=20260909-qa2" defer></script>
+  <script src="/forum/forum-regression.js?v=20260909-qa2" defer></script>
+  <script src="/forum/forum-history-cursor.js?v=20260909-qa2" defer></script>
+  <script src="/forum/forum-deepqa.js?v=20260909-qa2" defer></script>
+  <script src="/forum/forum-deepqa2.js?v=20260909-qa2" defer></script>
+  <script src="/forum/forum-app.js?v=20260909-qa3" defer></script>
+  <script src="/forum/forum-ia.js?v=20260909-qa6" defer></script>
+</body>
+</html>

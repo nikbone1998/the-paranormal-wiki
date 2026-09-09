@@ -1,0 +1,74 @@
+/* forum IA release 20260909-ia4 */
+
+/* Information architecture and navigation layer. Preserves the existing terminal/archive visual language. */
+.ia-area-nav{display:flex;align-items:center;gap:6px;margin:10px 0 0;padding:8px 10px;border:1px solid #293629;background:#080c08;color:#72806c;font-size:9px;letter-spacing:.08em}
+.ia-area-nav a{color:#9caf94;text-decoration:none}
+.ia-area-nav a:hover{color:#e0ead9}
+.ia-area-nav .ia-current{color:#dcead5}
+.ia-divider{color:#43513e}
+.ia-continue{margin:0 0 10px;border:1px solid #465943;background:linear-gradient(90deg,#101810,#0a0e0a);box-shadow:inset 3px 0 #8ca77f}
+.ia-continue .panel-title{background:#142016}
+.ia-continue-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:10px}
+.ia-continue-card{display:grid;gap:4px;min-height:58px;padding:9px;border:1px solid #354532;background:#0a0f0a;color:#b6c9ad;text-decoration:none}
+.ia-continue-card:hover{background:#152016;border-color:#6d8664}
+.ia-continue-card strong{font-size:10px}
+.ia-continue-card span{color:#748570;font-size:9px;line-height:1.35}
+.ia-continue-card em{font-style:normal;color:#d4c482;font-size:9px}
+.ia-board-groups{display:grid;gap:10px}
+.ia-board-group{border:1px solid #2d392b;background:#080c08}
+.ia-board-group-title{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 11px;border-bottom:1px solid #2d392b;background:#121a12;color:#c8d8c0;font-size:10px;font-weight:bold;letter-spacing:.1em}
+.ia-board-group-title span{color:#6f806a;font-size:8px;font-weight:normal;letter-spacing:.04em}
+.ia-board-group .board-card{border-bottom:1px solid #222d21}
+.ia-board-group .board-card:last-child{border-bottom:0}
+.ia-board-jump{display:flex;gap:6px;flex-wrap:wrap;padding:9px 10px;border-bottom:1px solid #2d392b;background:#0b100b}
+.ia-board-jump a{padding:6px 8px;border:1px solid #354332;color:#9bad94;text-decoration:none;font-size:9px}
+.ia-board-jump a:hover{background:#172116;color:#dcead5}
+.ia-thread-controls{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:8px 10px;border-bottom:1px solid #2d392b;background:#0b100b}
+.ia-thread-controls-label{color:#72806c;font-size:8px;letter-spacing:.08em}
+.ia-thread-control-set{display:flex;gap:5px;flex-wrap:wrap}
+.ia-thread-control{min-height:30px;padding:5px 8px;border:1px solid #354332;background:#080c08;color:#8fa28a;font-size:9px;font-weight:bold}
+.ia-thread-control:hover,.ia-thread-control[aria-pressed=true]{background:#172116;border-color:#718a68;color:#d6e5ce}
+.ia-search-tabs{display:flex;gap:0;overflow-x:auto;border:1px solid #344132;border-bottom:0;background:#080c08}
+.ia-search-tab{flex:0 0 auto;min-height:38px;padding:8px 11px;border:0;border-right:1px solid #293629;background:#080c08;color:#778873;font-size:9px;font-weight:bold;letter-spacing:.06em}
+.ia-search-tab:hover,.ia-search-tab[aria-selected=true]{background:#172116;color:#d8e8d0;box-shadow:inset 0 -2px #8ca77f}
+.ia-search-mode{padding:10px;border:1px solid #344132;background:#0b100b}
+.ia-search-mode p{margin:0 0 10px;color:#8d9c87;font:12px/1.5 var(--sans)}
+.ia-search-mode .field{margin-bottom:8px}
+.ia-member-result{display:grid;gap:6px;margin-top:10px}
+.ia-member-result-card{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px;border:1px solid #2d392b;background:#080c08}
+.ia-member-result-card a{color:#c7d9bf;text-decoration:none}
+.ia-member-result-card small{display:block;margin-top:3px;color:#6f806a;font-size:8px}
+.ia-member-result-card .bbs-btn{flex:0 0 auto}
+.ia-member-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:10px;margin-bottom:10px;border:1px solid #344132;background:#080c08}
+.ia-member-nav-group{display:grid;align-content:start;gap:4px}
+.ia-member-nav-group-title{padding:3px 2px 5px;color:#697b65;font-size:8px;font-weight:bold;letter-spacing:.1em}
+.ia-member-nav-group a{display:flex;align-items:center;min-height:36px;padding:7px 8px;border:1px solid #2b382a;background:#0b110b;color:#96aa90;text-decoration:none;font-size:9px;font-weight:bold}
+.ia-member-nav-group a:hover,.ia-member-nav-group a.active{background:#172116;border-color:#718a68;color:#dcead5}
+.ia-member-nav-group a.active:before{content:">";margin-right:6px;color:#c6dcae}
+.ia-mobile-nav{display:none}
+.ia-mobile-nav a,.ia-mobile-nav button{min-height:52px;border:0;border-right:1px solid #293629;background:#080c08;color:#9caf94;font-size:8px;font-weight:bold;letter-spacing:.04em;text-decoration:none}
+.ia-mobile-nav a:last-child,.ia-mobile-nav button:last-child{border-right:0}
+.ia-mobile-nav a,.ia-mobile-nav button{display:grid;place-items:center;gap:3px}
+.ia-mobile-nav b{font-size:15px;line-height:1;color:#bfd5b5}
+.ia-mobile-nav span{font-size:8px}
+.ia-mobile-nav .ia-mobile-primary{color:#e0edda;background:#152116}
+@media(max-width:780px){
+  .ia-continue-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ia-member-nav{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .ia-area-nav{display:none}
+  .ia-continue-grid{grid-template-columns:1fr 1fr;padding:8px}
+  .ia-continue-card{min-height:54px}
+  .ia-thread-controls{align-items:flex-start}
+  .ia-thread-control-set{width:100%}
+  .ia-thread-control{flex:1;min-width:0}
+  .ia-member-nav{padding:8px}
+  .ia-mobile-nav{position:fixed;right:0;bottom:0;left:0;z-index:60;display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid #52634f;background:#080c08;box-shadow:0 -10px 26px rgba(0,0,0,.55);padding-bottom:env(safe-area-inset-bottom)}
+  body.ia-mobile-dock-space{padding-bottom:calc(65px + env(safe-area-inset-bottom))}
+}
+@media(max-width:360px){
+  .ia-continue-grid{grid-template-columns:1fr}
+  .ia-thread-control{font-size:8px;padding-inline:5px}
+  .ia-mobile-nav span{font-size:7px}
+}
