@@ -40,6 +40,19 @@ S.refreshNav=async function(){
   return baseSocialRefreshNav();
 };
 
+// Do not offer a profile MESSAGE action when the same server-side permission check will reject it.
+const baseDecorateProfile=S.decorateProfile.bind(S);
+S.decorateProfile=async function(userId){
+  await baseDecorateProfile(userId);
+  if(!signedIn()||!userId||userId===state.profile.id)return;
+  try{
+    const{data:allowed,error}=await db.rpc('forum_can_message_member',{p_target:userId});if(error||allowed===true)return;
+    const wrap=[...document.querySelectorAll('#profileContent .social-profile-actions')].find(x=>x.dataset.socialProfile===String(userId));if(!wrap)return;
+    wrap.querySelectorAll('[data-social-action="message"]').forEach(b=>b.remove());
+    if(!wrap.querySelector('[data-social-action="unblock"]')&&!wrap.querySelector('.messaging-unavailable'))wrap.insertAdjacentHTML('beforeend','<button class="bbs-btn secondary messaging-unavailable" type="button" disabled>MESSAGING UNAVAILABLE</button>');
+  }catch{}
+};
+
 // Serialize profile updates in Postgres so concurrent tabs clean up the true previous avatar.
 M.saveProfileEdit=async function(){
   if(!state.profile)return;
@@ -71,7 +84,7 @@ S.renderConversation=async function(id,...rest){
     if(pe||allowed===true)return result;
     form.remove();
     const shell=$('#forumContent .dm-shell');
-    if(shell&&!shell.querySelector('.dm-permission-notice'))shell.insertAdjacentHTML('beforeend','<div class="notice error dm-permission-notice">Messaging is currently unavailable for this conversation because of a block, suspension, friendship change, or privacy setting.</div>');
+    if(shell&&!shell.querySelector('.dm-permission-notice'))shell.insertAdjacentHTML('beforeend','<div class="notice error dm-permission-notice">Messaging is currently unavailable for this conversation because of a block, suspension, friendship change, privacy setting, or a closed request.</div>');
   }catch{}
   return result;
 };
