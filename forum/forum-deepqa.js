@@ -114,6 +114,7 @@ document.addEventListener('pointerdown',e=>{const a=e.target.closest?.('a[data-r
 const style=document.createElement('style');style.textContent=`
 .forum-shell{padding-bottom:calc(54px + env(safe-area-inset-bottom,0px))}
 @supports(padding:max(0px)){.modal-backdrop{padding-top:max(14px,env(safe-area-inset-top));padding-right:max(14px,env(safe-area-inset-right));padding-bottom:max(14px,env(safe-area-inset-bottom));padding-left:max(14px,env(safe-area-inset-left))}.forum-tabs{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}}
+@media(max-width:560px){.bbs-btn,.mini-btn,.modal-close,.account-menu a,.account-menu button{min-height:44px}.field input,.field select,.social-search input,.settings-field select{min-height:44px}}
 @media(orientation:landscape) and (max-height:500px){.account-menu{max-height:calc(100dvh - max(12px,env(safe-area-inset-top)) - max(12px,env(safe-area-inset-bottom)))}}
 `;document.head.append(style);
 })();
