@@ -1,3 +1,4 @@
+/* forum IA release 20260909-ia4 */
 
 /* Information architecture and navigation layer. Preserves the existing terminal/archive visual language. */
 .ia-area-nav{display:flex;align-items:center;gap:6px;margin:10px 0 0;padding:8px 10px;border:1px solid #293629;background:#080c08;color:#72806c;font-size:9px;letter-spacing:.08em}
