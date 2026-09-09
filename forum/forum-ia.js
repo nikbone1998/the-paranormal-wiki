@@ -97,11 +97,14 @@ function sortRows(button){
 async function memberSearch(form){
   const q=form.querySelector('input')?.value.trim()||'',box=form.querySelector('.ia-member-result');if(!box)return;
   if(q.length<2){box.innerHTML='<div class="empty-state">Enter at least two characters.</div>';return}
+  if(!C.state.session){box.innerHTML='<div class="empty-state">Sign in to search public members.<br><button class="bbs-btn secondary" type="button" data-auth-open="signin" style="margin-top:8px">SIGN IN</button></div>';return}
   box.innerHTML='<div class="loading-state">SEARCHING MEMBERS…</div>';
-  const r=await C.db.rpc('forum_search_members',{p_query:q,p_limit:20});
-  if(r.error){box.innerHTML='<div class="empty-state">Member search is temporarily unavailable.</div>';return}
-  const rows=r.data||[];
-  box.innerHTML=rows.length?rows.map(p=>'<article class="ia-member-result-card"><div>'+C.avatar(p,'sm')+'<a href="#" data-profile="'+esc(p.id)+'"><strong>'+esc(C.displayName(p))+'</strong><small>@'+esc(p.username)+'</small></a></div><button type="button" class="bbs-btn secondary" data-profile="'+esc(p.id)+'">OPEN PROFILE</button></article>').join(''):'<div class="empty-state">No members found.</div>';
+  try{
+    const r=await C.db.rpc('forum_search_members',{p_query:q,p_limit:20});
+    if(r.error)throw r.error;
+    const rows=r.data||[];
+    box.innerHTML=rows.length?rows.map(p=>'<article class="ia-member-result-card"><div>'+C.avatar(p,'sm')+'<a href="#" data-profile="'+esc(p.id)+'"><strong>'+esc(C.displayName(p))+'</strong><small>@'+esc(p.username)+'</small></a></div><button type="button" class="bbs-btn secondary" data-profile="'+esc(p.id)+'">OPEN PROFILE</button></article>').join(''):'<div class="empty-state">No members found.</div>';
+  }catch(e){box.innerHTML='<div class="empty-state">Member search is temporarily unavailable. Please try again later.</div>'}
 }
 function searchTabs(){
   const form=C.$('#searchForm');if(!form)return;
