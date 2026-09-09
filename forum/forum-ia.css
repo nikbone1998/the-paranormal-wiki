@@ -51,7 +51,6 @@
 .ia-mobile-nav b{font-size:15px;line-height:1;color:#bfd5b5}
 .ia-mobile-nav span{font-size:8px}
 .ia-mobile-nav .ia-mobile-primary{color:#e0edda;background:#152116}
-body.ia-mobile-dock-space{padding-bottom:65px}
 @media(max-width:780px){
   .ia-continue-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .ia-member-nav{grid-template-columns:1fr}
