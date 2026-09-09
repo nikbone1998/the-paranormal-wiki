@@ -31,14 +31,45 @@ function extractCanonicalEntities(html){
  return [...bySlug.values()].sort((a,b)=>a.name.localeCompare(b.name));
 }
 
-async function loadArchiveHtml(){
- const local=path.join(process.cwd(),'index.html');
- try{return fs.readFileSync(local,'utf8')}catch{}
+function extractPushedArray(source){
+ const marker='window.__ARCHIVE_ENTITIES=window.__ARCHIVE_ENTITIES||[];window.__ARCHIVE_ENTITIES.push(...[';
+ const start=source.indexOf(marker);
+ if(start<0)throw new Error('archive entity payload marker missing');
+ const open=start+marker.length-1;
+ let depth=0,inString=false,escaped=false;
+ for(let i=open;i<source.length;i++){
+  const ch=source[i];
+  if(inString){
+   if(escaped)escaped=false;
+   else if(ch==='\\')escaped=true;
+   else if(ch==='"')inString=false;
+   continue;
+  }
+  if(ch==='"'){inString=true;continue}
+  if(ch==='[')depth++;
+  else if(ch===']'){
+   depth--;
+   if(depth===0)return JSON.parse(source.slice(open,i+1));
+  }
+ }
+ throw new Error('archive entity payload end missing');
+}
+
+async function loadArchiveEntities(){
+ const files=['archive-entities-01.js','archive-entities-02.js','archive-entities-03.js','archive-entities-04.js','archive-entities-05.js'];
+ const local=[];
+ for(const file of files){
+  try{local.push(...extractPushedArray(fs.readFileSync(path.join(process.cwd(),file),'utf8')))}catch{}
+ }
+ if(local.length)return local;
  const ref=process.env.VERCEL_GIT_COMMIT_SHA||process.env.VERCEL_GIT_COMMIT_REF||'main';
- const raw=`https://raw.githubusercontent.com/nikbone1998/the-paranormal-wiki/${encodeURIComponent(ref)}/index.html`;
- const response=await fetch(raw,{headers:{'User-Agent':'the-paranormal-wiki-forum-index'}});
- if(!response.ok)throw new Error(`archive source returned ${response.status}`);
- return response.text();
+ const remote=await Promise.all(files.map(async file=>{
+  const raw=`https://raw.githubusercontent.com/nikbone1998/the-paranormal-wiki/${encodeURIComponent(ref)}/${file}`;
+  const response=await fetch(raw,{headers:{'User-Agent':'the-paranormal-wiki-forum-index'}});
+  if(!response.ok)throw new Error(`archive source returned ${response.status} for ${file}`);
+  return extractPushedArray(await response.text());
+ }));
+ return remote.flat();
 }
 
 function send(res,status,body){
@@ -55,8 +86,8 @@ module.exports=async function forumEntities(req,res){
  }
  try{
   if(!cached){
-   const html=await loadArchiveHtml();
-   const entries=extractCanonicalEntities(html);
+   const entities=await loadArchiveEntities();
+   const entries=entities.map(entity=>({id:normalize(entity.id),name:normalize(entity.name),slug:cleanSlug(entity.slug)})).filter(entry=>entry.id&&entry.name&&entry.slug);
    if(entries.length!==EXPECTED_ENTRIES)throw new Error(`canonical entity extraction returned ${entries.length} routes; expected exactly ${EXPECTED_ENTRIES}`);
    cached={count:entries.length,entries};
   }
