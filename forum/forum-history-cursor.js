@@ -14,7 +14,7 @@ async function sync(id,reset=false){const h=history.get(id),box=$('#dmMessages')
 function observe(id,box){const h=history.get(id);h.observer?.disconnect();h.observer=new MutationObserver(records=>{if(!records.some(r=>r.target===box&&r.type==='childList'))return;if(h.busy){h.invalidated=true;return}clearTimeout(timers.get(id));timers.set(id,setTimeout(()=>sync(id,true).catch(()=>{}),140))});h.observer.observe(box,{childList:true})}
 async function install(id){const box=$('#dmMessages'),btn=$('[data-load-older-dm]');if(!box||!btn){history.get(id)?.observer?.disconnect();history.delete(id);return}const total=await totalFor(id);const h=history.get(id)||{};h.total=total;h.loaded=visibleCount(box);h.beforeId=oldestVisible(box);h.busy=false;h.invalidated=false;history.set(id,h);observe(id,box);updateUi(id)}
 const base=S.renderConversation.bind(S);
-S.renderConversation=async function(id,...args){const result=await base(id,...args);try{await install(id)}catch{}return result};
+S.renderConversation=async function(id,...args){try{const result=await base(id,...args);try{await install(id)}catch{}return result}catch(err){const msg=String(err?.message||'');if(msg.includes('Private conversation unavailable')||msg.includes('other member profile is unavailable')){C.renderNotFound('This private conversation is unavailable.');return}throw err}};
 async function cursorPage(id,h,box){for(let attempt=0;attempt<4;attempt++){
   h.invalidated=false;
   const before=oldestVisible(box);h.beforeId=before;if(!before)return[];
