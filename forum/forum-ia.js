@@ -141,10 +141,17 @@ function setMobileActive(){
   const view=currentView(),map={home:'home',experiences:'home',boards:'boards',latest:'latest',search:'home',bookmarks:'member',member:'member','member-profile':'member','member-activity':'member',messages:'member',friends:'member',requests:'member',settings:'member','my-discussions':'member','my-posts':'member',thread:'home'};
   document.querySelectorAll('[data-mobile-view]').forEach(a=>{if(a.dataset.mobileView===map[view])a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
 }
+function ensureMemberSearch(){
+  const p=new URLSearchParams(location.search),f=C.$('#iaMemberSearchForm');
+  if(p.get('searchType')!=='members'||!f||f.dataset.iaSearchStarted==='1')return;
+  const q=f.querySelector('input')?.value.trim()||'';
+  if(q.length<2)return;
+  f.dataset.iaSearchStarted='1';memberSearch(f);
+}
 function apply(){
   if(applying)return;applying=true;
   try{
-    setAreaNav();mobileNav();setMobileActive();groupBoards();if(currentView()==='home')addContinue();decorateMemberNav();decorateThreadControls();searchTabs();
+    setAreaNav();mobileNav();setMobileActive();groupBoards();if(currentView()==='home')addContinue();decorateMemberNav();decorateThreadControls();searchTabs();ensureMemberSearch();
     document.body.classList.add('ia-mobile-dock-space');
   }finally{applying=false}
 }
