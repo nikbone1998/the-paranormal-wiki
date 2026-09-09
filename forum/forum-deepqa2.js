@@ -2,6 +2,32 @@
 const C=window.ForumCore,M=window.ForumCommunity,N=window.ForumMember,T=window.ForumThread,S=window.ForumSocial;
 const{db,state,$,esc,fmt,flash,openModal}=C;
 
+function signedIn(){return!!(state.session&&state.profile)}
+function signedOutView(){
+  C.activeTab('');C.crumbs([{label:'Forum',href:'/forum/'},{label:'Member Area'}]);
+  $('#forumContent').innerHTML=C.pageHead('PRIVATE COMMUNITY','Sign In Required','Your private messages, friends, requests and settings are available after you sign in.')+'<section class="panel"><div class="empty-state"><button class="bbs-btn primary" type="button" data-auth-open="signin">SIGN IN</button></div></section>';
+  C.requireProfile();
+}
+function guardPrivateView(name){const base=N[name]?.bind(N);if(!base)return;N[name]=async function(...args){if(!signedIn())return signedOutView();return base(...args)}}
+['renderOverview','renderRequests','renderMemberProfile','renderActivity','renderSettings','renderMessages','renderFriends','renderConversation'].forEach(guardPrivateView);
+
+// Refresh Realtime authorization even when an existing channel is reused. If the signed-in
+// account changes in-place, remove the previous account's DM channel and stop any borrowed media.
+let realtimeUserId=state.profile?.id||null;
+const baseSocialRefreshNav=S.refreshNav.bind(S);
+S.refreshNav=async function(){
+  const current=state.profile?.id||null;
+  if(state.session?.access_token)db.realtime.setAuth(state.session.access_token);
+  if(realtimeUserId&&realtimeUserId!==current){
+    try{$('#incomingCallModal:not(.hidden) [data-decline-call]')?.click()}catch{}
+    try{$('#videoCallModal:not(.hidden) [data-end-call]')?.click()}catch{}
+    for(const v of document.querySelectorAll('#localVideo,#remoteVideo'))try{v.srcObject?.getTracks?.().forEach(t=>t.stop())}catch{}
+    try{await S.teardownConversationChannel?.()}catch{}
+  }
+  realtimeUserId=current;
+  return baseSocialRefreshNav();
+};
+
 // Serialize profile updates in Postgres so concurrent tabs clean up the true previous avatar.
 M.saveProfileEdit=async function(){
   if(!state.profile)return;
@@ -63,6 +89,19 @@ T.toggleReaction=async function(spec,button){
   }catch(e){flash(e.message||'Unable to update reaction.','error')}
   finally{if(button?.isConnected)button.disabled=false}
 };
+
+// A hard reload on sign-out guarantees camera/microphone, WebRTC peers, presence, typing,
+// stale private DOM and account-specific JavaScript state cannot survive into signed-out mode.
+M.signOut=async function(){
+  try{$('#incomingCallModal:not(.hidden) [data-decline-call]')?.click()}catch{}
+  try{$('#videoCallModal:not(.hidden) [data-end-call]')?.click()}catch{}
+  for(const v of document.querySelectorAll('#localVideo,#remoteVideo'))try{v.srcObject?.getTracks?.().forEach(t=>t.stop())}catch{}
+  try{await S.teardownConversationChannel?.()}catch{}
+  try{await S.teardownUserChannel?.()}catch{}
+  try{await db.auth.signOut()}catch{}
+  location.replace('/forum/');
+};
+db.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_OUT'&&!session){const video=$('#videoCallModal');if(video&&!video.classList.contains('hidden'))location.replace('/forum/')}});
 
 // Staff report queue must remain reachable beyond the first 50 rows.
 const REPORT_PAGE_SIZE=50;let staffReportPage=1;
