@@ -93,13 +93,17 @@ S.renderMessages=async function(){
   $('#forumContent').innerHTML=C.pageHead('PRIVATE COMMUNITY','Messages','One-to-one conversations. Non-friends arrive as message requests after they actually send their first message.',`<a class="bbs-btn secondary" data-route href="/forum/?view=friends">FRIENDS & REQUESTS</a>`)+`${incoming.length?`<section class="panel"><div class="panel-title">MESSAGE REQUESTS <span>${incoming.length}</span></div>${incoming.map(conversationCard).join('')}</section>`:''}<section class="panel ${incoming.length?'social-section':''}"><div class="panel-title">CONVERSATIONS</div>${rest.length?rest.map(conversationCard).join(''):'<div class="empty-state">No private conversations yet. Open a member profile and choose MESSAGE.</div>'}</section>`;
   await S.refreshNav();
 };
+function pendingDraftComposer(){return`<form id="dmComposer" class="dm-composer"><textarea id="dmBody" maxlength="5000" placeholder="Write a private message…"></textarea><div id="dmFilePreview" class="dm-file-preview"></div><div class="dm-compose-actions"><button class="bbs-btn primary" type="submit">SEND REQUEST</button></div><div class="field-help">Nothing is sent until you submit this first message. Photos and videos unlock after the other member accepts.</div></form>`}
 async function correctPendingConversationBanner(id){
   if(!state.profile||!validUuid(id))return;
   try{
     const{data,error}=await db.rpc('forum_direct_conversation_summaries',{p_limit:200,p_offset:0});if(error)return;const c=(data||[]).find(x=>x.id===id);if(!c||c.status!=='pending')return;
-    const banner=$('#forumContent .dm-request-banner');if(!banner)return;
-    if(!c.last_message_id&&c.requested_by===state.profile.id)banner.innerHTML='<strong>MESSAGE REQUEST DRAFT</strong><span>Nothing has been sent yet. Write your first message below to send the request.</span>';
-    else if(!c.last_message_id&&c.requested_by!==state.profile.id)banner.remove();
+    const banner=$('#forumContent .dm-request-banner');
+    if(!c.last_message_id){
+      if(banner)banner.innerHTML='<strong>MESSAGE REQUEST DRAFT</strong><span>Nothing has been sent yet. The first person to submit a message starts the request.</span>';
+      else $('#forumContent .dm-head')?.insertAdjacentHTML('afterend','<div class="dm-request-banner"><strong>MESSAGE REQUEST DRAFT</strong><span>Nothing has been sent yet. The first person to submit a message starts the request.</span></div>');
+      if(!$('#dmComposer'))$('#forumContent .dm-shell')?.insertAdjacentHTML('beforeend',pendingDraftComposer());
+    }
   }catch{}
 }
 
