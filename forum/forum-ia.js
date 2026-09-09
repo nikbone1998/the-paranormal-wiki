@@ -20,13 +20,6 @@ function setAreaNav(){
   const account=tabs.find(t=>t.dataset.navView==='member'&&!t.classList.contains('hidden'));
   if(account&&active==='member')account.setAttribute('aria-current','page');
 }
-function insertAreaContext(){
-  const shell=C.$('.forum-shell'),old=C.$('#iaAreaNav');if(old)old.remove();
-  if(!shell)return;
-  const nav=document.createElement('div');nav.id='iaAreaNav';nav.className='ia-area-nav';
-  nav.innerHTML='<a href="/#home">ARCHIVE</a><span class="ia-divider">/</span><a href="/forum/" class="ia-current">COMMUNITY</a><span class="ia-divider">/</span><a data-route href="/forum/?view=latest">LATEST</a><span class="ia-divider">/</span><a data-route href="/forum/?view=search">SEARCH</a><span class="ia-divider">/</span><a data-route href="/forum/?view=member">ACCOUNT</a>';
-  const tabs=C.$('#forumTabs');if(tabs)tabs.before(nav);else shell.prepend(nav);
-}
 function groupName(name){
   const n=String(name||'').toLowerCase();
   if(/experience|sighting|encounter|sleep|dream/.test(n))return ['PERSONAL EXPERIENCES','First-person reports, encounters, and anomalous experiences.'];
@@ -51,11 +44,13 @@ function groupBoards(){
     dir.dataset.iaGrouped='1';
     dir.innerHTML='';
     const jump=document.createElement('nav');jump.className='ia-board-jump';jump.setAttribute('aria-label','Board categories');
-    groups.forEach((cards,label)=>{
+    const order=['PERSONAL EXPERIENCES','PARANORMAL SUBJECTS','RESEARCH & DISCUSSION','COMMUNITY','OTHER COMMUNITY BOARDS'];
+    const ordered=[...groups.entries()].sort((a,b)=>(order.indexOf(a[0])<0?99:order.indexOf(a[0]))-(order.indexOf(b[0])<0?99:order.indexOf(b[0])));
+    ordered.forEach(([label,cards])=>{
       const anchor=document.createElement('a');anchor.href='#ia-'+label.toLowerCase().replace(/[^a-z0-9]+/g,'-');anchor.textContent=label;jump.append(anchor);
     });
     if(dir.id==='boardsAll')dir.append(jump);
-    groups.forEach((cards,label)=>{
+    ordered.forEach(([label,cards])=>{
       const section=document.createElement('section');section.className='ia-board-group';section.id='ia-'+label.toLowerCase().replace(/[^a-z0-9]+/g,'-');
       const title=document.createElement('div');title.className='ia-board-group-title';title.innerHTML='<span>'+esc(label)+'</span><span>'+cards.length+' BOARD'+(cards.length===1?'':'S')+'</span>';section.append(title);
       cards.forEach(card=>section.append(card));
@@ -117,13 +112,14 @@ function searchTabs(){
   const href=t=>'/forum/?view=search&searchType='+encodeURIComponent(t)+(q?'&q='+encodeURIComponent(q):'');
   const labels=[['all','ALL'],['archive','ARCHIVE'],['discussions','DISCUSSIONS'],['members','MEMBERS'],['boards','BOARDS']];
   tabs.innerHTML=labels.map(x=>x[0]==='archive'?'<a class="ia-search-tab" href="/#search">ARCHIVE</a>':'<a class="ia-search-tab" data-route aria-selected="'+String(type===x[0])+'" href="'+href(x[0])+'">'+x[1]+'</a>').join('');
+  let mode=panel.querySelector('.ia-search-mode');
   if(type==='discussions'||type==='all'){
-    form.classList.remove('hidden');
-    const existing=panel.querySelector('.ia-search-mode');if(existing)existing.remove();
-    return;
+    form.classList.remove('hidden');if(mode)mode.remove();return;
   }
   form.classList.add('hidden');
-  let mode=panel.querySelector('.ia-search-mode');if(!mode){mode=document.createElement('section');mode.className='ia-search-mode';panel.append(mode)}
+  if(!mode){mode=document.createElement('section');mode.className='ia-search-mode';panel.append(mode)}
+  if(mode.dataset.iaType===type&&((type==='members'&&mode.querySelector('#iaMemberSearchForm'))||type!=='members'))return;
+  mode.dataset.iaType=type;
   if(type==='archive'){mode.innerHTML='<p>Search the canonical Paranormal Wiki archive for dossiers, entities, regions, cultures, and other reference material.</p><a class="bbs-btn primary" href="/#search">OPEN ARCHIVE SEARCH</a>';return}
   if(type==='boards'){mode.innerHTML='<p>Browse the community boards by subject or purpose.</p><div class="ia-member-result">'+C.state.categories.map(c=>'<article class="ia-member-result-card"><a data-route href="/forum/?category='+encodeURIComponent(c.slug)+'"><strong>'+esc(c.name)+'</strong><small>'+esc(c.description||'Open this community board.')+'</small></a><a class="bbs-btn secondary" data-route href="/forum/?category='+encodeURIComponent(c.slug)+'">OPEN</a></article>').join('')+'</div>';return}
   if(type==='members'){
@@ -131,10 +127,21 @@ function searchTabs(){
     const f=mode.querySelector('#iaMemberSearchForm');if(q.length>=2)memberSearch(f);
   }
 }
+function mobileNav(){
+  if(C.$('#iaMobileNav'))return;
+  const n=document.createElement('nav');n.id='iaMobileNav';n.className='ia-mobile-nav';n.setAttribute('aria-label','Mobile forum navigation');
+  n.innerHTML='<a data-route data-mobile-view="home" href="/forum/"><b>⌂</b><span>HOME</span></a><a data-route data-mobile-view="boards" href="/forum/?view=boards"><b>▦</b><span>BROWSE</span></a><button type="button" class="ia-mobile-primary" data-new-thread><b>＋</b><span>NEW POST</span></button><a data-route data-mobile-view="latest" href="/forum/?view=latest"><b>≡</b><span>LATEST</span></a><a data-route data-mobile-view="member" href="/forum/?view=member"><b>◎</b><span>ACCOUNT</span></a>';
+  document.body.append(n);
+  setMobileActive();
+}
+function setMobileActive(){
+  const view=currentView(),map={home:'home',experiences:'home',boards:'boards',latest:'latest',search:'home',bookmarks:'member',member:'member','member-profile':'member','member-activity':'member',messages:'member',friends:'member',requests:'member',settings:'member','my-discussions':'member','my-posts':'member',thread:'home'};
+  document.querySelectorAll('[data-mobile-view]').forEach(a=>{if(a.dataset.mobileView===map[view])a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+}
 function apply(){
   if(applying)return;applying=true;
   try{
-    setAreaNav();insertAreaContext();groupBoards();if(currentView()==='home')addContinue();decorateMemberNav();decorateThreadControls();searchTabs();
+    setAreaNav();mobileNav();setMobileActive();groupBoards();if(currentView()==='home')addContinue();decorateMemberNav();decorateThreadControls();searchTabs();
     document.body.classList.add('ia-mobile-dock-space');
   }finally{applying=false}
 }
