@@ -55,14 +55,14 @@
     const SUPABASE_KEY='sb_publishable_uPGjlkbauGtisASevhnTLA_jIJDhzZG';
     const hash=new URLSearchParams(location.hash.replace(/^#/,''));
     const query=new URLSearchParams(location.search);
-    const recoveryMarker=hash.get('type')==='recovery'||query.get('type')==='recovery';
+    const recoveryMarker=hash.get('type')==='recovery'||query.get('type')==='recovery'||hash.has('access_token')||query.has('code');
     const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
     const form=document.getElementById('resetForm'),status=document.getElementById('status'),intro=document.getElementById('intro'),button=document.getElementById('savePassword');
     let recoveryReady=false;
     function showReady(){if(recoveryReady)return;recoveryReady=true;form.hidden=false;intro.textContent='Enter a new password for your forum account.';status.textContent='Recovery link verified. You may choose a new password.';status.className='status success';document.getElementById('newPassword').focus()}
     function showInvalid(){if(recoveryReady)return;form.hidden=true;intro.textContent='This recovery link is invalid, expired, or has already been used.';status.innerHTML='Return to the forum and request a new password-reset email.';status.className='status error'}
     db.auth.onAuthStateChange((event,session)=>{if(event==='PASSWORD_RECOVERY'&&session)showReady();else if(recoveryMarker&&event==='SIGNED_IN'&&session)showReady()});
-    async function checkSession(){try{const{data,error}=await db.auth.getSession();if(error)throw error;if(recoveryMarker&&data.session)showReady()}catch{}setTimeout(()=>{if(!recoveryReady)showInvalid()},1300)}
+    async function checkSession(){try{const{data,error}=await db.auth.getSession();if(error)throw error;if(recoveryMarker&&data.session)showReady()}catch{}setTimeout(()=>{if(!recoveryReady)showInvalid()},5000)}
     form.addEventListener('submit',async e=>{e.preventDefault();if(!recoveryReady)return showInvalid();const password=document.getElementById('newPassword').value,confirm=document.getElementById('confirmPassword').value;if(password.length<8){status.textContent='Password must contain at least 8 characters.';status.className='status error';return}if(password!==confirm){status.textContent='The two passwords do not match.';status.className='status error';return}button.disabled=true;button.textContent='UPDATING…';status.textContent='Updating password…';status.className='status';try{const{error}=await db.auth.updateUser({password});if(error)throw error;status.textContent='Password updated. Signing out old sessions…';status.className='status success';await db.auth.signOut();setTimeout(()=>location.replace('/forum/?passwordReset=1'),900)}catch(err){status.textContent=err?.message||'Password could not be updated. Request a new recovery email and try again.';status.className='status error';button.disabled=false;button.textContent='UPDATE PASSWORD'}});
     checkSession();
   })();
