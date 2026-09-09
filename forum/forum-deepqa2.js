@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const C=window.ForumCore,M=window.ForumCommunity,N=window.ForumMember;
+const C=window.ForumCore,M=window.ForumCommunity,N=window.ForumMember,T=window.ForumThread,S=window.ForumSocial;
 const{db,state,$,esc,fmt,flash,openModal}=C;
 
 // Serialize profile updates in Postgres so concurrent tabs clean up the true previous avatar.
@@ -18,6 +18,50 @@ M.saveProfileEdit=async function(){
     if(old&&old!==updated.avatar_url&&old.includes('/storage/v1/object/public/forum-avatars/')){const oldPath=decodeURIComponent(old.split('/storage/v1/object/public/forum-avatars/')[1]||'');if(oldPath.startsWith(`${p.id}/`))await db.storage.from(C.AVATAR_BUCKET).remove([oldPath]).catch(()=>{})}
     state.profile=updated;C.renderAccount();await N.refreshNav().catch(()=>{});await M.showProfile(p.id,false);flash('Profile saved.','success');
   }catch(e){if(newPath)await db.storage.from(C.AVATAR_BUCKET).remove([newPath]).catch(()=>{});flash(e.message||'Unable to save profile.','error');button.disabled=false;button.textContent='SAVE PROFILE'}
+};
+
+// Keep an already-open DM consistent with current block/friend/privacy policy.
+const basePrivacyConversation=S.renderConversation.bind(S);
+S.renderConversation=async function(id,...rest){
+  const result=await basePrivacyConversation(id,...rest);
+  const form=$('#dmComposer');if(!form||!state.profile)return result;
+  try{
+    const{data:c,error}=await db.from('forum_direct_conversations').select('id,user_one,user_two,status').eq('id',id).maybeSingle();
+    if(error||!c)return result;
+    const partner=c.user_one===state.profile.id?c.user_two:c.user_one;
+    const{data:allowed,error:pe}=await db.rpc('forum_can_message_member',{p_target:partner});
+    if(pe||allowed===true)return result;
+    form.remove();
+    const shell=$('#forumContent .dm-shell');
+    if(shell&&!shell.querySelector('.dm-permission-notice'))shell.insertAdjacentHTML('beforeend','<div class="notice error dm-permission-notice">Messaging is currently unavailable for this conversation because of a block, suspension, friendship change, or privacy setting.</div>');
+  }catch{}
+  return result;
+};
+
+// Reactions and bookmarks were hardened to atomic RPCs; keep the browser on those same paths.
+T.toggleBookmark=async function(){
+  if(!state.thread||!C.requireProfile())return;
+  const b=$('#bookmarkBtn');if(b)b.disabled=true;
+  try{
+    const{data:active,error}=await db.rpc('forum_toggle_bookmark',{p_thread:state.thread.id});if(error)throw error;
+    if(b){b.dataset.bookmarked=active===true?'1':'0';b.textContent=active===true?'BOOKMARKED':'BOOKMARK'}
+    flash(active===true?'Discussion bookmarked.':'Bookmark removed.','success');
+    await N.refreshNav?.().catch?.(()=>{});
+  }catch(e){flash(e.message||'Unable to update bookmark.','error')}
+  finally{if(b?.isConnected)b.disabled=false}
+};
+T.toggleReaction=async function(spec,button){
+  if(!C.requireProfile())return;
+  const[postId,reaction]=String(spec||'').split(':');
+  if(!/^[0-9a-f-]{36}$/i.test(postId)||!['like','interesting','helpful'].includes(reaction))return flash('Invalid reaction.','error');
+  if(button)button.disabled=true;
+  try{
+    const{data:active,error}=await db.rpc('forum_toggle_reaction',{p_post:postId,p_reaction:reaction});if(error)throw error;
+    await T.reroute(false);
+    document.getElementById(`post-${postId}`)?.scrollIntoView({block:'center'});
+    flash(active===true?'Reaction added.':'Reaction removed.','success');
+  }catch(e){flash(e.message||'Unable to update reaction.','error')}
+  finally{if(button?.isConnected)button.disabled=false}
 };
 
 // Staff report queue must remain reachable beyond the first 50 rows.
