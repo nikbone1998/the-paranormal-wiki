@@ -164,4 +164,4 @@ async function updateVisitorCounter(){
 })();
 
 // Source-grounded dossier markers are kept in an isolated layer so the Earth renderer remains unchanged.
-import('./paranormal-earth-entities.js?v=1.0.1-marker-stability').catch(error=>console.warn('[PARANORMAL WIKI EARTH] entity layer unavailable',error));
+import('./paranormal-earth-entities.js?v=20260910-map-fix-2').catch(error=>console.warn('[PARANORMAL WIKI EARTH] entity layer unavailable',error));
