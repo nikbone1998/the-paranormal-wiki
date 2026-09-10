@@ -1,0 +1,37 @@
+name: Ensure dossier loader
+
+on:
+  push:
+    branches:
+      - dossier-production-render-fix-20260910
+    paths:
+      - 'scripts/ensure-dossier-loader.js'
+      - '.github/workflows/ensure-dossier-loader.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repair branch
+        uses: actions/checkout@v4
+        with:
+          ref: dossier-production-render-fix-20260910
+          fetch-depth: 0
+
+      - name: Install direct dossier loader
+        run: node scripts/ensure-dossier-loader.js
+
+      - name: Commit patched index
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "No loader changes to commit."
+          else
+            git commit -m "Load canonical dossier repair directly from HTML"
+            git push origin HEAD:dossier-production-render-fix-20260910
+          fi
