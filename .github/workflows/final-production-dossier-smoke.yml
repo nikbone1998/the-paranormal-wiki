@@ -1,0 +1,73 @@
+name: Final production dossier smoke
+
+on:
+  push:
+    branches:
+      - dossier-inplace-render-fix-20260910
+    paths:
+      - '.github/workflows/final-production-dossier-smoke.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: dossier-inplace-render-fix-20260910
+          fetch-depth: 0
+      - name: Verify rendered production dossiers
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHROME="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          test -n "$CHROME"
+          mkdir -p reports /tmp/final-dossier-smoke
+          python3 - <<'PY'
+          import json
+          slugs=['ghost','mothman','bigfoot','vampire','banshee','demon','draugr','chupacabra']
+          open('/tmp/final-dossier-smoke/slugs.txt','w').write('\n'.join(slugs))
+          PY
+          while IFS= read -r slug; do
+            timeout 45s "$CHROME" --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage --disable-background-networking --virtual-time-budget=9000 --dump-dom "https://www.theparanormalwiki.com/#entity/$slug" > "/tmp/final-dossier-smoke/$slug.html"
+          done < /tmp/final-dossier-smoke/slugs.txt
+          python3 - <<'PY'
+          import re, html, json, pathlib
+          slugs=['ghost','mothman','bigfoot','vampire','banshee','demon','draugr','chupacabra']
+          required_ids=['dossier-overview','dossier-behavior','dossier-sightings','dossier-weaknesses','dossier-geography','dossier-frequency','dossier-culture','dossier-science','dossier-controversy']
+          old_frequency='No reliable global census exists for this entity'
+          results=[]
+          for slug in slugs:
+              raw=pathlib.Path(f'/tmp/final-dossier-smoke/{slug}.html').read_text(encoding='utf-8')
+              visible=re.sub(r'<script\b[^>]*>.*?</script>', '', raw, flags=re.I|re.S)
+              visible=re.sub(r'<style\b[^>]*>.*?</style>', '', visible, flags=re.I|re.S)
+              text=html.unescape(re.sub(r'<[^>]+>', ' ', visible))
+              text=re.sub(r'\s+',' ',text).strip()
+              ids={x: bool(re.search(rf'id=["\']{re.escape(x)}["\']', visible, re.I)) for x in required_ids}
+              checks={
+                'nav': 'class="dossier-nav"' in visible,
+                'frequencyLabel': 'dossier-frequency-label' in visible,
+                'geographySummary': 'data-field-summary' in visible,
+                'oldGenericFrequencyVisible': old_frequency.lower() in text.lower(),
+                'visibleLength': len(text),
+              }
+              ok=all(ids.values()) and checks['nav'] and checks['frequencyLabel'] and checks['geographySummary'] and not checks['oldGenericFrequencyVisible'] and checks['visibleLength']>1500
+              results.append({'slug':slug,'ids':ids,**checks,'ok':ok})
+          report={'productionUrl':'https://www.theparanormalwiki.com/','results':results,'failures':sum(not x['ok'] for x in results)}
+          report['passed']=report['failures']==0
+          pathlib.Path('reports/final-production-dossier-smoke.json').write_text(json.dumps(report,indent=2),encoding='utf-8')
+          print(json.dumps(report,indent=2))
+          if not report['passed']:
+              raise SystemExit(1)
+          PY
+      - name: Commit smoke report
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/final-production-dossier-smoke.json || true
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Record final production dossier smoke test"
+          git push origin HEAD:dossier-inplace-render-fix-20260910
