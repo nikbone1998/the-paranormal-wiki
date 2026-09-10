@@ -41,7 +41,7 @@ body{background:#000 url('./assets/paranormal-wiki-1997-starfield.png') center t
 <div class="bottom-navigation"><div class="nav">
 <a data-go="home">[ HOME ]</a> <a data-go="entity-index">[ ENTITY INDEX ]</a> <a data-go="categories">[ CATEGORIES ]</a> &nbsp; <a data-go="cultures">[ CULTURES ]</a> &nbsp; <a data-go="countries">[ COUNTRIES ]</a> &nbsp; <a data-go="stats">[ STATS ]</a> &nbsp; <a data-go="archive-tree">[ ARCHIVE TREE ]</a>
 <a data-go="aliens">[ EXTRATERRESTRIAL ARCHIVE ]</a> <a data-go="uap">[ MODERN UAP ]</a>
-<a data-go="cases">[ CASES ]</a> <a data-go="world">[ MAP INDEX ]</a> <a data-go="search">[ SEARCH ]</a>
+<a data-go="cases">[ FAMOUS CASES ]</a> <a data-go="world">[ MAP INDEX ]</a> <a data-go="search">[ SEARCH ]</a>
 <a data-go="about">[ ABOUT ]</a> <a data-go="contact">[ CONTACT ]</a><br>
 <button id="randomEntity">[ RANDOM ENTITY ]</button> <button id="randomFolklore">[ RANDOM WORLD FOLKLORE ]</button> <button id="randomCryptid">[ RANDOM CRYPTID ]</button> <button id="randomAlien">[ RANDOM UFO FILE ]</button> <button id="sound">[ SOUND: OFF ]</button>
 </div></div>
@@ -239,11 +239,6 @@ function home(){
  shell('HOME','<div class="home-classic">'+
   '<div class="welcome">WELCOME TRAVELER</div>'+
   '<div class="home-welcome-copy"><div class="home-welcome-title">WELCOME TO THE PARANORMAL WIKI</div><p>Every culture leaves behind stories of things that should not exist—figures seen at the edge of the forest, voices heard in empty rooms, creatures described by generations of witnesses, and unexplained events that refuse to disappear. THE PARANORMAL WIKI gathers these accounts into one living archive, tracing where the stories began, how they changed, and why they continue to capture the human imagination.</p><p>Inside these files you will find folklore, historical records, modern reports, famous cases, UFO and UAP material, cultural traditions, skeptical explanations, and the occasional mystery that remains unresolved. Some accounts are ancient. Some are recent. Some may be misunderstood, exaggerated, or entirely invented. The archive does not tell you what to believe—it invites you to read carefully, follow the trail, and decide where the unknown begins.</p></div>'+
-  '<div class="home-directory">[ <a data-go="entity-index">BROWSE ALL '+E.length+' ENTITY FILES</a> ] &nbsp; [ <a data-go="search">SEARCH THE ARCHIVE</a> ]</div>'+
-  '<hr class="home-rule">'+
-  '<div class="home-heading">ARCHIVE DIRECTORY</div>'+
-  '<div class="home-directory">[ <a data-go="categories">CATEGORIES</a> ] &nbsp; [ <a data-go="cultures">CULTURES</a> ] &nbsp; [ <a data-go="countries">COUNTRIES</a> ]<br>[ <a data-go="entity-index">ENTITY INDEX</a> ] &nbsp; [ <a data-go="archive-tree">ARCHIVE TREE</a> ] &nbsp; [ <a data-go="aliens">UFO / UAP ARCHIVE</a> ] &nbsp; [ <a data-go="cases">FAMOUS CASES</a> ]</div>'+
-  '<hr class="home-rule">'+
   '<div class="home-heading">GLOBAL MAP INDEX</div>'+
   '<div class="home-directory">[ <a data-go="world">OPEN THE INTERACTIVE EARTH MAP</a> ]</div>'+
   ''+
