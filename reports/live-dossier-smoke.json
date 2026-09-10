@@ -1,6 +1,6 @@
 {
   "productionUrl": "https://www.theparanormalwiki.com/",
-  "checkedAt": "2026-09-10T15:52:07Z",
+  "checkedAt": "2026-09-10T15:55:26Z",
   "browser": "/usr/bin/google-chrome",
   "results": [
     {"slug":"ghost","overview":true,"nav":true,"behavior":false,"famousSightings":false,"weaknesses":false,"culturalSignificance":false,"scientificExplanations":false,"hoaxesAndControversies":false,"reportFrequency":false,"geographicalOrigin":false,"legacyGenericFrequencyVisible":false,"ok":false},
