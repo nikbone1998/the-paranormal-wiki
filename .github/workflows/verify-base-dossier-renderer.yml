@@ -1,5 +1,6 @@
 name: Verify base dossier renderer
 
+# Rerun after defining the inline stat helper used by evidenceMatrix().
 on:
   push:
     branches:
