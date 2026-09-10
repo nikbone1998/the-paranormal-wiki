@@ -96,6 +96,13 @@ body.ua-earth-lock{overflow:hidden!important;touch-action:none!important}
 .ua-entity-toggle{display:block;width:100%;padding:6px;background:#080817;color:#d2a85e;border:1px solid #6666aa;font:11px "Courier New",monospace}.ua-entity-toolbar{max-width:min(620px,calc(100% - 16px));right:auto;background:rgba(0,0,12,.78)}.ua-entity-toolbar.ua-collapsed{width:170px}.ua-entity-toolbar.ua-collapsed>:not(.ua-entity-toggle){display:none}
 @media(max-width:680px){.ua-entity-toggle{display:block;width:100%;padding:6px;background:#080817;color:#d2a85e;border:1px solid #6666aa;font:11px "Courier New",monospace}.ua-entity-toolbar.ua-collapsed{width:auto}.ua-entity-toolbar.ua-collapsed>:not(.ua-entity-toggle){display:none}.ua-fallback-marker{font-size:21px;min-width:42px;min-height:46px}.ua-fallback-marker.ua-fallback-cluster{font-size:22px}}
 
+/* Homepage sections share the page's single star field; the Earth remains an
+ * intentionally framed interactive surface and is not affected by this rule. */
+.page:has(.home-page){background:transparent}
+.home-page>.layout,.home-page>.layout td,.home-page .box,.home-page .box-title,.home-page .box-body{background:transparent!important;border-color:transparent!important}
+.home-page>.layout{border-spacing:10px}
+.home-page .box-title{color:#cfcfff;padding-left:0;padding-right:0}
+
 /* Supplied masthead artwork. Keep the complete banner visible at every width. */
 .site-header-banner{margin:0 0 5px;background:#000;line-height:0;text-align:center;overflow:hidden}
 .site-header-banner a{display:block}
