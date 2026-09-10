@@ -85,10 +85,21 @@ import('./paranormal-earth-entities.js?v=20260910-2d-rebuild-1').catch(error=>co
 
 // Late-loaded occult profile data. Kept separate from the map implementation.
 (()=>{
+ const normalizeOccultRoute=()=>{
+  const h=decodeURIComponent(location.hash.replace(/^#/,'')||'');
+  if(h.startsWith('occult-rumor/')){
+   const slug=h.slice('occult-rumor/'.length);
+   if(slug) location.hash='#occult-figure/rumor/'+encodeURIComponent(slug);
+  }
+ };
+ addEventListener('hashchange',normalizeOccultRoute);
+ normalizeOccultRoute();
+
  const s=document.createElement('script');
- s.src='./occult-figures-batch2.js?v=20260910-b2-deep-1';
+ s.src='./occult-figures-batch2.js?v=20260910-b2-deep-2';
  s.async=true;
  s.onload=()=>{
+  normalizeOccultRoute();
   const h=decodeURIComponent(location.hash.replace(/^#/,'')||'home');
   if((h==='occult-figures'||h.startsWith('occult-figure/rumor/'))&&typeof route==='function')route();
  };
