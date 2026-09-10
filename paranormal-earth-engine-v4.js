@@ -148,7 +148,7 @@ async function mount(root){
 #include <colorspace_fragment>
 }`});
   earth=new THREE.Mesh(geo,surfaceMat);scene.add(earth);
- markerGroup=new THREE.Group();markerGroup.name='source-grounded-dossier-markers';markerLabelGroup=new THREE.Group();markerLabelGroup.name='source-grounded-dossier-labels';root.dataset.earthMarkerMode='three-depth-tested';root.dataset.earthMarkerDepth='true';scene.add(markerGroup,markerLabelGroup);markerGeometry=new THREE.SphereGeometry(.026,10,10);markerMaterials={traditional:new THREE.MeshBasicMaterial({color:'#63c7c2',depthTest:true,depthWrite:false,transparent:false,opacity:1}),historical:new THREE.MeshBasicMaterial({color:'#e0b56a',depthTest:true,depthWrite:false,transparent:false,opacity:1}),modern:new THREE.MeshBasicMaterial({color:'#a88bd8',depthTest:true,depthWrite:false,transparent:false,opacity:1}),famous:new THREE.MeshBasicMaterial({color:'#d77d78',depthTest:true,depthWrite:false,transparent:false,opacity:1})};
+ markerGroup=new THREE.Group();markerGroup.name='source-grounded-dossier-markers';markerLabelGroup=new THREE.Group();markerLabelGroup.name='source-grounded-dossier-labels';root.dataset.earthMarkerMode='three-depth-tested';root.dataset.earthMarkerDepth='true';scene.add(markerGroup,markerLabelGroup);markerGeometry=new THREE.ConeGeometry(.038,.12,12);markerMaterials={traditional:new THREE.MeshBasicMaterial({color:'#63c7c2',depthTest:true,depthWrite:false,transparent:false,opacity:1}),historical:new THREE.MeshBasicMaterial({color:'#e0b56a',depthTest:true,depthWrite:false,transparent:false,opacity:1}),modern:new THREE.MeshBasicMaterial({color:'#a88bd8',depthTest:true,depthWrite:false,transparent:false,opacity:1}),famous:new THREE.MeshBasicMaterial({color:'#d77d78',depthTest:true,depthWrite:false,transparent:false,opacity:1})};
 
   if(cloud){cloudU={tCloud:{value:cloud},uLightDir:{value:new THREE.Vector3(1,0,0)},uOff:{value:0}};const m=new THREE.ShaderMaterial({uniforms:cloudU,transparent:true,depthWrite:false,vertexShader:`varying vec2 vUv;varying vec3 vN;void main(){vUv=uv;vN=normalize(mat3(modelMatrix)*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`,fragmentShader:`precision mediump float;uniform sampler2D tCloud;uniform vec3 uLightDir;uniform float uOff;varying vec2 vUv;varying vec3 vN;float lum(vec3 c){return dot(c,vec3(.2126,.7152,.0722));}void main(){vec4 s=texture2D(tCloud,vec2(fract(vUv.x+uOff),vUv.y));float mask=clamp(min(lum(s.rgb),s.a),0.0,1.0);float lit=.18+.82*smoothstep(-.22,.32,dot(normalize(vN),normalize(uLightDir)));gl_FragColor=vec4(mix(vec3(.20,.24,.31),vec3(1.0),lit),pow(mask,1.15)*(.045+.29*lit));
 #include <tonemapping_fragment>
@@ -184,16 +184,16 @@ async function mount(root){
    camera.updateMatrixWorld(true);camera.updateProjectionMatrix();markerGroup.updateMatrixWorld(true);markerLabelGroup.updateMatrixWorld(true);
    const rect=canvas.getBoundingClientRect(),closeView=dist<1.72,dir=camera.position.clone().normalize(),projected=[];
    for(let i=0;i<markerItems.length;i++){
-    const e=markerItems[i],facing=e.mesh.position.clone().normalize().dot(dir),front=facing>-.035||(e.front===true&&facing>-.12);e.front=front;e.mesh.visible=front;e.hit.visible=front;if(e.label)e.label.visible=false;
+    const e=markerItems[i],facing=e.mesh.position.clone().normalize().dot(dir),front=facing>-.035||(e.front===true&&facing>-.12);e.front=front;e.mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),e.mesh.position.clone().normalize());e.mesh.visible=front;e.hit.visible=front;if(e.label)e.label.visible=false;
     if(!front){projected[i]=null;continue;}
     const p=e.mesh.position.clone().project(camera),view=e.mesh.position.clone().applyMatrix4(camera.matrixWorldInverse),depth=Math.max(.05,-view.z),ppu=rect.height/(2*depth*Math.tan(rad(camera.fov)/2));
-    e.mesh.scale.setScalar(clamp(7/(ppu*.026),.001,1.2));e.hit.scale.setScalar(Math.max(.05,e.mesh.scale.x*2.7));projected[i]={x:(p.x+1)*rect.width/2,y:(1-p.y)*rect.height/2};
+    e.mesh.scale.setScalar(clamp(7/(ppu*.12),.06,1.2));e.hit.scale.setScalar(Math.max(.05,e.mesh.scale.x*2.7));projected[i]={x:(p.x+1)*rect.width/2,y:(1-p.y)*rect.height/2};
    }
    const indices=projected.map((p,i)=>p?i:-1).filter(i=>i>=0);if(!indices.length)return;
    let groups=[];
    if(closeView){groups=indices.map(i=>[i]);}
    else{const used=new Set(),threshold=10+clamp((dist-1)/1.9,0,1)*24;for(const i of indices){if(used.has(i))continue;const members=indices.filter(j=>!used.has(j)&&Math.hypot(projected[j].x-projected[i].x,projected[j].y-projected[i].y)<threshold);members.forEach(j=>used.add(j));groups.push(members);}}
-   for(const members of groups){const lead=markerItems[members[0]],cluster=members.length>1;lead.mesh.visible=lead.hit.visible=true;lead.mesh.userData.selection=lead.hit.userData.selection=members.map(i=>markerItems[i].item);if(cluster){lead.mesh.scale.setScalar(clamp(18/(pixelsPerUnitFor(lead.mesh,rect)*.026),.001,1.2));}for(let k=1;k<members.length;k++){const e=markerItems[members[k]];e.mesh.visible=false;e.hit.visible=false;if(e.label)e.label.visible=false;}}
+   for(const members of groups){const lead=markerItems[members[0]],cluster=members.length>1;lead.mesh.visible=lead.hit.visible=true;lead.mesh.userData.selection=lead.hit.userData.selection=members.map(i=>markerItems[i].item);if(cluster){lead.mesh.scale.setScalar(clamp(18/(pixelsPerUnitFor(lead.mesh,rect)*.12),.08,1.2));}for(let k=1;k<members.length;k++){const e=markerItems[members[k]];e.mesh.visible=false;e.hit.visible=false;if(e.label)e.label.visible=false;}}
   }
   function pixelsPerUnitFor(mesh,rect){const depth=Math.max(.05,-mesh.position.clone().applyMatrix4(camera.matrixWorldInverse).z);return rect.height/(2*depth*Math.tan(rad(camera.fov)/2));}
 
