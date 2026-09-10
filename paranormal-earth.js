@@ -1,13 +1,9 @@
 /* THE PARANORMAL WIKI — Earth engine bootstrap.
  * Renderer is kept modular in paranormal-earth-engine-v4.js; homepage/brand compatibility remains here.
  */
-import('./paranormal-earth-tile-shim.js?v=4.0.2-marker-stability').catch(error=>{
- console.error('[PARANORMAL WIKI EARTH] engine bootstrap failed',error);
- document.querySelectorAll('[data-unseen-earth]').forEach(root=>{
-  root.classList.remove('ua-ready');
-  root.classList.add('ua-fallback');
- });
-});
+/* The bounded 2D map is the primary Earth path. The legacy WebGL/tile
+ * bootstrap is intentionally not started because it competed with the map
+ * layer and caused blank surfaces, stale overlays, and disappearing pins. */
 
 /* Public-brand and global visitor-counter patch.
    Archive-lore references to "The Unseen Archive" remain intentionally intact. */
@@ -164,4 +160,4 @@ async function updateVisitorCounter(){
 })();
 
 // Source-grounded dossier markers are kept in an isolated layer so the Earth renderer remains unchanged.
-import('./paranormal-earth-entities.js?v=20260910-map-fix-2').catch(error=>console.warn('[PARANORMAL WIKI EARTH] entity layer unavailable',error));
+import('./paranormal-earth-entities.js?v=20260910-2d-rebuild-1').catch(error=>console.warn('[PARANORMAL WIKI EARTH] entity layer unavailable',error));
