@@ -1,0 +1,23 @@
+{
+  "generatedAt": "2026-09-10T09:46:56.447Z",
+  "totalEntities": 913,
+  "needsIndividualResearch": [],
+  "countsByReason": {},
+  "countsByField": {},
+  "reportFrequency": {
+    "status": "complete-qualitative",
+    "note": "Qualitative frequency is permitted by the dossier specification; strong/weak archive-evidence counts are retained as QA signals, not missing-field flags.",
+    "strongArchiveEvidence": 246,
+    "weakArchiveEvidence": 667,
+    "labelCounts": {
+      "Widely reported": 45,
+      "Recurring": 59,
+      "Rare": 8,
+      "Occasional": 627,
+      "Tradition-based; modern reports vary": 152,
+      "Occasional to rare": 20,
+      "Frequently reported / recurring": 2
+    }
+  },
+  "uniqueEntitiesNeedingResearch": 0
+}
