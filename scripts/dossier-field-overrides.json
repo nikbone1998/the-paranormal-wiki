@@ -1,0 +1,211 @@
+{
+  "revenant": {
+    "fields": {"hoaxesAndControversies": ["Revenant traditions are often folded into later vampire and zombie categories, but medieval accounts describe a broader range of returning dead. Modern controversy therefore centers less on one famous hoax than on retrospective labeling: corpse-preservation and decomposition phenomena, later literary vampire traits, and local stories can be combined into a single standardized 'revenant' type that the older sources did not consistently use."]},
+    "sources": {"hoaxesAndControversies": [{"title":"Nancy Caciola, Afterlives: The Return of the Dead in the Middle Ages","url":"https://www.cornellpress.cornell.edu/book/9780801478543/afterlives/","note":"Historical study of medieval returning-dead traditions and their changing interpretation."}]}
+  },
+  "wraith": {
+    "fields": {"hoaxesAndControversies": ["Modern fantasy commonly treats a wraith as a fixed species of hostile undead, but historical Scots usage was broader. Dictionary evidence records the wraith as an apparition or double of a living person—often interpreted as a death omen—as well as, in later usage, a ghost or spectre. The main interpretive problem is therefore category drift: modern monster taxonomies can make a historically variable word look more precise than it was."]},
+    "sources": {"hoaxesAndControversies": [{"title":"Dictionary of the Scots Language — wraith","url":"https://dsl.ac.uk/entry/snd00087174","note":"Historical Scots senses include apparition/double and ghost or spectre."}]}
+  },
+  "doppelg-nger": {
+    "fields": {"hoaxesAndControversies": ["Doppelgänger stories are frequently blended with autoscopy and heautoscopy, but those are not interchangeable categories. Clinical literature uses autoscopy and heautoscopy for uncommon perceptual experiences in which a person sees or senses a double of the self, sometimes in neurological or psychiatric settings. Popular retellings can therefore turn a medical-perceptual phenomenon, a literary double, and a supernatural omen into one supposedly uniform entity."]},
+    "sources": {"hoaxesAndControversies": [{"title":"Existing canonical dossier source trail — autoscopy/heautoscopy literature","note":"Targeted synthesis of the dossier's medical and folklore sources; no claim that clinical autoscopy proves or disproves folklore accounts."}]}
+  },
+  "white-lady": {
+    "fields": {"hoaxesAndControversies": ["White Lady legends often acquire a precise local tragedy after the apparition story is already circulating. Folklorist Elizabeth Tucker's study of the White Lady of Devil's Elbow documents a migratory legend pattern, speculation about a historical murder, and teenage prank performances at the site. That makes the central controversy one of provenance: a local haunting may combine an older traveling legend, later historical identification, and deliberate performance without any single layer explaining the whole tradition."]},
+    "sources": {"hoaxesAndControversies": [{"title":"Elizabeth Tucker, The White Lady of Devil's Elbow","url":"https://scholarworks.iu.edu/journals/index.php/cfr/article/view/25060","note":"Folklore study of migratory legend, historical speculation, and prank performance."}]}
+  },
+  "hat-man": {
+    "fields": {"hoaxesAndControversies": ["The Hat Man is disputed partly because the same silhouette is reported in sleep-paralysis narratives and in stories learned through online paranormal culture. Sleep-paralysis research documents sensed presences and threatening intruder hallucinations, while folklore collections show that witnesses also encounter an already recognizable 'Hat Man' image through the internet. The unresolved issue is how much similarity comes from recurring human sleep phenomena and how much is shaped by a shared modern legend vocabulary."]},
+    "sources": {"hoaxesAndControversies": [{"title":"USC Digital Folklore Archives — Sleep Paralysis and the Hat Man","url":"https://folklore.usc.edu/sleep-paralysis-and-the-hat-man/","note":"Documents Hat Man testimony within contemporary folklore transmission."},{"title":"Sleep Paralysis and Folklore","url":"https://academic.oup.com/book/24530/chapter/187680252","note":"Context for recurring supernatural intruder interpretations of sleep paralysis."}]}
+  },
+  "incubus": {
+    "fields": {"weaknesses": ["Incubus traditions do not describe one universal physical vulnerability. Protective responses are usually religious or apotropaic rather than biological: prayer, sacred formulas, blessings, protective objects, and other rites vary by period and culture. In the modern sleep-paralysis interpretation of incubus experiences, prevention and treatment shift toward sleep, stress, and medical factors rather than a supernatural weakness."]},
+    "sources": {"weaknesses": [{"title":"Sleep paralysis and folklore","url":"https://pmc.ncbi.nlm.nih.gov/articles/PMC5167075/","note":"Reviews the incubus motif in relation to historical supernatural interpretations and sleep paralysis."}]}
+  },
+  "ifrit": {
+    "fields": {"hoaxesAndControversies": ["Modern games and fantasy often standardize the ifrit as a fire-demon species. Qur'an 27:39 instead presents an ʿifrīt as a powerful or formidable member of the jinn, with English translations varying in wording. The controversy is therefore taxonomic rather than a single hoax: the familiar elemental 'fire ifrit' profile combines later folklore, translation choices, and modern fantasy conventions with a much less rigid scriptural reference."]},
+    "sources": {"hoaxesAndControversies": [{"title":"Quranic Arabic Corpus — Qur'an 27:39 translations","url":"https://corpus.quran.com/translation.jsp?chapter=27&verse=39","note":"Shows the varying translations of ʿifrīt in the Solomon narrative."}]}
+  },
+  "rakshasa": {
+    "fields": {"hoaxesAndControversies": ["Rakshasa is not a single uniform monster category across South and Southeast Asian traditions. Art and literature include hostile man-eaters, powerful demon kings such as Ravana, female rakshasis such as Putana, and protective or guardian figures in some regional visual traditions. Treating every rakshasa as the same evil creature—especially the standardized fantasy-game version—erases major textual, religious, and regional differences."]},
+    "sources": {"hoaxesAndControversies": [{"title":"The Metropolitan Museum of Art — Bala Krishna and Putana","url":"https://www.metmuseum.org/art/collection/search/38158","note":"Example of a rakshasi in South Asian religious art."},{"title":"The Metropolitan Museum of Art — Rakshasa traditions","note":"The museum collection contains South and Southeast Asian examples illustrating varied rakshasa roles."}]}
+  },
+  "strigoi": {
+    "fields": {"hoaxesAndControversies": ["Strigoi are frequently presented online as though Romanian tradition supplied one fixed checklist identical to the modern vampire. In practice, Romanian revenant beliefs developed alongside neighboring Slavic traditions and were later filtered through Dracula literature, cinema, and international vampire culture. The resulting composite often mixes local terms and customs with traits popularized much later, so modern 'strigoi rules' should not automatically be projected backward onto every Romanian source."]},
+    "sources": {"hoaxesAndControversies": [{"title":"Journal of Cultural Research Studies — Romanian vampire/strigoi syncretism","url":"https://culturalstudies.in/journal/index.php/JCRS/article/view/7","note":"Discusses syncretic development and later cultural reception."}]}
+  },
+  "penanggalan": {
+    "fields": {"hoaxesAndControversies": ["Penanggalan is regularly conflated with the pontianak, krasue, and manananggal because all can appear in modern lists of Southeast Asian female night-monsters. Older Malay descriptions, however, emphasize a detached female head with trailing entrails and dangers surrounding pregnancy, childbirth, or infants. The controversy is mainly one of cross-cultural blending: visually similar traditions from different languages and regions are often treated online as alternate names for one creature when their stories and ritual details are not identical."]},
+    "sources": {"hoaxesAndControversies": [{"title":"Walter W. Skeat, Malay Magic (1900) — penanggal tradition","note":"Historical Malay ethnographic source used in the canonical dossier; targeted text distinguishes later cross-cultural conflation from Malay-specific motifs."}]}
+  },
+  "werehyena": {
+    "fields": {"hoaxesAndControversies": ["The label 'werehyena' can flatten several East and Northeast African traditions into a European-style werewolf model. Scholarship on Ethiopian buda traditions stresses the relationship among transformation belief, the evil eye, human-hyena boundaries, and stigmatized hereditary occupations. Because accusations have historically carried social consequences for particular communities, presenting every buda account as a zoological shapeshifter report risks stripping away the social and ethnographic context."]},
+    "sources": {"hoaxesAndControversies": [{"title":"Folklore — Human-Hyena Relations and Buda Traditions","url":"https://www.tandfonline.com/doi/abs/10.1080/0015587X.2015.1081514","note":"Peer-reviewed discussion of Ethiopian transformation belief and social context."}]}
+  },
+  "goatman": {
+    "fields": {"hoaxesAndControversies": ["There is no single stable Goatman origin story. Maryland versions have accumulated laboratory-accident, axe-wielding attacker, livestock, and roadside-encounter motifs, while wildlife officials note that injured, diseased, or oddly viewed deer and other animals can contribute to cryptid interpretations. The familiar 'scientist transformed into Goatman' story is best treated as one modern legend variant rather than a documented origin event."]},
+    "sources": {"hoaxesAndControversies": [{"title":"Maryland Department of Natural Resources — Maryland's Cryptids and the Wildlife That May Have Inspired Them","url":"https://news.maryland.gov/dnr/2024/10/04/marylands-cryptids-and-the-wildlife-that-may-have-inspired-them/","note":"Official wildlife discussion of Maryland cryptid stories and possible animal inspirations."}]}
+  },
+  "kraken": {
+    "fields": {
+      "weaknesses": ["Traditional kraken stories do not preserve a consistent magical weakness or ritual defense. Its practical limitation is environmental: the creature belongs to the sea, especially deep or offshore water, and many later naturalistic interpretations connect the legend with very large cephalopods. Under that interpretation its vulnerabilities would be ordinary biological limits rather than iron, holy objects, or other folkloric banes."],
+      "hoaxesAndControversies": ["The kraken sits at the boundary between maritime legend and real giant cephalopods. Giant squid are genuine animals, but historical accounts that describe island-sized bodies, catastrophic whirlpools, or deliberate ship destruction greatly exceed what is documented for known squid. The controversy is therefore not simply 'real or fake': real animals may have contributed to the tradition while later illustration, sailors' tales, and monster literature amplified scale and behavior."
+      ]
+    },
+    "sources": {
+      "weaknesses": [{"title":"Smithsonian Ocean — Giant Squid","url":"https://ocean.si.edu/ocean-life/invertebrates/giant-squid","note":"Natural-history context for a major proposed source of kraken traditions."}],
+      "hoaxesAndControversies": [{"title":"Smithsonian Ocean — Giant Squid","url":"https://ocean.si.edu/ocean-life/invertebrates/giant-squid","note":"Separates documented giant-squid biology from legendary kraken scale and behavior."}]
+    }
+  },
+  "siren": {
+    "fields": {"hoaxesAndControversies": ["The fish-tailed 'siren' familiar from modern mermaid imagery is not the only, or earliest, form of the Greek Sirens. Ancient Greek art commonly represented Sirens as women with bird bodies or bird features; medieval and later European traditions increasingly merged siren and mermaid imagery. A major source of confusion is therefore iconographic drift: modern retellings can project the mermaid form backward onto Homeric and classical material."]},
+    "sources": {"hoaxesAndControversies": [{"title":"The Metropolitan Museum of Art — Dangerous Beauty: Medusa, Sirens, and Other Female Monsters","url":"https://www.metmuseum.org/ko/perspectives/dangerous-beauty-interview-with-kiki-karoglou","note":"Museum discussion of the changing visual forms of Sirens and related female monsters."}]}
+  },
+  "draugr": {
+    "fields": {"hoaxesAndControversies": ["Modern games often use 'draugr' as a convenient name for a uniform Norse zombie species, but medieval Icelandic material is less tidy. Scholarship distinguishes several kinds of corporeal returning dead, including mound-dwellers and walkers-again, and even notes that not every saga revenant was called draugr in the original text. The controversy is thus one of retrospective taxonomy: modern undead categories can erase differences among saga vocabulary, burial context, and narrative role."]},
+    "sources": {"hoaxesAndControversies": [{"title":"Ármann Jakobsson, The Fearless Vampire Killers: A Note about the Icelandic Draugr and Demonic Contamination in Grettis Saga","url":"https://iris.landsbokasafn.is/en/publications/the-fearless-vampire-killers-a-note-about-the-icelandic-draugr-an/","note":"Peer-reviewed Folklore article on draugr interpretation."},{"title":"The Draugr Seen as 'The Other' in the Family Icelandic Sagas","url":"https://www.ceeol.com/search/article-detail?id=266296","note":"Discusses multiple categories of corporeal revenants in Icelandic saga material."}]}
+  },
+  "dullahan": {
+    "fields": {"hoaxesAndControversies": ["Modern Dullahan portrayals often settle on a single armored male headless horseman, but Irish oral records preserve a wider headless-coach complex, including the Cóiste Bodhar and variants in which the coach, driver, horses, or accompanying apparition receive different emphasis. The main controversy is therefore standardization: later literature and games have hardened one visual profile out of a family of regionally variable death-omen traditions."]},
+    "sources": {"hoaxesAndControversies": [{"title":"Dúchas.ie — National Folklore Collection, headless coach tradition","url":"https://www.duchas.ie/en/cbes/4922393/4877558/5076970","note":"Archival Irish folklore record preserving a headless-coach/death-omen variant."},{"title":"Dúchas.ie — National Folklore Collection, Cóiste Bodhar material","url":"https://www.duchas.ie/en/cbes/4922366/4874776/5080089?transcribe=true","note":"Additional oral-tradition record showing variant form."}]}
+  },
+  "grim-reaper": {
+    "fields": {"hoaxesAndControversies": ["The Grim Reaper is often described as if it were one ancient named being with a single origin. The familiar hooded skeleton carrying a scythe is instead a composite personification of Death that accumulated visual conventions over centuries. Popular claims that the figure was created in one event—especially a simple 'it began with the Black Death' story—compress a longer development in European death imagery, allegory, and later popular culture."]},
+    "sources": {"hoaxesAndControversies": [{"title":"PBS Monstrum — The Macabre Origins of the Grim Reaper","url":"https://www.pbs.org/video/the-macabre-origins-of-the-grim-reaper-pdlo4z/","note":"Overview of the composite historical development of the Reaper image."}]}
+  },
+  "leshy": {
+    "fields": {"hoaxesAndControversies": ["The modern 'leshen' popularized by fantasy games is not a neutral reconstruction of one fixed Slavic creature. Recent scholarship describes the process as folkloresque: fragmented folklore motifs are selected, redesigned, and then circulated so successfully that the new version can begin to replace older local understandings. The figure has also become entangled in modern debates over Russian, Polish, and broader Slavic cultural ownership."]},
+    "sources": {"hoaxesAndControversies": [{"title":"Games and Culture — Leshen, folkloresque, and invented tradition","url":"https://journals.sagepub.com/doi/10.1177/15554120251397689","note":"Peer-reviewed analysis of modern game-mediated reshaping of the leshy/leshen tradition."}]}
+  },
+  "church-grim": {
+    "fields": {"hoaxesAndControversies": ["Antiquarian writers sometimes explained the Church Grim as a survival of alleged foundation-sacrifice customs, in which an animal or first burial became a supernatural guardian of the churchyard. That interpretation is influential but should not be treated as proof that every Church Grim story records an actual sacrifice. Guardian-dog traditions, first-burial beliefs, death omens, and the wider British black-dog complex overlap, and later retellings often collapse them into a single origin story."]},
+    "sources": {"hoaxesAndControversies": [{"title":"British Goblins — church and foundation-spirit traditions","url":"https://sacred-texts.com/neu/celt/bof/bof05.htm","note":"Historical folklore source showing the antiquarian foundation-sacrifice interpretation."}]}
+  },
+  "troll": {
+    "fields": {"hoaxesAndControversies": ["There is no single Scandinavian troll template. Folklore and literature range from landscape-linked giants and mountain beings to smaller, more humanlike, comic, dangerous, or morally ambiguous figures. Modern fantasy, children's media, and the internet have each standardized very different meanings of the word; treating the contemporary bridge-dweller, fantasy monster, and online provocateur as direct continuations of one creature obscures that long semantic and cultural change."]},
+    "sources": {"hoaxesAndControversies": [{"title":"Cambridge Core — Nordic troll Gothic","url":"https://www.cambridge.org/core/books/abs/nordic-gothic/nordic-troll-gothic/5B79719FDFBC8798549A195727F25009","note":"Scholarly overview emphasizing the ambiguous, changing troll tradition in modern Nordic literature."}]}
+  },
+  "reptilian": {
+    "fields": {"hoaxesAndControversies": ["The modern shape-shifting Reptilian conspiracy is strongly associated with late-20th-century conspiracy literature, especially David Icke's claims about hidden nonhuman elites. Critics and antisemitism researchers have noted that prominent versions recycle older bloodline, secret-cabal, and world-control tropes that have also appeared in antisemitic conspiracy traditions. This is distinct from older dragon, serpent, or reptile-human mythology, which should not be retroactively treated as evidence for the modern conspiracy system."]},
+    "sources": {"hoaxesAndControversies": [{"title":"Anti-Defamation League — conspiracy narratives and antisemitic tropes","url":"https://www.adl.org/resources/report/antisemitic-conspiracies-about-911-endure-20-years-later","note":"Context for the overlap between modern conspiracist narratives and older antisemitic tropes."}]}
+  },
+  "acheri": {
+    "fields": {"famousSightings": [
+      {"heading":"Himalayan child-spirit encounter tradition","detail":"Acheri stories are best preserved as a regional encounter tradition rather than as a catalog of named modern cases: the spirit is described as the ghost of a young girl associated with mountains or hills and with encounters around dusk or night."},
+      {"heading":"Illness-by-shadow tradition","detail":"A recurring motif holds that contact with, or the shadow of, the Acheri brings fever or wasting illness to children. Protective red or scarlet thread and similar folk precautions belong to the same story complex in later retellings."}
+    ]},
+    "sources": {"famousSightings": [{"title":"Existing canonical Acheri dossier source trail","note":"Field is framed as encounter traditions rather than invented named sightings because the source tradition does not supply a reliable modern case list."}]}
+  },
+  "myling": {
+    "fields": {"hoaxesAndControversies": ["Myling legends are inseparable from historical stories about concealed birth, infanticide, abandonment, baptism, burial, and social shame. Modern retellings sometimes present the myling as a generic murderous child-ghost while removing the gendered blame placed on mothers in older narratives. Recent literary scholarship explicitly revisits that inherited pattern, making the controversy one of social framing as much as supernatural classification."]},
+    "sources": {"hoaxesAndControversies": [{"title":"Umeå University / DiVA — contemporary reworking of the myling tradition","note":"Scholarly analysis of gender, blame, and reinterpretation in modern myling narratives."}]}
+  },
+  "fossegrim": {
+    "fields": {"hoaxesAndControversies": ["Fossegrim is often merged with nøkken or näcken in English-language lists because all belong to Scandinavian water-spirit traditions. Norwegian reference sources more specifically associate Fossegrimen with waterfalls and extraordinary fiddle playing or musical instruction. The controversy is taxonomic: related water beings share motifs, but treating every name as a direct synonym erases regional distinctions and different narrative roles."]},
+    "sources": {"hoaxesAndControversies": [{"title":"Store norske leksikon — fossegrimen","url":"https://snl.no/fossegrimen","note":"Norwegian reference entry on the waterfall and fiddle-playing tradition."},{"title":"Det Norske Akademis ordbok — fossgrim","url":"https://naob.no/ordbok/fossgrim","note":"Lexical evidence for Norwegian usage."}]}
+  },
+  "nisse": {
+    "fields": {"hoaxesAndControversies": ["The modern Christmas nisse is not identical to the older farm or household spirit. Scandinavian museum and folklore sources describe a guardian connected with farms, livestock, reciprocity, and household conduct; nineteenth-century illustration and Christmas culture increasingly blended that figure with the gift-bringing Santa tradition. Modern red-capped Christmas imagery therefore represents a major cultural merger rather than an unchanged ancient form."]},
+    "sources": {"hoaxesAndControversies": [{"title":"University Museum of Bergen — Nissen i tro og tradisjon","url":"https://www.universitetsmuseet.no/nb/artikkel/110/nissen-i-tro-og-tradisjon","note":"Museum overview of the nisse in belief and tradition."},{"title":"Institute for Language and Folklore, Sweden — Hur kom jultomten till Sverige?","url":"https://www.isof.se/folkminnen/folkminnesbloggen/inlagg/2017-12-22-hur-kom-jultomten-till-sverige","note":"Documents the development of the Christmas gift-bringer and tomte/nisse imagery."}]}
+  },
+  "perchten": {
+    "fields": {"hoaxesAndControversies": ["Claims that today's Perchten runs are unchanged survivals of a single prehistoric pagan rite are difficult to sustain. Folklore scholarship shows a complex history in which mask traditions, seasonal customs, Perchta traditions, Krampus-like figures, tourism, new materials, organized clubs, and media influence overlap. Perchten and Krampus may appear together today, but using the names as exact synonyms also erases local distinctions."]},
+    "sources": {"hoaxesAndControversies": [{"title":"John B. Smith — Perchten traditions, Folklore","url":"https://www.tandfonline.com/doi/abs/10.1080/0015587042000231264","note":"Scholarly discussion of Perchten traditions and historical interpretation."},{"title":"White Rose eTheses — Perchten/Krampus mask tradition research","url":"https://etheses.whiterose.ac.uk/id/eprint/14431/","note":"Academic research on continuity, innovation, and contemporary performance."}]}
+  },
+  "shaitan": {
+    "fields": {"famousSightings": [
+      {"heading":"Adam and the forbidden tree — Qur'an 20:120","detail":"One of the best-known scriptural episodes has Satan whisper to Adam and tempt him with the 'tree of eternity' and a kingdom that does not decay. This is a canonical encounter narrative rather than a modern sighting report."},
+      {"heading":"Solomon and the shayatin — Qur'an 21:82","detail":"Another Qur'anic episode describes some of the shayatin as being made to dive and perform other works for Solomon while being kept under watch. It is a central scriptural appearance of the category in the Solomon cycle."}
+    ]},
+    "sources": {"famousSightings": [{"title":"Qur'an 20:120","url":"https://corpus.quran.com/translation.jsp?chapter=20&verse=120","note":"Adam temptation episode."},{"title":"Qur'an 21:82","url":"https://islamawakened.org/quran/21/82/translations/","note":"Solomon and the shayatin episode; multiple English translations shown."}]}
+  },
+  "roc": {
+    "fields": {"famousSightings": [
+      {"heading":"Sinbad's voyages — Arabian Nights tradition","detail":"The roc's most famous literary encounters occur in the Sinbad cycle, where an enormous bird and its egg become central to episodes of escape, transport, and danger. These are literary-traditional encounters, not zoological observations."},
+      {"heading":"Marco Polo's rukh report — Indian Ocean/Madagascar tradition","detail":"Medieval travel tradition associated an enormous bird called the rukh with islands south of the Indian Ocean world; versions of Marco Polo's account describe reports brought to the Great Khan and a supposed gigantic feather. Later writers connected such stories with real large birds and with palm fronds mistaken for feathers."}
+    ]},
+    "sources": {"famousSightings": [{"title":"Encyclopaedia Britannica (1911) — Roc","url":"https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Roc","note":"Historical reference summarizing Sinbad, Marco Polo, and Indian Ocean roc traditions."},{"title":"American Museum of Natural History — Roc","url":"https://www.amnh.org/explore/ology/ology-cards/286-roc?view=modal","note":"Museum educational context for the roc and possible inspiration from large birds."}]}
+  },
+  "inkanyamba": {
+    "fields": {"famousSightings": [
+      {"heading":"Howick Falls encounter tradition","detail":"The strongest modern Inkanyamba tradition centers on Howick Falls in KwaZulu-Natal, where a great water-serpent or lake creature is linked with the pool below the falls and with dangerous weather and water."},
+      {"heading":"1962 Umgeni/Midmar report","detail":"A local history account records a 1962 statement by a Conservation Services ranger, Mr Buthelezi, who said he saw an unusual large creature on a sandbank along the Umgeni near the Midmar area. It is preserved as a reported encounter, not as verified zoological evidence."}
+    ]},
+    "sources": {"famousSightings": [{"title":"Howick Village — What is the Howick Falls Monster?","url":"https://howickvillage.co.za/news/1197-what-is-the-howick-falls-monster-a-myth-or-popular-folklore","note":"Local historical summary of Howick Falls tradition and the 1962 ranger report."}]}
+  },
+  "obayifo": {
+    "fields": {"famousSightings": [
+      {"heading":"Night-flight and luminous-spirit tradition","detail":"Older descriptions of the obayifo preserve a recurring night encounter motif in which the witch or vampire-like force leaves ordinary human appearance and is associated with a moving phosphorescent or luminous presence."},
+      {"heading":"Child and crop-draining accusations","detail":"The best-known encounter tradition concerns attacks blamed for wasting illness in children and for damage to crops, including the draining of plant vitality. These are traditional accusations and explanatory narratives rather than a modern list of independently verified sightings."}
+    ]},
+    "sources": {"famousSightings": [{"title":"The Vampire — historical ethnographic summary of Ashanti obayifo beliefs","url":"https://en.wikisource.org/wiki/Page%3AThe_Vampire.djvu/293","note":"Historical source summarizing Rattray-era accounts of obayifo traditions."}]}
+  },
+  "kalanoro": {
+    "fields": {"hoaxesAndControversies": ["Kalanoro are sometimes recast in cryptozoological writing as a hidden population of dwarf hominids, but Malagasy ethnographic material places them within living spirit, healing, nature, and ritual traditions. Contemporary practice can also combine older Malagasy concepts with newer religious influences. The main controversy is therefore category error: treating a relational spirit tradition as though it were only a zoological search target changes what local accounts are describing."]},
+    "sources": {"hoaxesAndControversies": [{"title":"Journal des anthropologues — Malagasy Kalanoro and ritual/healing traditions","url":"https://journals.openedition.org/jda/5886","note":"Anthropological context for Kalanoro as spirit/healing figures rather than a simple cryptid species."}]}
+  },
+  "vazimba": {
+    "fields": {"hoaxesAndControversies": ["Vazimba traditions sit between ancestral legend and questions about Madagascar's early settlement. Older retellings sometimes turn the Vazimba into a vanished pygmy, fairy, or nonhuman race; current archaeology instead investigates real early populations, migration, coexistence, and mixture in the highlands. The controversy comes from treating legendary descriptions as literal biological taxonomy when the term also carries historical and ancestral meaning."]},
+    "sources": {"hoaxesAndControversies": [{"title":"French Ministry of Culture — Vazimba et peuplement malgache","url":"https://archeologie.culture.gouv.fr/fr/vazimba-peuplement-malgache","note":"Archaeological discussion of Vazimba traditions in relation to Madagascar's settlement history."}]}
+  },
+  "ramanga": {
+    "fields": {"hoaxesAndControversies": ["Ramanga is often listed in modern 'vampire' encyclopedias as though it named a supernatural blood-drinking monster. Historical descriptions instead record a Betsileo social or ritual role: attendants consumed nobles' nail clippings and licked spilled blood so those bodily materials could not be used in sorcery. The controversy is one of reclassification—an unusual protective custom was later detached from its social setting and repackaged as a vampire species."]},
+    "sources": {"hoaxesAndControversies": [{"title":"James George Frazer, The Golden Bough — ramanga passage","url":"https://en.wikisource.org/wiki/Page%3AThe_Golden_Bough_%281922%29.djvu/249","note":"Historical description of ramanga consuming nail parings and spilled noble blood as protection against sorcery."}]}
+  },
+  "pepo": {
+    "fields": {"hoaxesAndControversies": ["Pepo are sometimes translated simply as 'demons,' but Swahili-coast ethnography treats spirit possession as a wider social and cultural system. Scholarship has challenged older theories that possession cults were merely marginal responses of powerless people, emphasizing instead their central role in local expression, healing, identity, and social relations. A generic demon label therefore captures only part of what pepo traditions mean in practice."]},
+    "sources": {"hoaxesAndControversies": [{"title":"Africa — Possession Cults on the Swahili Coast: A Re-examination of Theories of Marginality","url":"https://www.cambridge.org/core/journals/africa/article/abs/possession-cults-on-the-swahili-coast-a-reexamination-of-theories-of-marginality/977D5A617B8FD8A7ED7C0785B8D167AD","note":"Ethnographic reassessment of Swahili spirit-possession traditions."}]}
+  },
+  "mmoatia": {
+    "fields": {"hoaxesAndControversies": ["English descriptions often call the mmoatia 'dwarfs,' 'gnomes,' or 'fairies,' but Asante sources place them within a broader nature-spirit and forest relationship. They may assist priests or hunters, reveal medicinal plants, and inhabit forests whose taboos also serve social and conservation functions. Reducing mmoatia to a European-style fairy species can therefore obscure their specific Asante religious and ecological context."]},
+    "sources": {"hoaxesAndControversies": [{"title":"The Use of Indigenous Cultural Practices by the Ashantis for the Conservation of Forests in Ghana","url":"https://journals.sagepub.com/doi/10.1177/2158244016687611","note":"Peer-reviewed discussion of forests as dwelling places of mmoatia and related deities."},{"title":"The symbolic significance of motifs on selected Asante religious temples","url":"https://www.tandfonline.com/doi/full/10.3402/jac.v7.27006","note":"Documents mmoatia as nature spirits associated with assistance, communication, and medicinal knowledge."}]}
+  },
+  "ajogun": {
+    "fields": {"hoaxesAndControversies": ["Ajogun are frequently rendered in English as 'demons,' yet Yoruba religious thought uses the category for destructive or adversarial forces associated with conditions such as disease, death, loss, conflict, and disorder. Scholarship places those forces inside a larger moral and cosmological balance rather than a simple good-versus-evil monster taxonomy. Treating every Ajogun as an individual horned demon is therefore a modern simplification."]},
+    "sources": {"hoaxesAndControversies": [{"title":"Harvard Divinity School Center for the Study of World Religions — Africana Religions","url":"https://cswr.hds.harvard.edu/news/2026/07/14/africana-religions","note":"Contemporary scholarly context for Yoruba/Africana religious categories and cosmology."}]}
+  },
+  "egbere": {
+    "fields": {"hoaxesAndControversies": ["Egbere is sometimes compared to a leprechaun or standardized as a goblin carrying a magical mat, but Yoruba-language and literary traditions are more complicated. The same word has also been associated with nocturnal animals such as the galago/bushbaby, whose cries provide a plausible natural source for some night-wailing associations. Modern cryptid summaries can therefore mix lexical meaning, animal sound, literary folklore, and supernatural story into one overly rigid creature profile."]},
+    "sources": {"hoaxesAndControversies": [{"title":"Yoruba lexical tradition — egbere","url":"https://en.wiktionary.org/wiki/egbere","note":"Lexical orientation; used together with the canonical dossier's Yoruba literary and folklore source trail."}]}
+  },
+  "abiku": {
+    "fields": {
+      "famousSightings": [
+        {"heading":"Ondo and Ekiti field research","detail":"A demographic study of 1,695 women in southwestern Nigeria documented continuing belief in the abiku explanation for repeated childhood illness and death; more than half of respondents expressed belief and traditional treatment remained common. This is evidence of a living encounter-and-interpretation tradition, not a claim that a supernatural child was medically verified."},
+        {"heading":"Recurring spirit-child identification tradition","detail":"Across Yoruba family and healing traditions, repeated infant sickness or death may be interpreted through the abiku cycle, with naming, divination, marks, ritual treatment, and family memory used to identify or interrupt the perceived recurrence."}
+      ],
+      "hoaxesAndControversies": ["The central controversy around abiku is not a single hoax but the meeting of a living Yoruba explanatory tradition with modern medicine and public health. Field research shows that the belief can coexist with biomedical care and materially influence treatment choices. Responsible interpretation therefore has to avoid two opposite errors: presenting abiku as medically proven supernatural causation, or dismissing the tradition so completely that its real influence on family decisions and cultural meaning disappears."]
+    },
+    "sources": {
+      "famousSightings": [{"title":"Demographic Research — Cultural beliefs and the abiku phenomenon in southwest Nigeria","url":"https://www.demographic-research.org/articles/volume/11/2","note":"Field study of 1,695 women in Ondo and Ekiti concerning abiku belief and treatment."}],
+      "hoaxesAndControversies": [{"title":"Demographic Research — Cultural beliefs and the abiku phenomenon in southwest Nigeria","url":"https://www.demographic-research.org/articles/volume/11/2","note":"Documents coexistence of cultural belief, treatment decisions, and demographic/health context."}]
+    }
+  },
+  "emere": {
+    "fields": {"hoaxesAndControversies": ["Emere is frequently treated as a direct synonym for abiku, but Yoruba healers and published authors do not always define the relationship the same way. Clinical-cultural research records distinctions in which an emere may be understood as a broader spirit-linked person while abiku refers more specifically to recurrent child death; other writers connect the categories more closely. The important controversy is therefore internal taxonomy, not whether one English monster label can replace both terms."]},
+    "sources": {"hoaxesAndControversies": [{"title":"Transcultural Psychiatry / cultural psychiatry research on Yoruba Abiku and Emere","url":"https://www.tandfonline.com/doi/abs/10.1080/13694670600621795","note":"Records differing healer and scholarly understandings of Emere and Abiku."}]}
+  },
+  "iwin": {
+    "fields": {"hoaxesAndControversies": ["Iwin is often translated as 'fairy,' 'goblin,' or 'forest spirit,' but none of those English labels maps perfectly onto the Yoruba category. Stories connect iwin with forests, hunters, herbal knowledge, unusual encounters, and a range of spirit behavior rather than one fixed anatomy. The controversy is primarily translational: European fairy terminology can make a broad indigenous spirit category look like a standardized creature species."]},
+    "sources": {"hoaxesAndControversies": [{"title":"YorubaNames lexical/cultural archive","url":"https://www.yorubaname.com/entries/Iw%C3%ADnd%C3%A0p%E1%BB%8D%CC%80","note":"Yoruba-language cultural context used alongside the canonical dossier source trail."}]}
+  },
+  "ogbanje": {
+    "fields": {"hoaxesAndControversies": ["Ogbanje is often collapsed into the Yoruba abiku because both traditions concern children understood to move repeatedly between the spirit world and a family. Igbo sources, however, have their own terminology, ritual practices, literary history, and modern religious reinterpretations. Medical and psychological readings add another layer. The main controversy is therefore cross-cultural equivalence: similarity does not make Ogbanje and Abiku interchangeable labels."]},
+    "sources": {"hoaxesAndControversies": [{"title":"Cambridge University Press — Spirit Names, the Child, Pentecostal Futurity in the Name of Jesus","url":"https://www.cambridge.org/core/books/performing-power-in-nigeria/spirit-names-the-child-pentecostal-futurity-in-the-name-of-jesus/328E7A0F1B23122EC9B4E35602C8D9FB","note":"Scholarly discussion of spirit-child concepts and changing religious interpretation in Nigeria."}]}
+  },
+  "tlahuelpuchi": {
+    "fields": {"famousSightings": [
+      {"heading":"Tlaxcala household-attack tradition","detail":"Ethnographic accounts from rural Tlaxcala preserve a recurring belief that a tlahuelpuchi enters or approaches households at night and feeds on infants or young children. The evidence is a living witchcraft tradition documented through community narratives, not a verified criminal case series."},
+      {"heading":"Animal-transformation encounter tradition","detail":"A second recurring motif describes the tlahuelpuchi transforming into animals or lights during nocturnal movement. These reports belong to a broader Tlaxcalan system of witchcraft belief shaped by Indigenous and colonial-era religious traditions."}
+    ]},
+    "sources": {"famousSightings": [{"title":"Ethnographic scholarship on bloodsucking witchcraft in Tlaxcala","url":"https://www.jstor.org/stable/j.ctvrf89q7","note":"Book-length ethnographic treatment of tlahuelpuchi/bloodsucking-witch traditions in Tlaxcala."}]}
+  },
+  "boto-encantado": {
+    "fields": {"famousSightings": [
+      {"heading":"The dolphin at the dance","detail":"One of the most widespread Amazonian encounter stories has a river dolphin take human form, arrive at a dance or festival as an exceptionally well-dressed stranger—often in white with a hat—and court or seduce a local person before returning to the river."},
+      {"heading":"Journey to the Encante","detail":"A second major tradition describes encantado dolphins drawing people away from ordinary human space and into an enchanted city beneath or beyond the river. The same beings may appear dangerous in one story and assist healers in another, which is part of the tradition's persistent ambiguity."}
+    ]},
+    "sources": {"famousSightings": [{"title":"Candace Slater, Dance of the Dolphin: Transformation and Disenchantment in the Amazonian Imagination","url":"https://www.bibliovault.org/BV.book.epl?ISBN=9780226761831","note":"University of Chicago Press ethnography of Amazonian dolphin/encantado stories."},{"title":"Candace Slater — The Dolphin as Lover","url":"https://www.degruyterbrill.com/document/doi/10.7208/chicago/9780226924892-009/html","note":"Chapter specifically addressing dolphin-as-human-lover traditions."}]}
+  }
+}
