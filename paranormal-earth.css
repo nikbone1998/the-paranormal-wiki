@@ -137,3 +137,9 @@ body.ua-earth-lock{overflow:hidden!important;touch-action:none!important}
 .home-classic > table,.home-classic > .layout,.home-classic > .box,.home-classic > table td,.home-classic > table th,.home-classic > table tr{border:0!important;background:transparent!important;box-shadow:none!important}
 .home-classic > table{border-collapse:collapse!important;border-spacing:0!important;width:100%!important}
 .home-classic > hr{border-left:0!important;border-right:0!important;border-bottom:0!important}
+
+
+/* Final homepage-only table cleanup. The Earth section contains no legacy tables and is excluded by scope. */
+.home-classic table,.home-classic table tbody,.home-classic table thead,.home-classic table tfoot,.home-classic table tr,.home-classic table td,.home-classic table th{border:0!important;background:transparent!important;box-shadow:none!important}
+.home-classic table{border-collapse:collapse!important;border-spacing:0!important}
+.home-classic .box,.home-classic .layout,.home-classic .archive-table{border:0!important;background:transparent!important}
