@@ -1,0 +1,46 @@
+{
+  "full": {
+    "appLength": 782,
+    "tableCount": 0,
+    "boxCount": 0,
+    "overview": true,
+    "behavior": false,
+    "frequency": false,
+    "sources": false,
+    "behaviorHeading": false,
+    "sourceHeading": false
+  },
+  "no-repair": {
+    "appLength": 0,
+    "tableCount": 0,
+    "boxCount": 0,
+    "overview": false,
+    "behavior": false,
+    "frequency": false,
+    "sources": false,
+    "behaviorHeading": false,
+    "sourceHeading": false
+  },
+  "no-earth": {
+    "appLength": 782,
+    "tableCount": 0,
+    "boxCount": 0,
+    "overview": true,
+    "behavior": false,
+    "frequency": false,
+    "sources": false,
+    "behaviorHeading": false,
+    "sourceHeading": false
+  },
+  "no-both": {
+    "appLength": 0,
+    "tableCount": 0,
+    "boxCount": 0,
+    "overview": false,
+    "behavior": false,
+    "frequency": false,
+    "sources": false,
+    "behaviorHeading": false,
+    "sourceHeading": false
+  }
+}
