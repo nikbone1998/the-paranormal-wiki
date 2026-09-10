@@ -1,5 +1,3 @@
-const fs=require('fs');
-const path=require('path');
 const vm=require('vm');
 
 const ARCHIVE_FILES=['archive-entities-01.js','archive-entities-02.js','archive-entities-03.js','archive-entities-04.js','archive-entities-05.js'];
@@ -8,12 +6,21 @@ const text=value=>String(value??'').replace(/\s+/g,' ').trim();
 const meaningful=value=>{const valueText=text(value);return !!valueText&&!PLACEHOLDER.test(valueText)};
 const hasDeep=(entity,pattern)=>(entity.deepSections||[]).some(section=>pattern.test(text(section&&section.title)+' '+(section&&section.paragraphs||[]).map(text).join(' ')));
 
-function loadEntities(){
+async function loadEntities(req){
+ const host=req.headers['x-forwarded-host']||req.headers.host;
+ if(!host)throw new Error('request host unavailable');
+ const proto=req.headers['x-forwarded-proto']||'https';
+ const headers={Accept:'text/javascript'};
+ if(req.headers.cookie)headers.Cookie=req.headers.cookie;
+ if(req.headers.authorization)headers.Authorization=req.headers.authorization;
+ if(req.headers['x-vercel-protection-bypass'])headers['x-vercel-protection-bypass']=req.headers['x-vercel-protection-bypass'];
  const sandbox={window:{__ARCHIVE_ENTITIES:[]}};
  vm.createContext(sandbox);
  for(const filename of ARCHIVE_FILES){
-  const fullPath=path.join(process.cwd(),filename);
-  const source=fs.readFileSync(fullPath,'utf8');
+  const url=`${proto}://${host}/${filename}`;
+  const response=await fetch(url,{headers,cache:'no-store'});
+  if(!response.ok)throw new Error(`${filename} returned ${response.status}`);
+  const source=await response.text();
   vm.runInContext(source,sandbox,{filename,timeout:10000});
  }
  return sandbox.window.__ARCHIVE_ENTITIES;
@@ -36,12 +43,12 @@ function coverage(entity){
  };
 }
 
-module.exports=function dossierAudit(req,res){
+module.exports=async function dossierAudit(req,res){
  if(req.method!=='GET'){
   res.statusCode=405;res.setHeader('Allow','GET');res.end(JSON.stringify({error:'method_not_allowed'}));return;
  }
  try{
-  const entities=loadEntities();
+  const entities=await loadEntities(req);
   const fields=['famousSightings','behavior','weaknesses','culturalSignificance','scientificExplanations','hoaxesAndControversies','reportFrequency','geographicalOrigin'];
   const counts=Object.fromEntries(fields.map(field=>[field,0]));
   const missing=[];
