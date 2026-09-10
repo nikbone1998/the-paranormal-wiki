@@ -245,3 +245,32 @@ body.ua-earth-lock{overflow:hidden!important;touch-action:none!important}
 .hr{border:0!important;box-shadow:none!important}
 .archive-table th,.archive-table td,.timeline td{border-bottom:0!important}
 .page{background:transparent!important}
+
+
+/* Dossier text color pass: neutral copy turns archive-yellow; existing colored labels and links keep their own colors. */
+.dossier-page{color:#e6df9a}
+.dossier-page p,
+.dossier-page td,
+.dossier-page dd,
+.dossier-page li,
+.dossier-page .status,
+.dossier-page .caption,
+.dossier-page .tiny,
+.dossier-page .note,
+.dossier-page .box-body,
+.dossier-page .dossier-overview,
+.dossier-page .dossier-quickfacts span,
+.dossier-page .dossier-field-summary,
+.dossier-page .dossier-subfact,
+.dossier-page .dossier-frequency-label,
+.dossier-page .dossier-sighting p,
+.dossier-page .dossier-sighting h4,
+.dossier-page h3,
+.dossier-page h4{color:#e6df9a}
+.dossier-page .box-title:not(.red):not(.yellow):not(.green):not(.purple){color:#e6df9a}
+.dossier-page .archive-table td,
+.dossier-page .archive-table td *,
+.dossier-page .box-body p,
+.dossier-page .box-body li{color:#e6df9a}
+.dossier-page a{color:inherit}
+.dossier-page a:visited{color:inherit}
