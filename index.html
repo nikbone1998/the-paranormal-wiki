@@ -225,34 +225,13 @@ function home(){
   '<div class="home-heading">ARCHIVE DIRECTORY</div>'+
   '<div class="home-directory">[ <a data-go="categories">CATEGORIES</a> ] &nbsp; [ <a data-go="cultures">CULTURES</a> ] &nbsp; [ <a data-go="countries">COUNTRIES</a> ]<br>[ <a data-go="entity-index">ENTITY INDEX</a> ] &nbsp; [ <a data-go="archive-tree">ARCHIVE TREE</a> ] &nbsp; [ <a data-go="aliens">UFO / UAP ARCHIVE</a> ] &nbsp; [ <a data-go="cases">FAMOUS CASES</a> ]</div>'+
   '<p class="home-note">Claims are cataloged as claims. Map points represent source-grounded cultural, historical, modern-report, or famous-case associations; they do not show creature population density or prove paranormal activity.</p>'+
-  '<!-- UNSEEN_EARTH_SECTION_BEGIN -->
-<section class="ua-globe-section" aria-labelledby="global-view-title">
-  <div class="ua-globe-head" id="global-view-title">GLOBAL VIEW</div>
-  <div class="ua-globe-sub">INTERACTIVE EARTH OBSERVATION SYSTEM // SOURCE-GROUNDED ENTITY LAYER ONLINE</div>
-  <div class="ua-globe-shell" data-unseen-earth tabindex="0">
-    <canvas class="ua-globe-stars" aria-hidden="true"></canvas>
-    <canvas class="ua-globe-canvas" aria-label="Interactive three-dimensional Earth. Drag to rotate and scroll or pinch to zoom."></canvas>
-    <div class="ua-2d-map-viewport" aria-label="Interactive high-resolution world map">
-      <div class="ua-2d-map-world">
-        <img class="ua-globe-fallback" alt="Interactive high-resolution equirectangular world map">
-      </div>
-    </div>
-    <div class="ua-globe-vignette"></div>
-    <div class="ua-globe-status">EARTH ENGINE <b>ONLINE</b><br>ENTITY LAYER: STANDBY<br>RENDER: <span class="ua-globe-quality">...</span></div>
-    <div class="ua-globe-controls"><button class="ua-globe-btn" type="button" data-globe-reset>[ RESET VIEW ]</button><button class="ua-globe-btn" type="button" data-globe-fullscreen>[ OPEN FULL EARTH VIEW ]</button></div>
-    <div class="ua-globe-help">DRAG TO MOVE // SCROLL / PINCH TO ZOOM // TAP 📍 FOR DOSSIER</div>
-    <div class="ua-globe-loading">INITIALIZING EARTH OBSERVATION SYSTEM<span class="ua-globe-loaderbar"><i></i></span></div>
-    <div class="ua-globe-error">2D INTERACTIVE MAP ACTIVE — HIGH-RES FALLBACK MODE.</div>
-  </div>
-  <div class="ua-globe-foot"><span class="ua-globe-signal">SIGNAL: NOMINAL // GEOSPHERE LINK ACTIVE</span><span class="ua-globe-future">ENTITY COORDINATES: LOADING</span></div>
-</section>
-<!-- UNSEEN_EARTH_SECTION_END -->'+
+  "<!-- UNSEEN_EARTH_SECTION_BEGIN -->\n<section class=\"ua-globe-section\" aria-labelledby=\"global-view-title\">\n  <div class=\"ua-globe-head\" id=\"global-view-title\">GLOBAL VIEW</div>\n  <div class=\"ua-globe-sub\">INTERACTIVE EARTH OBSERVATION SYSTEM // SOURCE-GROUNDED ENTITY LAYER ONLINE</div>\n  <div class=\"ua-globe-shell\" data-unseen-earth tabindex=\"0\">\n    <canvas class=\"ua-globe-stars\" aria-hidden=\"true\"></canvas>\n    <canvas class=\"ua-globe-canvas\" aria-label=\"Interactive three-dimensional Earth. Drag to rotate and scroll or pinch to zoom.\"></canvas>\n    <div class=\"ua-2d-map-viewport\" aria-label=\"Interactive high-resolution world map\">\n      <div class=\"ua-2d-map-world\">\n        <img class=\"ua-globe-fallback\" alt=\"Interactive high-resolution equirectangular world map\">\n      </div>\n    </div>\n    <div class=\"ua-globe-vignette\"></div>\n    <div class=\"ua-globe-status\">EARTH ENGINE <b>ONLINE</b><br>ENTITY LAYER: STANDBY<br>RENDER: <span class=\"ua-globe-quality\">...</span></div>\n    <div class=\"ua-globe-controls\"><button class=\"ua-globe-btn\" type=\"button\" data-globe-reset>[ RESET VIEW ]</button><button class=\"ua-globe-btn\" type=\"button\" data-globe-fullscreen>[ OPEN FULL EARTH VIEW ]</button></div>\n    <div class=\"ua-globe-help\">DRAG TO MOVE // SCROLL / PINCH TO ZOOM // TAP 📍 FOR DOSSIER</div>\n    <div class=\"ua-globe-loading\">INITIALIZING EARTH OBSERVATION SYSTEM<span class=\"ua-globe-loaderbar\"><i></i></span></div>\n    <div class=\"ua-globe-error\">2D INTERACTIVE MAP ACTIVE — HIGH-RES FALLBACK MODE.</div>\n  </div>\n  <div class=\"ua-globe-foot\"><span class=\"ua-globe-signal\">SIGNAL: NOMINAL // GEOSPHERE LINK ACTIVE</span><span class=\"ua-globe-future\">ENTITY COORDINATES: LOADING</span></div>\n</section>\n<!-- UNSEEN_EARTH_SECTION_END -->"+
   '<hr class="home-rule">'+
   '<div class="home-heading">FEATURED RESEARCH FILES</div>'+
   '<div class="home-featured">'+E.filter(e=>e.researchStatus.startsWith('FLAGSHIP')).slice(0,12).map(e=>'<a data-entity="'+e.slug+'">'+esc(e.name)+'</a>').join(' · ')+'</div>'+
   '<p class="home-note">Archive status: '+E.length+' public entity files · '+flag+' flagship reviews · '+sourced+' sourced non-fiction dossiers · '+fiction+' original fiction files · '+A.length+' alien / NHI archetypes · '+C.length+' UAP case files.</p>'+
   '<div class="home-closing">[ <a data-go="entity-index">COMPLETE ENTITY INDEX</a> ] &nbsp; [ <a data-go="contact">CONTACT</a> ] &nbsp; [ <a data-go="about">ABOUT THE ARCHIVE</a> ]</div>'+
- '</div>');
+  '</div>');
 }
 function entityIndex(cat=''){
  const list=E.filter(e=>!cat||e.category===cat),g={};list.forEach(e=>(g[e.name[0].toUpperCase()]??=[]).push(e));
