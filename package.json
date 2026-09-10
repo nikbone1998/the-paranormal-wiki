@@ -1,0 +1,7 @@
+{
+  "name": "the-paranormal-wiki",
+  "private": true,
+  "scripts": {
+    "vercel-build": "node scripts/materialize-dossier-fields.js"
+  }
+}
