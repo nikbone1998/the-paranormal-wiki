@@ -1,0 +1,47 @@
+/* Global borderless content treatment. Interactive controls retain their
+ * own native/button styling and all :focus-visible outlines remain intact. */
+.forum-shell div,
+.forum-shell section,
+.forum-shell article,
+.forum-shell aside,
+.forum-shell header,
+.forum-shell nav,
+.forum-shell form,
+.forum-shell table,
+.forum-shell thead,
+.forum-shell tbody,
+.forum-shell tfoot,
+.forum-shell tr,
+.forum-shell td,
+.forum-shell th,
+.forum-shell a:not(.forum-tab),
+.forum-shell .member-nav-link,
+.forum-shell .forum-tab,
+.forum-shell .ia-mobile-nav a,
+.forum-shell .ia-mobile-nav button {
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.forum-shell .panel-title,
+.forum-shell .side-title,
+.forum-shell .ia-board-group-title,
+.forum-shell .modal-header,
+.forum-shell .search-section-label {
+  border-bottom: 0 !important;
+}
+
+.forum-shell .post-tools,
+.forum-shell .profile-editor,
+.forum-shell .profile-editor-rich,
+.forum-shell .thread-stats-bar,
+.forum-shell .rules-list div,
+.forum-shell .profile-community-upgrade {
+  border-top: 0 !important;
+}
+
+.forum-shell .forum-pagination,
+.forum-shell .settings-save-bar,
+.forum-shell .ia-mobile-nav {
+  border-top: 0 !important;
+}
