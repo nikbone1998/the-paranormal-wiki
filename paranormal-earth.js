@@ -1,8 +1,7 @@
 /* THE PARANORMAL WIKI — Earth engine bootstrap.
  * Renderer is kept modular in paranormal-earth-engine-v4.js; homepage/brand compatibility remains here.
  */
-import('./dossier-repair.js?v=1.0.0').catch(error=>console.warn('[PARANORMAL WIKI] dossier repair layer unavailable',error));
-import('./paranormal-earth-tile-shim.js?v=4.0.1').catch(error=>{
+import('./paranormal-earth-tile-shim.js?v=4.0.2-marker-stability').catch(error=>{
  console.error('[PARANORMAL WIKI EARTH] engine bootstrap failed',error);
  document.querySelectorAll('[data-unseen-earth]').forEach(root=>{
   root.classList.remove('ua-ready');
@@ -165,5 +164,4 @@ async function updateVisitorCounter(){
 })();
 
 // Source-grounded dossier markers are kept in an isolated layer so the Earth renderer remains unchanged.
-import('./paranormal-earth-entities.js?v=1.0.0').catch(error=>console.warn('[PARANORMAL WIKI EARTH] entity layer unavailable',error));
-
+import('./paranormal-earth-entities.js?v=1.0.1-marker-stability').catch(error=>console.warn('[PARANORMAL WIKI EARTH] entity layer unavailable',error));
