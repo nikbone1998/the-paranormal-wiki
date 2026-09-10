@@ -1,0 +1,67 @@
+name: Live dossier production smoke test
+
+on:
+  push:
+    branches:
+      - dossier-production-render-fix-20260910
+    paths:
+      - '.github/workflows/live-dossier-smoke.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: dossier-production-render-fix-20260910
+          fetch-depth: 0
+      - name: Check rendered production dossiers
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHROME="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          if [ -z "$CHROME" ]; then
+            echo "Chrome/Chromium not found on runner" >&2
+            exit 1
+          fi
+          mkdir -p reports /tmp/dossier-smoke
+          printf '{\n  "productionUrl": "https://www.theparanormalwiki.com/",\n  "checkedAt": "%s",\n  "browser": "%s",\n  "results": [\n' "$(date -u +%FT%TZ)" "$CHROME" > reports/live-dossier-smoke.json
+          slugs=(ghost mothman bigfoot vampire banshee demon draugr black-eyed-children)
+          first=1
+          failures=0
+          for slug in "${slugs[@]}"; do
+            dom="/tmp/dossier-smoke/${slug}.html"
+            timeout 45s "$CHROME" --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage --disable-background-networking --virtual-time-budget=7000 --dump-dom "https://www.theparanormalwiki.com/#entity/${slug}" > "$dom"
+            overview=false; grep -q 'DOSSIER OVERVIEW' "$dom" && overview=true
+            nav=false; grep -q 'dossier-section-nav' "$dom" && nav=true
+            behavior=false; grep -q 'BEHAVIOR / REPORTED HABITAT' "$dom" && behavior=true
+            sightings=false; grep -q 'FAMOUS SIGHTINGS / DOCUMENTED CASE FILES' "$dom" && sightings=true
+            weaknesses=false; grep -q 'WEAKNESSES, PROTECTION & PRACTICAL SAFETY' "$dom" && weaknesses=true
+            culture=false; grep -q 'CULTURAL SIGNIFICANCE' "$dom" && culture=true
+            science=false; grep -q 'SCIENTIFIC / SKEPTICAL EXPLANATIONS' "$dom" && science=true
+            controversy=false; grep -q 'HOAXES, MISIDENTIFICATIONS & CONTROVERSIES' "$dom" && controversy=true
+            frequency=false; grep -q 'REPORT FREQUENCY / DATA QUALITY' "$dom" && frequency=true
+            geography=false; grep -q 'GEOGRAPHICAL ORIGIN / REPORTED OR TRADITIONAL DISTRIBUTION' "$dom" && geography=true
+            legacy=false; grep -q 'NO INVENTED SIGHTING COUNTS' "$dom" && legacy=true
+            ok=false
+            if $overview && $nav && $behavior && $sightings && $weaknesses && $culture && $science && $controversy && $frequency && $geography && ! $legacy; then ok=true; else failures=$((failures+1)); fi
+            [ $first -eq 1 ] || printf ',\n' >> reports/live-dossier-smoke.json
+            first=0
+            printf '    {"slug":"%s","overview":%s,"nav":%s,"behavior":%s,"famousSightings":%s,"weaknesses":%s,"culturalSignificance":%s,"scientificExplanations":%s,"hoaxesAndControversies":%s,"reportFrequency":%s,"geographicalOrigin":%s,"legacyGenericFrequencyPresent":%s,"ok":%s}' "$slug" "$overview" "$nav" "$behavior" "$sightings" "$weaknesses" "$culture" "$science" "$controversy" "$frequency" "$geography" "$legacy" "$ok" >> reports/live-dossier-smoke.json
+          done
+          printf '\n  ],\n  "failures": %d,\n  "passed": %s\n}\n' "$failures" "$([ "$failures" -eq 0 ] && echo true || echo false)" >> reports/live-dossier-smoke.json
+          cat reports/live-dossier-smoke.json
+          test "$failures" -eq 0
+      - name: Commit smoke report
+        if: always()
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/live-dossier-smoke.json || true
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Record live dossier production smoke test"
+          git push origin HEAD:dossier-production-render-fix-20260910
