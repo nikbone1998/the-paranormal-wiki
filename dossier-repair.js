@@ -251,7 +251,35 @@
     return { label, explanation };
   }
 
+  function canonicalFieldsComplete(fields) {
+    return !!(fields &&
+      Array.isArray(fields.famousSightings) && fields.famousSightings.length &&
+      Array.isArray(fields.behavior) && fields.behavior.length &&
+      Array.isArray(fields.weaknesses) && fields.weaknesses.length &&
+      Array.isArray(fields.culturalSignificance) && fields.culturalSignificance.length &&
+      Array.isArray(fields.scientificExplanations) && fields.scientificExplanations.length &&
+      Array.isArray(fields.hoaxesAndControversies) && fields.hoaxesAndControversies.length &&
+      fields.reportFrequency && meaningful(fields.reportFrequency.label) && meaningful(fields.reportFrequency.explanation) &&
+      Array.isArray(fields.geographicalOrigin) && fields.geographicalOrigin.length);
+  }
+
+  function exposeFieldAliases(entity, fields) {
+    entity.famousSightings = fields.famousSightings;
+    entity.behaviorProfile = fields.behavior;
+    entity.weaknessesProfile = fields.weaknesses;
+    entity.culturalSignificanceProfile = fields.culturalSignificance;
+    entity.scientificExplanationsProfile = fields.scientificExplanations;
+    entity.hoaxesAndControversies = fields.hoaxesAndControversies;
+    entity.reportFrequency = fields.reportFrequency;
+    entity.geographicalOrigin = fields.geographicalOrigin;
+  }
+
   function normalize(entity) {
+    if (canonicalFieldsComplete(entity.dossierFields)) {
+      exposeFieldAliases(entity, entity.dossierFields);
+      return entity.dossierFields;
+    }
+
     const fields = {
       famousSightings: buildFamousSightings(entity),
       behavior: buildBehavior(entity),
@@ -263,14 +291,7 @@
       geographicalOrigin: buildGeography(entity)
     };
     entity.dossierFields = fields;
-    entity.famousSightings = fields.famousSightings;
-    entity.behaviorProfile = fields.behavior;
-    entity.weaknessesProfile = fields.weaknesses;
-    entity.culturalSignificanceProfile = fields.culturalSignificance;
-    entity.scientificExplanationsProfile = fields.scientificExplanations;
-    entity.hoaxesAndControversies = fields.hoaxesAndControversies;
-    entity.reportFrequency = fields.reportFrequency;
-    entity.geographicalOrigin = fields.geographicalOrigin;
+    exposeFieldAliases(entity, fields);
     return fields;
   }
 
