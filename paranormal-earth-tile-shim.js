@@ -66,5 +66,18 @@
  window.__paranormalWikiEarthTileShim=true;
 })();
 
+// The site's primary router also uses location.hash, so dossier section links must scroll
+// without changing the route hash. Capture both the new quick-nav and legacy deep-section links.
+document.addEventListener('click',event=>{
+ const link=event.target.closest?.('.dossier-nav a[data-dossier-anchor], a[href^="#deep-"]');
+ if(!link)return;
+ const id=link.dataset.dossierAnchor||(link.getAttribute('href')||'').slice(1);
+ const target=id&&document.getElementById(id);
+ if(!target)return;
+ event.preventDefault();
+ event.stopPropagation();
+ target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+},{capture:true});
+
 import('./dossier-repair.js?v=1.0.0').catch(error=>console.warn('[PARANORMAL WIKI] dossier repair layer unavailable',error));
 import('./paranormal-earth-engine-v4.js?v=4.0.3-safari-safe');
