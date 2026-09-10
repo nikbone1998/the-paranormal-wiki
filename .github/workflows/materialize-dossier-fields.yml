@@ -1,0 +1,37 @@
+name: Materialize canonical dossier fields
+
+on:
+  push:
+    branches:
+      - canonical-dossier-fields-20260910
+    paths:
+      - 'scripts/materialize-dossier-fields.js'
+      - '.github/workflows/materialize-dossier-fields.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repair branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: canonical-dossier-fields-20260910
+
+      - name: Materialize canonical dossier fields
+        run: node scripts/materialize-dossier-fields.js
+
+      - name: Commit canonical archive data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add archive-entities-01.js archive-entities-02.js archive-entities-03.js archive-entities-04.js archive-entities-05.js reports/canonical-dossier-field-audit.json
+          if git diff --cached --quiet; then
+            echo "No canonical archive changes to commit."
+          else
+            git commit -m "Materialize canonical dossier fields for all 913 entities"
+            git push origin HEAD:canonical-dossier-fields-20260910
+          fi
