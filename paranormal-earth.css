@@ -193,11 +193,11 @@ body.ua-earth-lock{overflow:hidden!important;touch-action:none!important}
 
 
 /* Homepage symbolic directory: lightweight, text-first, and border-free. */
-.home-directory-symbolic{max-width:760px;margin:18px auto 22px;text-align:left;font:14px/1.65 "Courier New",monospace;color:#b9b9c9}
+.home-directory-symbolic{max-width:760px;margin:18px auto 22px;text-align:left;font:14px/1.65 "Courier New",monospace;color:#e6df9a}
 .home-directory-symbolic>div{margin:6px 0}
-.home-directory-symbolic .directory-symbol{display:inline-block;width:1.8em;color:#9de7bd;font-size:1.05em;text-align:center}
-.home-directory-symbolic a{color:#9de7bd;text-decoration:underline;text-underline-offset:2px}
-.home-directory-symbolic a:focus-visible{outline:2px solid #f4d27a;outline-offset:3px}
+.home-directory-symbolic .directory-symbol{display:inline-block;width:1.8em;color:#e6df9a;font-size:1.05em;text-align:center}
+.home-directory-symbolic a{color:#c7a8ff;text-decoration:underline;text-underline-offset:2px}
+.home-directory-symbolic a:focus-visible{outline:2px solid #fff0a8;outline-offset:3px}
 .home-directory-symbolic .directory-description{color:#aaa}
 @media(max-width:680px){
   .home-directory-symbolic{margin:16px 6px 20px;font-size:13px;line-height:1.55}
