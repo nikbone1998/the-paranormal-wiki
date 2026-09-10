@@ -207,3 +207,12 @@ body.ua-earth-lock{overflow:hidden!important;touch-action:none!important}
 @media(prefers-reduced-motion:reduce){
   .home-directory-symbolic a{transition:none}
 }
+
+
+/* Final cascade fix: the symbolic homepage directory owns its requested colors. */
+.home-classic .home-directory-symbolic,
+.home-classic .home-directory-symbolic .directory-symbol,
+.home-classic .home-directory-symbolic .directory-description{color:#e6df9a!important}
+.home-classic .home-directory-symbolic a,
+.home-classic .home-directory-symbolic a:visited,
+.home-classic .home-directory-symbolic a:hover{color:#c7a8ff!important}
