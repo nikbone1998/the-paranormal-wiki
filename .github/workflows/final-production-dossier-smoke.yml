@@ -26,9 +26,8 @@ jobs:
           test -n "$CHROME"
           mkdir -p reports /tmp/final-dossier-smoke
           python3 - <<'PY'
-          import json
           slugs=['ghost','mothman','bigfoot','vampire','banshee','demon','draugr','chupacabra']
-          open('/tmp/final-dossier-smoke/slugs.txt','w').write('\n'.join(slugs))
+          open('/tmp/final-dossier-smoke/slugs.txt','w').write('\n'.join(slugs)+'\n')
           PY
           while IFS= read -r slug; do
             timeout 45s "$CHROME" --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage --disable-background-networking --virtual-time-budget=9000 --dump-dom "https://www.theparanormalwiki.com/#entity/$slug" > "/tmp/final-dossier-smoke/$slug.html"
