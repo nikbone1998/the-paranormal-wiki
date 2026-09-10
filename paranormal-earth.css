@@ -131,3 +131,9 @@ body.ua-earth-lock{overflow:hidden!important;touch-action:none!important}
 .home-page .ua-globe-section{margin-top:14px}
 .home-page .ua-globe-section,.home-page .ua-globe-shell{background-color:#02020b}
 @media(max-width:680px){.home-classic{padding-left:3px;padding-right:3px}.home-intro{font-size:12px}.home-directory,.home-featured,.home-closing{font-size:12px}.home-page .ua-globe-section{margin-left:-3px;margin-right:-3px}}
+
+
+/* Homepage border reset: remove legacy section frames while preserving the Earth UI. */
+.home-classic > table,.home-classic > .layout,.home-classic > .box,.home-classic > table td,.home-classic > table th,.home-classic > table tr{border:0!important;background:transparent!important;box-shadow:none!important}
+.home-classic > table{border-collapse:collapse!important;border-spacing:0!important;width:100%!important}
+.home-classic > hr{border-left:0!important;border-right:0!important;border-bottom:0!important}
