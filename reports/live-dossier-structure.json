@@ -1,0 +1,13 @@
+{
+  "overview": true,
+  "nav": true,
+  "tableBoxCount": 0,
+  "anyBoxCount": 0,
+  "boxTitles": [],
+  "dossierIds": [
+    "dossier-overview"
+  ],
+  "coreSections": true,
+  "frequencyLabel": false,
+  "fieldSummary": false
+}
