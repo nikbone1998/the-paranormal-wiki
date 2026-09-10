@@ -160,3 +160,5 @@ async function updateVisitorCounter(){
 
 // Source-grounded dossier markers are kept in an isolated layer so the Earth renderer remains unchanged.
 import('./paranormal-earth-entities.js?v=20260910-2d-rebuild-1').catch(error=>console.warn('[PARANORMAL WIKI EARTH] entity layer unavailable',error));
+
+// Production deployment trigger: homepage layout remains owned by index.html.
