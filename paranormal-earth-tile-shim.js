@@ -66,4 +66,4 @@
  window.__paranormalWikiEarthTileShim=true;
 })();
 
-import('./paranormal-earth-engine-v4.js?v=4.0.4-marker-stability');
+import('./paranormal-earth-engine-v4.js?v=4.0.5-prerender-recovery');
