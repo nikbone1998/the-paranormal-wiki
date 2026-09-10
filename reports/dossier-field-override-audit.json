@@ -1,0 +1,16 @@
+{
+  "generatedAt": "2026-09-10T09:46:55.691Z",
+  "expectedEntities": 913,
+  "totalEntities": 913,
+  "overrideEntitiesRequested": 43,
+  "overrideEntitiesApplied": 43,
+  "fieldsApplied": {
+    "hoaxesAndControversies": 35,
+    "weaknesses": 2,
+    "famousSightings": 8
+  },
+  "missingSlugs": [],
+  "invalidFields": [],
+  "sourcesAttached": 56,
+  "identityPreserved": true
+}

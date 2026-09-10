@@ -1,0 +1,41 @@
+{
+  "version": "canonical-dossier-fields-2026-09-10-v2-targeted",
+  "status": "PASS",
+  "totalEntities": 913,
+  "expectedEntities": 913,
+  "fieldCounts": {
+    "famousSightings": 913,
+    "behavior": 913,
+    "weaknesses": 913,
+    "culturalSignificance": 913,
+    "scientificExplanations": 913,
+    "hoaxesAndControversies": 913,
+    "reportFrequency": 913,
+    "geographicalOrigin": 913
+  },
+  "targetedResearchRefinement": {
+    "entities": 43,
+    "fields": 45,
+    "famousSightings": 8,
+    "weaknesses": 2,
+    "hoaxesAndControversies": 35,
+    "fieldLevelSourceNotesAttached": 56
+  },
+  "reportFrequency": {
+    "status": "complete-qualitative",
+    "note": "The dossier specification permits qualitative frequency. Labels are archive profiles rather than invented sighting statistics."
+  },
+  "integrity": {
+    "identityPreserved": true,
+    "duplicateIds": 0,
+    "duplicateSlugs": 0,
+    "missingOverrideSlugs": 0,
+    "invalidOverrides": 0
+  },
+  "remainingManualResearchFlags": 0,
+  "notes": [
+    "The eight fields are physically materialized in the canonical archive entity records rather than existing only as browser-runtime fallbacks.",
+    "The reader runtime now preserves complete canonical dossierFields instead of recomputing over them.",
+    "Existing entity IDs, slugs, source arrays, map points, deep sections and other canonical properties are preserved."
+  ]
+}
