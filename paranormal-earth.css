@@ -117,3 +117,17 @@ body.ua-earth-lock{overflow:hidden!important;touch-action:none!important}
 .site-header-banner a{display:block}
 .site-header-banner img{display:block;width:100%;height:auto;max-width:1536px;margin:0 auto}
 .site-header-banner a:focus-visible{outline:2px dotted #00ffff;outline-offset:-3px}
+
+
+/* Text-first late-1990s homepage presentation. The Earth section is intentionally untouched. */
+.home-page{max-width:760px;margin-left:auto;margin-right:auto;text-align:center}
+.home-classic{padding:2px 8px 12px}
+.home-intro{max-width:690px;margin:0 auto;padding:6px 4px;line-height:1.45}
+.home-rule{border:0;border-top:1px dotted #777;margin:14px 8px}
+.home-heading{font:bold 14px Arial,sans-serif;color:#ddd;margin:10px 0}
+.home-directory,.home-featured,.home-closing{font:13px/1.8 Arial,sans-serif}
+.home-directory a,.home-featured a,.home-closing a{color:#8fb4ff}
+.home-note{max-width:700px;margin:10px auto;color:#aaa;font:11px/1.45 Arial,sans-serif}
+.home-page .ua-globe-section{margin-top:14px}
+.home-page .ua-globe-section,.home-page .ua-globe-shell{background-color:#02020b}
+@media(max-width:680px){.home-classic{padding-left:3px;padding-right:3px}.home-intro{font-size:12px}.home-directory,.home-featured,.home-closing{font-size:12px}.home-page .ua-globe-section{margin-left:-3px;margin-right:-3px}}

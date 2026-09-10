@@ -217,17 +217,15 @@ function entityPage(slug){
 }
 function home(){
  const flag=E.filter(e=>e.researchStatus.startsWith('FLAGSHIP')).length, fiction=E.filter(e=>e.sourceCode==='O').length, sourced=E.filter(e=>e.sourceCode!=='O'&&e.sources&&e.sources.length).length;
- shell('HOME',`<div class="welcome">WELCOME TRAVELER</div><div class="center"><b>THE ARCHIVE HAS BEEN RESEARCHED AGAIN.</b><br><span style="color:#00ffff">THE WEBSITE STILL THINKS IT IS 1997. THE SOURCES DO NOT.</span></div>
- <p class="warning">WARNING: SUPERNATURAL CLAIMS ARE CATALOGED — NOT AUTOMATICALLY ENDORSED</p>
- <table class="layout"><tr><td width="58%">
- <table class="box"><tr><td class="box-title">2026 RESEARCH EXPANSION</td></tr><tr><td class="box-body"><p>The archive now separates folklore, historical records, modern witness claims, scientific explanations and original fiction at the section level.</p><div class="progress">PARANORMAL ENTITY FILES: ${E.length}<br>FLAGSHIP ENTITY-SPECIFIC REVIEWS: ${flag}<br>COMPLETED NON-FICTION DOSSIERS: ${E.filter(e=>e.sourceCode!=='O').length}<br>NON-FICTION DOSSIERS WITH NAMED EXTERNAL SOURCES: ${sourced}<br>ORIGINAL FICTION FILES: ${fiction}<br>ALIEN / NHI ARCHETYPES: ${A.length}<br>UAP CASE FILES: ${C.length}<br>RESEARCH CURRENT THROUGH: 09/06/2026 · COMPLETION PASS: 09/06/2026</div><p class="tiny">All 913 public entity files use the expanded dossier architecture, with the original 150 preserved and 763 new records appended without renumbering legacy files. Every non-fiction file carries named external provenance, an entity-specific synthesis, chronology and map policy; original archive-fiction files remain explicitly fictional and do not receive fabricated historical evidence or real-world heat maps.</p></td></tr></table>
- <table class="box"><tr><td class="box-title purple">DEEPEST PARANORMAL FILES</td></tr><tr><td class="box-body">${E.filter(e=>e.researchStatus.startsWith('FLAGSHIP')).map(e=>`<a data-entity="${e.slug}">${esc(e.name)}</a>`).join(' · ')}</td></tr></table>
- <table class="box"><tr><td class="box-title green">NEW: ENTITY HEAT / ASSOCIATION MAPS</td></tr><tr><td class="box-body">Entity dossiers can now plot traditional cultural range, historical records, modern reports and famous cases separately. Maps never claim to show a creature population.</td></tr></table>
- </td><td width="42%">
- <table class="box"><tr><td class="box-title red">EXTRATERRESTRIAL ARCHIVE</td></tr><tr><td class="box-body center"><span class="ufo">🛸</span><br><b>${A.length} ALIEN / NHI ARCHETYPES</b><p>Species lore, contactee movements, abduction history, UAP cases, government documents, shape taxonomy, Roswell, Area 51 and current AARO material.</p>[ <a data-go="aliens">ENTER UFO ARCHIVE</a> ]</td></tr></table>
- <table class="box"><tr><td class="box-title">ENTITY OF THE WEEK</td></tr><tr><td class="box-body center"><b><a data-entity="mothman">MOTHMAN</a></b><p>Expanded timeline, Point Pleasant association map, source review, cultural history and skeptical alternatives.</p></td></tr></table>
- </td></tr></table>
-<!-- UNSEEN_EARTH_SECTION_BEGIN -->
+ shell('HOME','<div class="home-classic">'+
+  '<div class="welcome">WELCOME TRAVELER</div>'+
+  '<p class="home-intro">THE PARANORMAL WIKI is a source-grounded archive of unusual entities, cultural traditions, historical records, modern reports and famous cases. Browse the files, follow the evidence, and decide what you think.</p>'+
+  '<div class="home-directory">[ <a data-go="entity-index">BROWSE ALL '+E.length+' ENTITY FILES</a> ] &nbsp; [ <a data-go="search">SEARCH THE ARCHIVE</a> ]</div>'+
+  '<hr class="home-rule">'+
+  '<div class="home-heading">ARCHIVE DIRECTORY</div>'+
+  '<div class="home-directory">[ <a data-go="categories">CATEGORIES</a> ] &nbsp; [ <a data-go="cultures">CULTURES</a> ] &nbsp; [ <a data-go="countries">COUNTRIES</a> ]<br>[ <a data-go="entity-index">ENTITY INDEX</a> ] &nbsp; [ <a data-go="archive-tree">ARCHIVE TREE</a> ] &nbsp; [ <a data-go="aliens">UFO / UAP ARCHIVE</a> ] &nbsp; [ <a data-go="cases">FAMOUS CASES</a> ]</div>'+
+  '<p class="home-note">Claims are cataloged as claims. Map points represent source-grounded cultural, historical, modern-report, or famous-case associations; they do not show creature population density or prove paranormal activity.</p>'+
+  '<!-- UNSEEN_EARTH_SECTION_BEGIN -->
 <section class="ua-globe-section" aria-labelledby="global-view-title">
   <div class="ua-globe-head" id="global-view-title">GLOBAL VIEW</div>
   <div class="ua-globe-sub">INTERACTIVE EARTH OBSERVATION SYSTEM // SOURCE-GROUNDED ENTITY LAYER ONLINE</div>
@@ -248,8 +246,13 @@ function home(){
   </div>
   <div class="ua-globe-foot"><span class="ua-globe-signal">SIGNAL: NOMINAL // GEOSPHERE LINK ACTIVE</span><span class="ua-globe-future">ENTITY COORDINATES: LOADING</span></div>
 </section>
-<!-- UNSEEN_EARTH_SECTION_END -->
-`); app.classList.add('home-page');
+<!-- UNSEEN_EARTH_SECTION_END -->'+
+  '<hr class="home-rule">'+
+  '<div class="home-heading">FEATURED RESEARCH FILES</div>'+
+  '<div class="home-featured">'+E.filter(e=>e.researchStatus.startsWith('FLAGSHIP')).slice(0,12).map(e=>'<a data-entity="'+e.slug+'">'+esc(e.name)+'</a>').join(' · ')+'</div>'+
+  '<p class="home-note">Archive status: '+E.length+' public entity files · '+flag+' flagship reviews · '+sourced+' sourced non-fiction dossiers · '+fiction+' original fiction files · '+A.length+' alien / NHI archetypes · '+C.length+' UAP case files.</p>'+
+  '<div class="home-closing">[ <a data-go="entity-index">COMPLETE ENTITY INDEX</a> ] &nbsp; [ <a data-go="contact">CONTACT</a> ] &nbsp; [ <a data-go="about">ABOUT THE ARCHIVE</a> ]</div>'+
+ '</div>');
 }
 function entityIndex(cat=''){
  const list=E.filter(e=>!cat||e.category===cat),g={};list.forEach(e=>(g[e.name[0].toUpperCase()]??=[]).push(e));
