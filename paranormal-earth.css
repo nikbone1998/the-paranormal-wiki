@@ -291,3 +291,26 @@ body .source,
 body .dossier-page,
 body .dossier-page .dossier-overview,
 body .dossier-page .dossier-quickfacts span{color:var(--archive-yellow)}
+
+
+/* Occult archive section: atmospheric, text-led, and border-free. */
+.occult-page{max-width:760px;margin:0 auto;padding:4px 8px 24px;color:#e6df9a}
+.occult-page .welcome{color:#e6df9a!important}
+.occult-intro{max-width:680px;margin:10px auto 18px;color:#e6df9a;line-height:1.7;text-align:center}
+.occult-directory{max-width:700px;margin:22px auto}
+.occult-directory>div{margin:18px 0}
+.occult-symbol{display:inline-block;width:1.7em;color:#e6df9a}
+.occult-directory a,.occult-article a,.occult-return a{color:#c7a8ff;text-decoration:underline}
+.occult-directory a{font:bold 15px Arial,sans-serif;letter-spacing:.04em}
+.occult-directory p{margin:5px 0 0 1.7em;color:#e6df9a;font:14px/1.6 "Times New Roman",Times,serif}
+.occult-article{margin:20px 0 24px}
+.occult-article h3,.occult-sources h3{margin:0 0 6px;color:#e6df9a;font:bold 14px Arial,sans-serif;letter-spacing:.08em}
+.occult-article p,.occult-sources li{color:#e6df9a;font:14px/1.7 "Times New Roman",Times,serif}
+.occult-sources{margin-top:28px}
+.occult-sources ul{margin:8px 0;padding-left:24px}
+.occult-return{text-align:center;margin-top:28px}
+@media(max-width:680px){
+  .occult-page{padding-left:8px;padding-right:8px}
+  .occult-intro,.occult-directory p,.occult-article p,.occult-sources li{font-size:15px}
+  .occult-directory>div{margin:21px 0}
+}
