@@ -26,25 +26,30 @@ jobs:
           mkdir -p reports /tmp/dossier-smoke
           timeout 45s "$CHROME" --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage --disable-background-networking --virtual-time-budget=7000 --dump-dom "https://www.theparanormalwiki.com/#entity/ghost" > /tmp/dossier-smoke/ghost.html
           python3 - <<'PY'
-          import re, html, json
+          import re, html, json, collections
           s=open('/tmp/dossier-smoke/ghost.html', encoding='utf-8').read()
           s=re.sub(r'<script\b[^>]*>.*?</script>', '', s, flags=re.I|re.S)
           s=re.sub(r'<style\b[^>]*>.*?</style>', '', s, flags=re.I|re.S)
-          titles=[]
-          for m in re.finditer(r'<(?P<tag>[a-z0-9]+)\b(?P<attrs>[^>]*)class="(?P<class>[^"]*\bbox-title\b[^"]*)"(?P<rest>[^>]*)>(?P<body>.*?)</(?P=tag)>', s, flags=re.I|re.S):
-              txt=html.unescape(re.sub(r'<[^>]+>', ' ', m.group('body')))
-              txt=re.sub(r'\s+', ' ', txt).strip()
-              titles.append({'tag':m.group('tag'),'class':m.group('class'),'text':txt})
+          class_counter=collections.Counter()
+          for classes in re.findall(r'class="([^"]+)"', s, flags=re.I):
+              for c in classes.split(): class_counter[c]+=1
+          ids=sorted(set(re.findall(r'id="([^"]+)"', s, flags=re.I)))
+          snippets=[]
+          keys=['BEHAVIOR','FAMOUS SIGHTINGS','WEAKNESSES','CULTURAL SIGNIFICANCE','SCIENTIFIC','HOAXES','REPORT FREQUENCY','GEOGRAPHICAL ORIGIN','KNOWN HISTORY','PHYSICAL DESCRIPTION']
+          upper=s.upper()
+          for key in keys:
+              pos=upper.find(key)
+              if pos>=0:
+                  frag=s[max(0,pos-220):pos+360]
+                  frag=re.sub(r'\s+',' ',frag).strip()
+                  snippets.append({'key':key,'fragment':frag})
           out={
             'overview': 'id="dossier-overview"' in s,
             'nav': 'class="dossier-nav"' in s,
-            'tableBoxCount': len(re.findall(r'<table\b[^>]*class="[^"]*\bbox\b', s, flags=re.I)),
-            'anyBoxCount': len(re.findall(r'<[a-z0-9]+\b[^>]*class="[^"]*\bbox\b', s, flags=re.I)),
-            'boxTitles': titles,
-            'dossierIds': sorted(set(re.findall(r'id="(dossier-[^"]+)"', s))),
             'coreSections': 'dossier-core-sections' in s,
-            'frequencyLabel': 'dossier-frequency-label' in s,
-            'fieldSummary': 'data-field-summary' in s,
+            'classCounts': class_counter.most_common(80),
+            'ids': ids[:160],
+            'keywordFragments': snippets,
           }
           open('reports/live-dossier-structure.json','w').write(json.dumps(out,indent=2))
           print(json.dumps(out,indent=2))
@@ -56,5 +61,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add reports/live-dossier-structure.json || true
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Record live dossier DOM structure diagnostic"
+          git commit -m "Record transformed live dossier DOM structure"
           git push origin HEAD:dossier-production-render-fix-20260910
