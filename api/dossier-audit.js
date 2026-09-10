@@ -1,24 +1,17 @@
 const vm=require('vm');
 
 const ARCHIVE_FILES=['archive-entities-01.js','archive-entities-02.js','archive-entities-03.js','archive-entities-04.js','archive-entities-05.js'];
+const ARCHIVE_ORIGIN='https://www.theparanormalwiki.com';
 const PLACEHOLDER=/^(?:empty|null|n\/a|no data|unknown|-|not entered|none)$/i;
 const text=value=>String(value??'').replace(/\s+/g,' ').trim();
 const meaningful=value=>{const valueText=text(value);return !!valueText&&!PLACEHOLDER.test(valueText)};
 const hasDeep=(entity,pattern)=>(entity.deepSections||[]).some(section=>pattern.test(text(section&&section.title)+' '+(section&&section.paragraphs||[]).map(text).join(' ')));
 
-async function loadEntities(req){
- const host=req.headers['x-forwarded-host']||req.headers.host;
- if(!host)throw new Error('request host unavailable');
- const proto=req.headers['x-forwarded-proto']||'https';
- const headers={Accept:'text/javascript'};
- if(req.headers.cookie)headers.Cookie=req.headers.cookie;
- if(req.headers.authorization)headers.Authorization=req.headers.authorization;
- if(req.headers['x-vercel-protection-bypass'])headers['x-vercel-protection-bypass']=req.headers['x-vercel-protection-bypass'];
+async function loadEntities(){
  const sandbox={window:{__ARCHIVE_ENTITIES:[]}};
  vm.createContext(sandbox);
  for(const filename of ARCHIVE_FILES){
-  const url=`${proto}://${host}/${filename}`;
-  const response=await fetch(url,{headers,cache:'no-store'});
+  const response=await fetch(`${ARCHIVE_ORIGIN}/${filename}`,{headers:{Accept:'text/javascript'},cache:'no-store'});
   if(!response.ok)throw new Error(`${filename} returned ${response.status}`);
   const source=await response.text();
   vm.runInContext(source,sandbox,{filename,timeout:10000});
@@ -48,7 +41,7 @@ module.exports=async function dossierAudit(req,res){
   res.statusCode=405;res.setHeader('Allow','GET');res.end(JSON.stringify({error:'method_not_allowed'}));return;
  }
  try{
-  const entities=await loadEntities(req);
+  const entities=await loadEntities();
   const fields=['famousSightings','behavior','weaknesses','culturalSignificance','scientificExplanations','hoaxesAndControversies','reportFrequency','geographicalOrigin'];
   const counts=Object.fromEntries(fields.map(field=>[field,0]));
   const missing=[];
@@ -72,6 +65,7 @@ module.exports=async function dossierAudit(req,res){
 
   const body={
    generatedAt:new Date().toISOString(),
+   source:`${ARCHIVE_ORIGIN}/archive-entities-01..05.js`,
    totalEntities:entities.length,
    expectedEntities:913,
    entityCountPreserved:entities.length===913,
