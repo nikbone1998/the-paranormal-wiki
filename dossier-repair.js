@@ -308,7 +308,9 @@
   }
 
   function directBoxes(app) {
-    return [...app.children].filter(node => node.matches?.('table.box'));
+    // Dossier boxes may be wrapped by later layout/UI layers; search the active entity
+    // subtree instead of assuming every box is an immediate #app child.
+    return [...app.querySelectorAll('table.box')];
   }
 
   function boxTitle(box) {
