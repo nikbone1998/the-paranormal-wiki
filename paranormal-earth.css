@@ -314,3 +314,22 @@ body .dossier-page .dossier-quickfacts span{color:var(--archive-yellow)}
   .occult-intro,.occult-directory p,.occult-article p,.occult-sources li{font-size:15px}
   .occult-directory>div{margin:21px 0}
 }
+
+
+/* Occult figure profiles. */
+.occult-kicker{text-align:center;color:#e6df9a;font:12px "Courier New",monospace;letter-spacing:.12em}
+.occult-figure-entry{margin:12px 0 0 1em}
+.occult-figure-entry p{margin:5px 0 0 1.7em;color:#e6df9a;font:14px/1.6 "Times New Roman",Times,serif}
+.occult-portrait{max-width:520px;margin:20px auto;text-align:center}
+.occult-portrait img{display:block;width:100%;max-height:520px;object-fit:contain;background:#050505}
+.occult-portrait figcaption{margin-top:6px;color:#b9b173;font:11px/1.4 "Courier New",monospace}
+.occult-facts{max-width:620px;margin:20px auto;border-top:1px dotted #827b4b;border-bottom:1px dotted #827b4b}
+.occult-facts>div{display:grid;grid-template-columns:120px 1fr;gap:12px;padding:8px 0;border-bottom:1px dotted #4e4a2e}
+.occult-facts>div:last-child{border-bottom:0}
+.occult-facts b{color:#e6df9a;font:12px Arial,sans-serif}
+.occult-facts span{color:#e6df9a;font:13px/1.5 "Times New Roman",Times,serif}
+@media(max-width:680px){
+  .occult-figure-entry{margin-left:0}
+  .occult-facts>div{grid-template-columns:1fr;gap:2px}
+  .occult-portrait{margin-left:8px;margin-right:8px}
+}
