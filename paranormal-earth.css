@@ -161,3 +161,5 @@ body.ua-earth-lock{overflow:hidden!important;touch-action:none!important}
 .home-classic>table td,.home-classic>table th,.home-classic>table tr,.home-classic .box-title,.home-classic .box-body{border:0!important;background:transparent!important}
 .home-classic .ua-globe-section{margin-top:24px;text-align:left}
 @media(max-width:680px){.home-classic{max-width:none;padding-left:6px;padding-right:6px}.home-classic .welcome{font-size:16px}.home-classic .home-intro{font-size:13px}.home-classic .home-directory,.home-classic .home-featured,.home-classic .home-closing{font-size:11px;line-height:2.15}.home-classic .home-rule{margin:18px 4px}.home-classic .ua-globe-section{margin-left:-6px;margin-right:-6px}}
+
+/* Production deployment trigger for homepage presentation refinement. */
