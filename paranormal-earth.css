@@ -177,3 +177,10 @@ body.ua-earth-lock{overflow:hidden!important;touch-action:none!important}
 .home-classic .home-note{color:#b7b7b7!important}
 .home-classic .home-closing a{color:#8fc6ff!important}
 .home-classic a:visited{color:#c58cff!important}
+
+
+/* Homepage welcome copy: green HTML-era text, with no panel or border. */
+.home-welcome-copy{max-width:640px;margin:4px auto 18px;color:#8fe39a;text-align:center;font:14px/1.65 "Times New Roman",Times,serif}
+.home-welcome-copy p{margin:10px 0}
+.home-welcome-title{margin:0 0 10px;color:#8fe39a;font:bold 15px Arial,sans-serif;letter-spacing:.08em}
+@media(max-width:680px){.home-welcome-copy{font-size:13px;line-height:1.55}.home-welcome-title{font-size:14px}}
