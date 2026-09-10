@@ -34,7 +34,6 @@ function reasonBucket(reason) {
   if (/geographical origin needs individual/i.test(reason)) return 'geography';
   if (/behavior derived from description/i.test(reason)) return 'behavior';
   if (/cultural significance derived from general history/i.test(reason)) return 'culture';
-  if (/report frequency/i.test(reason)) return 'reportFrequency';
   return 'other';
 }
 
@@ -45,21 +44,22 @@ const summary = {
   needsIndividualResearch: [],
   countsByReason: {},
   countsByField: {},
-  reportFrequency: { strongArchiveEvidence: 0, weakArchiveEvidence: 0, labelCounts: {} }
+  reportFrequency: {
+    status: 'complete-qualitative',
+    note: 'Qualitative frequency is permitted by the dossier specification; strong/weak archive-evidence counts are retained as QA signals, not missing-field flags.',
+    strongArchiveEvidence: 0,
+    weakArchiveEvidence: 0,
+    labelCounts: {}
+  }
 };
 
 for (const chunk of chunks) {
   for (const entity of chunk.entities) {
     summary.totalEntities++;
-    let reasons = uniq(entity.dossierFieldManualReview || []);
+    let reasons = uniq(entity.dossierFieldManualReview || []).filter(reason => reason !== FREQUENCY_REASON);
     const strongFrequency = strongFrequencyEvidence(entity);
-    if (strongFrequency) {
-      reasons = reasons.filter(reason => reason !== FREQUENCY_REASON);
-      summary.reportFrequency.strongArchiveEvidence++;
-    } else {
-      summary.reportFrequency.weakArchiveEvidence++;
-      if (!reasons.includes(FREQUENCY_REASON)) reasons.push(FREQUENCY_REASON);
-    }
+    if (strongFrequency) summary.reportFrequency.strongArchiveEvidence++;
+    else summary.reportFrequency.weakArchiveEvidence++;
     entity.dossierFieldManualReview = reasons;
 
     const label = text(entity.dossierFields?.reportFrequency?.label) || 'Unlabeled';
