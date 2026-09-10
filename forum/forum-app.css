@@ -4,3 +4,52 @@
 @media(max-width:560px){.forum-shell{width:100%;padding-top:0}.utility-bar,.masthead,.forum-tabs,.breadcrumbs{border-left:0;border-right:0}.masthead{margin-top:0}.forum-tab{min-height:48px;padding:0 14px}.forum-layout{margin-top:8px}.forum-content,.forum-sidebar{padding:0 6px}.forum-sidebar{grid-template-columns:1fr}.page-head{padding-inline:2px}.page-actions{width:100%}.page-actions .bbs-btn{flex:1}.thread-meta-grid{grid-template-columns:1fr 1fr}.thread-actions .bbs-btn{flex:1}.post-body,.post-author{padding:10px}.forum-avatar.sm{width:38px;height:38px}.post-tools{display:grid;grid-template-columns:repeat(2,1fr)}.post-tools .mini-btn{width:100%;min-height:38px}.post-number{grid-column:1/-1}.forum-pagination{grid-template-columns:1fr 1fr}.forum-pagination .page-status{grid-column:1/-1;grid-row:1}.reply-target{flex-direction:column}.search-form{grid-template-columns:1fr}.profile-grid{grid-template-columns:1fr}.profile-stats{grid-template-columns:1fr}.profile-avatar-edit{align-items:flex-start;flex-direction:column}.modal-backdrop{padding:6px;align-items:end}.modal{width:100%;max-height:94vh}.field input,.field select{min-height:44px}.auth-tab{min-height:46px}.account-copy strong{max-width:210px}}
 @media(max-width:375px){.forum-tab{padding:0 12px}.thread-meta-grid{grid-template-columns:1fr}.account-copy strong{max-width:165px}.post-tools{grid-template-columns:1fr 1fr}}
 @media(max-width:330px){.forum-tab{padding:0 10px}.masthead h1{font-size:23px}.thread-actions,.post-tools,.forum-pagination{display:grid;grid-template-columns:1fr}.forum-pagination .page-status{grid-column:auto}.bbs-btn{width:100%}}
+
+/* Border-free community presentation: preserve button/input affordances and
+ * keyboard focus outlines, but remove framed panels and divider lines. */
+.forum-shell .utility-bar,
+.forum-shell .masthead,
+.forum-shell .forum-tabs,
+.forum-shell .breadcrumbs,
+.forum-shell .panel,
+.forum-shell .side-panel,
+.forum-shell .thread-shell,
+.forum-shell .panel-title,
+.forum-shell .side-title,
+.forum-shell .notice,
+.forum-shell .thread-row,
+.forum-shell .board-card,
+.forum-shell .thread-head,
+.forum-shell .thread-meta-item,
+.forum-shell .staff-strip,
+.forum-shell .post,
+.forum-shell .post-author,
+.forum-shell .post-tools,
+.forum-shell .reply-context,
+.forum-shell .reply-target,
+.forum-shell .profile-stats>div,
+.forum-shell .recent-list,
+.forum-shell .staff-section,
+.forum-shell .staff-row,
+.forum-shell .search-result,
+.forum-shell .forum-pagination,
+.forum-shell .field input,
+.forum-shell .field textarea,
+.forum-shell .field select,
+.forum-shell .modal,
+.forum-shell .modal-header,
+.forum-shell .auth-tabs,
+.forum-shell .profile-editor,
+.forum-shell .account-chip,
+.forum-shell .account-menu,
+.forum-shell .forum-avatar,
+.forum-shell .rules-list div,
+.forum-shell .board-latest{border:0!important;box-shadow:none!important}
+.forum-shell .forum-tab,
+.forum-shell .post-author,
+.forum-shell .board-latest,
+.forum-shell .forum-stats>div{border-right:0!important;border-left:0!important}
+.forum-shell .post-author,
+.forum-shell .board-latest,
+.forum-shell .forum-stats>div,
+.forum-shell .rules-list div{border-bottom:0!important}
