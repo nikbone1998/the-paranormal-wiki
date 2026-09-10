@@ -506,23 +506,12 @@
     assignId(controversyBox, 'dossier-controversy');
     assignId(sourcesBox, 'dossier-sources');
 
-    organizeCore(app, [
-      appearanceBox,
-      behaviorBox,
-      sightingsBox,
-      abilitiesBox,
-      weaknessesBox,
-      geoBox,
-      frequencyBox,
-      cultureBox,
-      scienceBox,
-      controversyBox,
-      etymologyBox,
-      historyBox,
-      timelineBox
-    ]);
-
-    groupResearchNotes(app);
+    // Keep the canonical dossier sections in the document positions created by
+    // entityPage(). Reparenting HTML table sections into a new <section> caused
+    // Chromium's table DOM normalization to detach the dossier content. The
+    // canonical fields are already written into these boxes above, so no move
+    // is necessary. This also preserves maps, history, sources, evidence tables,
+    // and the existing long-form research exactly where the base renderer puts them.
 
     app.querySelectorAll('*').forEach(node => {
       if (node.childNodes.length !== 1 || node.firstChild?.nodeType !== Node.TEXT_NODE) return;
