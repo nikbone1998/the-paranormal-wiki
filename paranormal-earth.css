@@ -102,6 +102,7 @@ body.ua-earth-lock{overflow:hidden!important;touch-action:none!important}
 .home-page>.layout,.home-page>.layout td,.home-page .box,.home-page .box-title,.home-page .box-body{background:transparent!important;border-color:transparent!important}
 .home-page>.layout{border-spacing:10px}
 .home-page .box-title{color:#cfcfff;padding-left:0;padding-right:0}
+.page{border:0}
 
 /* Supplied masthead artwork. Keep the complete banner visible at every width. */
 .site-header-banner{margin:0 0 5px;background:#000;line-height:0;text-align:center;overflow:hidden}
