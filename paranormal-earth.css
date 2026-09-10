@@ -184,3 +184,9 @@ body.ua-earth-lock{overflow:hidden!important;touch-action:none!important}
 .home-welcome-copy p{margin:10px 0}
 .home-welcome-title{margin:0 0 10px;color:#8fe39a;font:bold 15px Arial,sans-serif;letter-spacing:.08em}
 @media(max-width:680px){.home-welcome-copy{font-size:13px;line-height:1.55}.home-welcome-title{font-size:14px}}
+
+
+/* Transparent utility navigation buttons. */
+.nav button{background:transparent!important;color:#9bb7ff!important;border:0!important;box-shadow:none!important;padding:3px 6px}
+.nav button:hover,.nav button:focus-visible{color:#8fe39a!important;background:transparent!important;text-decoration:underline;outline:1px dotted #8fe39a;outline-offset:2px}
+.nav button:active{background:transparent!important;border:0!important}
