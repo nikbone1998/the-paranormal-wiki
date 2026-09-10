@@ -81,7 +81,6 @@ const LAST_COUNT_KEY='paranormalWikiLastVisitorCountV4';
 
    <table class="layout home-dual"><tr><td width="50%"><table class="box"><tr><td class="box-title red">ALIEN / NHI ARCHIVE</td></tr><tr><td class="box-body center"><span class="ufo">🛸</span><p>Species lore, contactee movements, alleged occupants, abduction narratives and extraterrestrial archetypes.</p>[ <a data-go="aliens">ENTER ALIEN / NHI ARCHIVE</a> ]</td></tr></table></td><td width="50%"><table class="box"><tr><td class="box-title green">MODERN UAP RESEARCH</td></tr><tr><td class="box-body center"><p>Official imagery, government records, historical investigations, AARO material and evidence-status reviews.</p><p class="tiny">Unresolved does not mean extraterrestrial.</p>[ <a data-go="uap">OPEN MODERN UAP ARCHIVE</a> ]</td></tr></table></td></tr></table>
 
-   <table class="box home-mystery"><tr><td class="box-title yellow">ARCHIVE MYSTERY</td></tr><tr><td class="box-body mono"><div class="home-mystery-grid"><div>PUBLIC FILE COUNT: ${publicEntities}<br>ALIEN INDEX COUNT: ${alienArchetypes}<br>RESTRICTED COUNT: ???<br>LAST UPDATE LOG: <span class="secret">09/07/2026</span></div><div>DATABASE GROWTH LOG:<br>1997 — 54 files · 1999 — 92 files · 2001 — 118 files · 2003 — 150 files<br>2007 — 207 files · 2012 — 319 files · 2017 — 438 files<br>2020 — 511 files · 2023 — 669 files · 2026 — 913 files</div></div><p class="tiny">(That date is in a hidden fictional storyline. Public research is current through 09/06/2026.)</p></td></tr></table>
   </div>`;
  }
 
