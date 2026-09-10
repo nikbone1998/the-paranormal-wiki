@@ -89,8 +89,8 @@ body.ua-earth-lock{overflow:hidden!important;touch-action:none!important}
 .ua-globe-shell.ua-fallback .ua-globe-error{display:none}
 .ua-2d-map-world{transform-origin:50% 50%;transition:none;will-change:transform}
 .ua-2d-map-world .ua-fallback-marker-stage{position:absolute;inset:0;transform:none;overflow:visible;pointer-events:auto;cursor:grab}
-.ua-fallback-marker{transform:translate(-50%,-100%);font-size:22px;line-height:1;min-width:36px;min-height:42px;padding:0;background:transparent;border:0;color:#d2a85e;text-shadow:0 1px 3px #000;filter:drop-shadow(0 1px 2px #000)}
-.ua-fallback-marker:hover,.ua-fallback-marker:focus-visible{transform:translate(-50%,-100%) scale(1.14);outline:2px solid #fff;outline-offset:2px;border-radius:10px}
+.ua-fallback-marker{transform:translate(-50%,-100%) scale(var(--pin-scale,1));font-size:22px;line-height:1;min-width:36px;min-height:42px;padding:0;background:transparent;border:0;color:#d2a85e;text-shadow:0 1px 3px #000;filter:drop-shadow(0 1px 2px #000)}
+.ua-fallback-marker:hover,.ua-fallback-marker:focus-visible{transform:translate(-50%,-100%) scale(calc(var(--pin-scale,1) * 1.14));outline:2px solid #fff;outline-offset:2px;border-radius:10px}
 .ua-fallback-marker.ua-fallback-cluster{font-size:23px}.ua-fallback-marker.ua-fallback-cluster small{right:-4px;top:-5px;min-width:18px;padding:2px 4px;border-radius:10px;background:#10131c;color:#fff;border:1px solid #d2d7df;font:bold 11px Arial,sans-serif}
 .ua-fallback-marker[data-layer="traditional"]{color:#72b9b4}.ua-fallback-marker[data-layer="historical"]{color:#d2a85e}.ua-fallback-marker[data-layer="modern"]{color:#a894c9}.ua-fallback-marker[data-layer="famous"]{color:#c77b76}
 .ua-entity-toggle{display:none}.ua-entity-toolbar{max-width:min(620px,calc(100% - 16px));right:auto;background:rgba(0,0,12,.78)}
