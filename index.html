@@ -58,6 +58,7 @@ const app=document.getElementById('app'),crumb=document.getElementById('crumb'),
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const go=x=>{location.hash='#'+x};
 const bar=n=>'█'.repeat(Math.max(0,Math.min(10,n)))+'░'.repeat(10-Math.max(0,Math.min(10,n)))+' '+n+'/10';
+const stat=bar;
 function shell(title,body,alien=false){crumb.textContent=title;alienNav.hidden=!alien;app.innerHTML=body;bind();scrollTo(0,0)}
 function srcList(xs){return `<ul class="source-list">${xs.map(s=>`<li><span class="tag">${esc(s.type)}</span> <a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a></li>`).join('')}</ul>`}
 function sourceLegend(){return `<div class="tiny">[F] folklore · [H] historical document · [M] modern report · [W] witness claim · [C] cryptozoology · [R] religious tradition · [A] academic · [G] government · [S] scientific explanation · [U] urban legend · [P] popular culture · [I] internet folklore · [O] archive-origin · [?] disputed/unknown</div>`}
