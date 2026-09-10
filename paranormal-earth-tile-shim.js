@@ -66,4 +66,5 @@
  window.__paranormalWikiEarthTileShim=true;
 })();
 
+import('./dossier-repair.js?v=1.0.0').catch(error=>console.warn('[PARANORMAL WIKI] dossier repair layer unavailable',error));
 import('./paranormal-earth-engine-v4.js?v=4.0.3-safari-safe');
