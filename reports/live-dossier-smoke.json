@@ -1,16 +1,16 @@
 {
   "productionUrl": "https://www.theparanormalwiki.com/",
-  "checkedAt": "2026-09-10T15:49:48Z",
+  "checkedAt": "2026-09-10T15:52:07Z",
   "browser": "/usr/bin/google-chrome",
   "results": [
-    {"slug":"ghost","overview":true,"nav":false,"behavior":true,"famousSightings":true,"weaknesses":true,"culturalSignificance":true,"scientificExplanations":true,"hoaxesAndControversies":true,"reportFrequency":true,"geographicalOrigin":true,"legacyGenericFrequencyPresent":true,"ok":false},
-    {"slug":"mothman","overview":true,"nav":false,"behavior":true,"famousSightings":true,"weaknesses":true,"culturalSignificance":true,"scientificExplanations":true,"hoaxesAndControversies":true,"reportFrequency":true,"geographicalOrigin":true,"legacyGenericFrequencyPresent":true,"ok":false},
-    {"slug":"bigfoot","overview":true,"nav":false,"behavior":true,"famousSightings":true,"weaknesses":true,"culturalSignificance":true,"scientificExplanations":true,"hoaxesAndControversies":true,"reportFrequency":true,"geographicalOrigin":true,"legacyGenericFrequencyPresent":true,"ok":false},
-    {"slug":"vampire","overview":true,"nav":false,"behavior":true,"famousSightings":true,"weaknesses":true,"culturalSignificance":true,"scientificExplanations":true,"hoaxesAndControversies":true,"reportFrequency":true,"geographicalOrigin":true,"legacyGenericFrequencyPresent":true,"ok":false},
-    {"slug":"banshee","overview":true,"nav":false,"behavior":true,"famousSightings":true,"weaknesses":true,"culturalSignificance":true,"scientificExplanations":true,"hoaxesAndControversies":true,"reportFrequency":true,"geographicalOrigin":true,"legacyGenericFrequencyPresent":true,"ok":false},
-    {"slug":"demon","overview":true,"nav":false,"behavior":true,"famousSightings":true,"weaknesses":true,"culturalSignificance":true,"scientificExplanations":true,"hoaxesAndControversies":true,"reportFrequency":true,"geographicalOrigin":true,"legacyGenericFrequencyPresent":true,"ok":false},
-    {"slug":"draugr","overview":true,"nav":false,"behavior":true,"famousSightings":true,"weaknesses":true,"culturalSignificance":true,"scientificExplanations":true,"hoaxesAndControversies":true,"reportFrequency":true,"geographicalOrigin":true,"legacyGenericFrequencyPresent":true,"ok":false},
-    {"slug":"black-eyed-children","overview":false,"nav":false,"behavior":true,"famousSightings":true,"weaknesses":true,"culturalSignificance":true,"scientificExplanations":true,"hoaxesAndControversies":true,"reportFrequency":true,"geographicalOrigin":true,"legacyGenericFrequencyPresent":true,"ok":false}
+    {"slug":"ghost","overview":true,"nav":true,"behavior":false,"famousSightings":false,"weaknesses":false,"culturalSignificance":false,"scientificExplanations":false,"hoaxesAndControversies":false,"reportFrequency":false,"geographicalOrigin":false,"legacyGenericFrequencyVisible":false,"ok":false},
+    {"slug":"mothman","overview":true,"nav":true,"behavior":false,"famousSightings":false,"weaknesses":false,"culturalSignificance":false,"scientificExplanations":false,"hoaxesAndControversies":false,"reportFrequency":false,"geographicalOrigin":false,"legacyGenericFrequencyVisible":false,"ok":false},
+    {"slug":"bigfoot","overview":true,"nav":true,"behavior":false,"famousSightings":false,"weaknesses":false,"culturalSignificance":false,"scientificExplanations":false,"hoaxesAndControversies":false,"reportFrequency":false,"geographicalOrigin":false,"legacyGenericFrequencyVisible":false,"ok":false},
+    {"slug":"vampire","overview":true,"nav":true,"behavior":false,"famousSightings":false,"weaknesses":false,"culturalSignificance":false,"scientificExplanations":false,"hoaxesAndControversies":false,"reportFrequency":false,"geographicalOrigin":false,"legacyGenericFrequencyVisible":false,"ok":false},
+    {"slug":"banshee","overview":true,"nav":true,"behavior":false,"famousSightings":false,"weaknesses":false,"culturalSignificance":false,"scientificExplanations":false,"hoaxesAndControversies":false,"reportFrequency":false,"geographicalOrigin":false,"legacyGenericFrequencyVisible":false,"ok":false},
+    {"slug":"demon","overview":true,"nav":true,"behavior":false,"famousSightings":false,"weaknesses":false,"culturalSignificance":false,"scientificExplanations":false,"hoaxesAndControversies":false,"reportFrequency":false,"geographicalOrigin":false,"legacyGenericFrequencyVisible":false,"ok":false},
+    {"slug":"draugr","overview":true,"nav":true,"behavior":false,"famousSightings":false,"weaknesses":false,"culturalSignificance":false,"scientificExplanations":false,"hoaxesAndControversies":false,"reportFrequency":false,"geographicalOrigin":false,"legacyGenericFrequencyVisible":false,"ok":false},
+    {"slug":"chupacabra","overview":true,"nav":true,"behavior":false,"famousSightings":false,"weaknesses":false,"culturalSignificance":false,"scientificExplanations":false,"hoaxesAndControversies":false,"reportFrequency":false,"geographicalOrigin":false,"legacyGenericFrequencyVisible":false,"ok":false}
   ],
   "failures": 8,
   "passed": false
