@@ -1,13 +1,119 @@
 {
   "overview": true,
   "nav": true,
-  "tableBoxCount": 0,
-  "anyBoxCount": 0,
-  "boxTitles": [],
-  "dossierIds": [
-    "dossier-overview"
-  ],
   "coreSections": true,
-  "frequencyLabel": false,
-  "fieldSummary": false
+  "classCounts": [
+    [
+      "badge",
+      8
+    ],
+    [
+      "page",
+      1
+    ],
+    [
+      "topnote",
+      1
+    ],
+    [
+      "site-header-banner",
+      1
+    ],
+    [
+      "stars",
+      1
+    ],
+    [
+      "nav",
+      1
+    ],
+    [
+      "aliennav",
+      1
+    ],
+    [
+      "marq",
+      1
+    ],
+    [
+      "ticker",
+      1
+    ],
+    [
+      "crumb",
+      1
+    ],
+    [
+      "content",
+      1
+    ],
+    [
+      "dossier-modernized",
+      1
+    ],
+    [
+      "dossier-nav",
+      1
+    ],
+    [
+      "dossier-overview",
+      1
+    ],
+    [
+      "dossier-overview-head",
+      1
+    ],
+    [
+      "dossier-quickfacts",
+      1
+    ],
+    [
+      "dossier-core-sections",
+      1
+    ],
+    [
+      "webring",
+      1
+    ],
+    [
+      "badges",
+      1
+    ],
+    [
+      "footer",
+      1
+    ],
+    [
+      "counter",
+      1
+    ],
+    [
+      "footerMystery",
+      1
+    ]
+  ],
+  "ids": [
+    "alienNav",
+    "app",
+    "crumb",
+    "dossier-overview",
+    "randomAlien",
+    "randomCryptid",
+    "randomEntity",
+    "randomFolklore",
+    "ringRandom",
+    "sound",
+    "visitor",
+    "whisper"
+  ],
+  "keywordFragments": [
+    {
+      "key": "REPORT FREQUENCY",
+      "fragment": "<div class=\"dossier-quickfacts\"> <div><b>CLASSIFICATION</b><span>Ghosts &amp; Apparitions</span></div> <div><b>GEOGRAPHICAL ORIGIN</b><span>Worldwide (Global traditions)</span></div> <div><b>REPORT FREQUENCY</b><span>Widely reported</span></div> <div><b>PRIMARY REGION</b><span>Global traditions</span></div> <div><b>SOURCE TRAIL</b><span>13 named references</span></div> </div> </section><section class=\"dossier-core-sections\"></section></main> <div class=\"webring\"><b>PARANORMAL RESEARCH WEBRING</b><br>[ <a data-g"
+    },
+    {
+      "key": "GEOGRAPHICAL ORIGIN",
+      "fragment": "ss=\"dossier-overview-head\"><span>DOSSIER OVERVIEW</span><small>PARA-0001</small></div> <div class=\"dossier-quickfacts\"> <div><b>CLASSIFICATION</b><span>Ghosts &amp; Apparitions</span></div> <div><b>GEOGRAPHICAL ORIGIN</b><span>Worldwide (Global traditions)</span></div> <div><b>REPORT FREQUENCY</b><span>Widely reported</span></div> <div><b>PRIMARY REGION</b><span>Global traditions</span></div> <div><b>SOURCE TRAIL</b><span>13 named references</span></div> </div> </section><section class=\"dossier-core-sections\">"
+    }
+  ]
 }
