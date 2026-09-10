@@ -116,7 +116,7 @@ const LAST_COUNT_KEY='paranormalWikiLastVisitorCountV4';
   app.querySelectorAll('.welcome').forEach(heading=>{
    if(heading.textContent.trim()==='SEARCH THE UNSEEN ARCHIVE')heading.textContent='SEARCH THE PARANORMAL WIKI';
   });
-  organizeHome();
+  // The homepage owns its layout; do not replace it with the legacy boxed organizer.
  }
 
  function formatCount(value){
