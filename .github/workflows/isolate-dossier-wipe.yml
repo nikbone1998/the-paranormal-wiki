@@ -1,0 +1,83 @@
+name: Isolate dossier wipe
+
+on:
+  push:
+    branches:
+      - dossier-base-renderer-fix-20260910
+    paths:
+      - '.github/workflows/isolate-dossier-wipe.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  isolate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: dossier-base-renderer-fix-20260910
+          fetch-depth: 0
+      - name: Compare render lifecycle variants
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHROME="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          test -n "$CHROME"
+          rm -rf /tmp/dossier-isolate && mkdir -p /tmp/dossier-isolate/{full,no-repair,no-earth,no-both}
+          cp -a . /tmp/dossier-isolate/full/site
+          cp -a . /tmp/dossier-isolate/no-repair/site
+          cp -a . /tmp/dossier-isolate/no-earth/site
+          cp -a . /tmp/dossier-isolate/no-both/site
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          for variant in ['no-repair','no-earth','no-both']:
+              p=Path('/tmp/dossier-isolate')/variant/'site/index.html'
+              s=p.read_text(encoding='utf-8')
+              if variant in ('no-repair','no-both'):
+                  s=re.sub(r'<script[^>]+src=["\'][^"\']*dossier-repair\.js[^"\']*["\'][^>]*></script>','',s,flags=re.I)
+              if variant in ('no-earth','no-both'):
+                  s=re.sub(r'<script[^>]+src=["\'][^"\']*paranormal-earth\.js[^"\']*["\'][^>]*></script>','',s,flags=re.I)
+              p.write_text(s,encoding='utf-8')
+          PY
+          mkdir -p reports /tmp/dossier-isolate/out
+          port=8800
+          for variant in full no-repair no-earth no-both; do
+            (cd "/tmp/dossier-isolate/$variant/site" && python3 -m http.server "$port" --bind 127.0.0.1 >/tmp/dossier-isolate/$variant.log 2>&1) &
+            pid=$!
+            sleep 1
+            timeout 30s "$CHROME" --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage --disable-background-networking --virtual-time-budget=5000 --dump-dom "http://127.0.0.1:$port/#entity/ghost" > "/tmp/dossier-isolate/out/$variant.html"
+            kill $pid 2>/dev/null || true
+            port=$((port+1))
+          done
+          python3 - <<'PY'
+          import re,json,pathlib
+          out={}
+          for variant in ['full','no-repair','no-earth','no-both']:
+              s=pathlib.Path(f'/tmp/dossier-isolate/out/{variant}.html').read_text(encoding='utf-8')
+              app=re.search(r'<main\b[^>]*id="app"[^>]*>([\s\S]*?)</main>',s,re.I)
+              a=app.group(1) if app else ''
+              out[variant]={
+                'appLength':len(a),
+                'tableCount':len(re.findall(r'<table\b',a,re.I)),
+                'boxCount':len(re.findall(r'class="[^"]*\bbox\b',a,re.I)),
+                'overview':'dossier-overview' in a,
+                'behavior':'dossier-behavior' in a,
+                'frequency':'dossier-frequency' in a,
+                'sources':'dossier-sources' in a,
+                'behaviorHeading':'BEHAVIOR / REPORTED HABITAT' in a,
+                'sourceHeading':'SOURCES &amp; FURTHER RESEARCH' in a or 'SOURCES & FURTHER RESEARCH' in a,
+              }
+          pathlib.Path('reports/dossier-wipe-isolation.json').write_text(json.dumps(out,indent=2),encoding='utf-8')
+          print(json.dumps(out,indent=2))
+          PY
+      - name: Commit isolation report
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/dossier-wipe-isolation.json || true
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Record dossier wipe isolation test"
+          git push origin HEAD:dossier-base-renderer-fix-20260910
