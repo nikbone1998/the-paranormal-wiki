@@ -58,7 +58,60 @@
   root.appendChild(credit);
  }
 
- function scan(){document.querySelectorAll('[data-unseen-earth]').forEach(addCredit);}
+ function currentEntity(){
+  const route=decodeURIComponent(location.hash.replace(/^#/,'')||'home');
+  if(!route.startsWith('entity/'))return null;
+  const slug=route.slice(7);
+  return (window.__ARCHIVE_ENTITIES||[]).find(entity=>entity.slug===slug)||null;
+ }
+
+ function polishDossierChrome(){
+  const app=document.getElementById('app');
+  if(!app)return;
+  const entity=currentEntity();
+  if(!entity){app.classList.remove('dossier-modernized');return;}
+
+  const headerSource=app.querySelector('h2.welcome + .center .source');
+  if(headerSource&&!headerSource.dataset.readerFacing){
+   headerSource.textContent=entity.category||'PARANORMAL ENTITY';
+   headerSource.dataset.readerFacing='1';
+  }
+
+  const status=app.querySelector('.status');
+  if(status&&!status.dataset.readerFacing){
+   const sourceCount=Number(entity.sourceCount||(entity.sources||[]).length)||0;
+   const reviewed=entity.reviewDate||entity.currentThrough||'CURRENT';
+   status.innerHTML=`<b>ARCHIVE REVIEW:</b> ${reviewed} &nbsp;·&nbsp; <b>ATTACHED SOURCES:</b> ${sourceCount}`;
+   status.dataset.readerFacing='1';
+  }
+
+  app.querySelectorAll('.tiny').forEach(node=>{
+   if(/\[O\]\s*original archive fiction/i.test(node.textContent||'')){
+    node.innerHTML=node.innerHTML.replace(/\[O\]\s*original archive fiction/gi,'[O] archive-origin');
+   }
+  });
+
+  if(app.classList.contains('dossier-modernized')&&!app.querySelector('.dossier-extended-details')){
+   const direct=[...app.children];
+   const deep=direct.filter(node=>
+    node.matches?.('table.box[id^="deep-"]')||
+    (/^FLAGSHIP LONG-FORM RESEARCH DOSSIER$/i.test((node.querySelector?.('.box-title')?.textContent||'').trim()))
+   );
+   if(deep.length){
+    const details=document.createElement('details');
+    details.className='dossier-research-details dossier-extended-details';
+    details.innerHTML='<summary>Extended dossier research</summary><div class="dossier-research-inner"></div>';
+    deep[0].insertAdjacentElement('beforebegin',details);
+    const inner=details.querySelector('.dossier-research-inner');
+    deep.forEach(node=>inner.appendChild(node));
+   }
+  }
+ }
+
+ function scan(){
+  document.querySelectorAll('[data-unseen-earth]').forEach(addCredit);
+  polishDossierChrome();
+ }
  scan();
  const observer=new MutationObserver(scan);
  observer.observe(document.documentElement,{childList:true,subtree:true});
