@@ -272,3 +272,22 @@ body.ua-earth-lock{overflow:hidden!important;touch-action:none!important}
 .dossier-page .archive-table td *,
 .dossier-page .box-body p,
 .dossier-page .box-body li{color:#e6df9a}
+
+
+/* Site-wide neutral text rule: intentionally colored UI elements keep their existing colors. */
+:root{--archive-yellow:#e6df9a}
+body{color:var(--archive-yellow)}
+body .topnote,
+body .crumb,
+body .content,
+body .footer,
+body .tiny,
+body .caption,
+body .note,
+body .box-body,
+body .archive-table td,
+body .layout td,
+body .source,
+body .dossier-page,
+body .dossier-page .dossier-overview,
+body .dossier-page .dossier-quickfacts span{color:var(--archive-yellow)}
