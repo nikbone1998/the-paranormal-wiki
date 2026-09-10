@@ -1,6 +1,7 @@
 /* THE PARANORMAL WIKI — Earth engine bootstrap.
  * Renderer is kept modular in paranormal-earth-engine-v4.js; homepage/brand compatibility remains here.
  */
+import('./dossier-repair.js?v=1.0.0').catch(error=>console.warn('[PARANORMAL WIKI] dossier repair layer unavailable',error));
 import('./paranormal-earth-tile-shim.js?v=4.0.1').catch(error=>{
  console.error('[PARANORMAL WIKI EARTH] engine bootstrap failed',error);
  document.querySelectorAll('[data-unseen-earth]').forEach(root=>{
