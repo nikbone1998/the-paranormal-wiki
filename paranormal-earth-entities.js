@@ -50,10 +50,10 @@
   layer.querySelectorAll('[data-entity-filter]').forEach(b=>b.onclick=()=>{filter=b.dataset.entityFilter;layer.querySelectorAll('[data-entity-filter]').forEach(x=>x.classList.toggle('on',x===b));lastSignature='';syncMarkers();});
   search.addEventListener('input',()=>{query=search.value.trim().toLowerCase();lastSignature='';const match=records.find(r=>query&&`${r.entity.name} ${r.entity.slug} ${r.point.label} ${r.entity.category}`.toLowerCase().includes(query));if(match)api.flyTo({lat:match.point.lat,lon:match.point.lon,altitude:260});syncMarkers();});
   syncMarkers();
-  const sub=root.querySelector('.ua-globe-sub'),future=root.querySelector('.ua-globe-future'),status=root.querySelector('.ua-globe-status');
+  const sub=root.parentElement?.querySelector('.ua-globe-sub'),future=root.parentElement?.querySelector('.ua-globe-future'),status=root.querySelector('.ua-globe-status');
   if(sub)sub.textContent='INTERACTIVE EARTH OBSERVATION SYSTEM // SOURCE-GROUNDED ENTITY LAYER ONLINE';
   if(future)future.textContent='ENTITY COORDINATES: '+records.length+' POINTS / '+new Set(records.map(r=>r.entity.id)).size+' ENTITIES';
-  if(status)status.innerHTML='EARTH ENGINE <b>ONLINE</b><br>ENTITY LAYER: <b>ONLINE</b><br>RENDER: <span class="ua-globe-quality">...</span>';
+  if(status)status.innerHTML='MAP ENGINE <b>ONLINE</b><br>ENTITY LAYER: <b>ONLINE</b><br>RENDER: <span class="ua-globe-quality">2D HIGH-RES</span>';
  }
  async function boot(){for(let i=0;i<120;i++){const root=document.querySelector('[data-unseen-earth]');if(root){const bridge={getObservationState:()=>window.UnseenEarth?.get(root)?.getObservationState?.()||{center:{lat:13,lon:25},altitudeKm:12000},setMarkers:(items,onSelect)=>window.UnseenEarth?.get(root)?.setMarkers?.(items,onSelect)||false,flyTo:options=>window.UnseenEarth?.get(root)?.flyTo?.(options)};mount(root,bridge);return;}await wait(500);}}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
