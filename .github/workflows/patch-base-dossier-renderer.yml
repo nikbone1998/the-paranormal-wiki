@@ -1,0 +1,31 @@
+name: Patch base dossier renderer
+
+on:
+  push:
+    branches:
+      - dossier-base-renderer-fix-20260910
+    paths:
+      - 'scripts/patch-base-dossier-renderer.py'
+      - '.github/workflows/patch-base-dossier-renderer.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: dossier-base-renderer-fix-20260910
+          fetch-depth: 0
+      - name: Patch canonical dossier renderer
+        run: python3 scripts/patch-base-dossier-renderer.py
+      - name: Commit renderer repair
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Render canonical dossier fields in entityPage"
+          git push origin HEAD:dossier-base-renderer-fix-20260910
