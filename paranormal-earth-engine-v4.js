@@ -133,7 +133,7 @@ async function mount(root){
 
  try{
   THREE=await loadThree();if(disposed)return;
-  renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance'});renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.NeutralToneMapping||THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=p.tier==='MOBILE'?1.22:1.16;
+  let rendererError=null;for(const power of ['default','low-power','high-performance']){try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:power});break;}catch(error){rendererError=error;}}if(!renderer)throw rendererError||new Error('WebGL renderer unavailable');renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.NeutralToneMapping||THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=p.tier==='MOBILE'?1.22:1.16;
   scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(32,1,.001,80);astro=solar(THREE);
   const loader=new THREE.TextureLoader();loader.setCrossOrigin('anonymous');const maxAniso=renderer.capabilities.getMaxAnisotropy();
   const loadTex=(url,color=false)=>new Promise((resolve,reject)=>loader.load(url,t=>{if(color)t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=Math.min(maxAniso,p.tier==='MOBILE'?6:10);t.generateMipmaps=true;t.minFilter=THREE.LinearMipmapLinearFilter;resolve(t);},undefined,reject));
