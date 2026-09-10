@@ -184,7 +184,7 @@ async function mount(root){
    camera.updateMatrixWorld(true);camera.updateProjectionMatrix();markerGroup.updateMatrixWorld(true);markerLabelGroup.updateMatrixWorld(true);
    const rect=canvas.getBoundingClientRect(),closeView=dist<1.72,dir=camera.position.clone().normalize(),projected=[];
    for(let i=0;i<markerItems.length;i++){
-    const e=markerItems[i],facing=e.mesh.position.clone().normalize().dot(dir),front=facing>-.035||(e.front===true&&facing>-.12);e.front=front;e.mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),e.mesh.position.clone().normalize());e.mesh.visible=front;e.hit.visible=front;if(e.label)e.label.visible=false;
+    const e=markerItems[i],facing=e.mesh.position.clone().normalize().dot(dir),front=facing>-.035||(e.front===true&&facing>-.12);e.front=front;e.mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),e.mesh.position.clone().normalize());e.mesh.renderOrder=8;e.hit.renderOrder=8;e.mesh.visible=front;e.hit.visible=front;if(e.label){e.label.renderOrder=9;e.label.visible=false;}
     if(!front){projected[i]=null;continue;}
     const p=e.mesh.position.clone().project(camera),view=e.mesh.position.clone().applyMatrix4(camera.matrixWorldInverse),depth=Math.max(.05,-view.z),ppu=rect.height/(2*depth*Math.tan(rad(camera.fov)/2));
     e.mesh.scale.setScalar(clamp(7/(ppu*.12),.06,1.2));e.hit.scale.setScalar(Math.max(.05,e.mesh.scale.x*2.7));projected[i]={x:(p.x+1)*rect.width/2,y:(1-p.y)*rect.height/2};
