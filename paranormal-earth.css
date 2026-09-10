@@ -103,6 +103,14 @@ body.ua-earth-lock{overflow:hidden!important;touch-action:none!important}
 .home-page>.layout{border-spacing:10px}
 .home-page .box-title{color:#cfcfff;padding-left:0;padding-right:0}
 .page{border:0}
+.home-page .archive-table,
+.home-page .archive-table tbody,
+.home-page .archive-table tr,
+.home-page .archive-table th,
+.home-page .archive-table td{border:0!important;background:transparent!important}
+.home-page .home-stat-grid{border:0;background:transparent;gap:0}
+.home-page .home-stat-grid span{background:transparent}
+.home-page .home-map-note{border:0;background:transparent}
 
 /* Supplied masthead artwork. Keep the complete banner visible at every width. */
 .site-header-banner{margin:0 0 5px;background:#000;line-height:0;text-align:center;overflow:hidden}
