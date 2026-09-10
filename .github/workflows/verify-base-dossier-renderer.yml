@@ -1,0 +1,76 @@
+name: Verify base dossier renderer
+
+on:
+  push:
+    branches:
+      - dossier-base-renderer-fix-20260910
+    paths:
+      - '.github/workflows/verify-base-dossier-renderer.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: dossier-base-renderer-fix-20260910
+          fetch-depth: 0
+      - name: Run local production-equivalent browser smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHROME="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          test -n "$CHROME"
+          mkdir -p reports /tmp/base-dossier-smoke
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/base-dossier-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID 2>/dev/null || true' EXIT
+          sleep 1
+          for slug in ghost mothman bigfoot vampire banshee demon draugr chupacabra; do
+            timeout 45s "$CHROME" --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage --disable-background-networking --virtual-time-budget=7000 --dump-dom "http://127.0.0.1:8765/#entity/$slug" > "/tmp/base-dossier-smoke/$slug.html"
+          done
+          python3 - <<'PY'
+          import re, html, json, pathlib
+          slugs=['ghost','mothman','bigfoot','vampire','banshee','demon','draugr','chupacabra']
+          required=['dossier-overview','dossier-appearance','dossier-behavior','dossier-sightings','dossier-abilities','dossier-weaknesses','dossier-geography','dossier-frequency','dossier-culture','dossier-science','dossier-controversy','dossier-sources']
+          results=[]
+          for slug in slugs:
+              raw=pathlib.Path(f'/tmp/base-dossier-smoke/{slug}.html').read_text(encoding='utf-8')
+              visible=re.sub(r'<script\b[^>]*>.*?</script>','',raw,flags=re.I|re.S)
+              visible=re.sub(r'<style\b[^>]*>.*?</style>','',visible,flags=re.I|re.S)
+              txt=html.unescape(re.sub(r'<[^>]+>',' ',visible))
+              txt=re.sub(r'\s+',' ',txt).strip()
+              ids={i:bool(re.search(rf'id=["\']{re.escape(i)}["\']',visible,re.I)) for i in required}
+              checks={
+                'nav': 'class="dossier-nav"' in visible,
+                'overview': 'data-dossier-enhanced=' in visible,
+                'frequencyLabel': 'dossier-frequency-label' in visible,
+                'geographySummary': 'data-field-summary' in visible,
+                'sightingList': 'dossier-sighting-list' in visible,
+                'behaviorText': 'BEHAVIOR / REPORTED HABITAT' in txt,
+                'cultureText': 'CULTURAL SIGNIFICANCE' in txt,
+                'scienceText': 'SCIENTIFIC & CONVENTIONAL EXPLANATIONS' in txt,
+                'controversyText': 'HOAXES, MISIDENTIFICATIONS & CONTROVERSIES' in txt,
+                'visibleLength': len(txt),
+              }
+              ok=all(ids.values()) and all(v for k,v in checks.items() if k!='visibleLength') and checks['visibleLength']>5000
+              results.append({'slug':slug,'ids':ids,**checks,'ok':ok})
+          report={'results':results,'failures':sum(not r['ok'] for r in results)}
+          report['passed']=report['failures']==0
+          pathlib.Path('reports/base-dossier-browser-smoke.json').write_text(json.dumps(report,indent=2),encoding='utf-8')
+          print(json.dumps(report,indent=2))
+          if not report['passed']:
+              raise SystemExit(1)
+          PY
+      - name: Commit browser report
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/base-dossier-browser-smoke.json || true
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Record base dossier browser smoke test"
+          git push origin HEAD:dossier-base-renderer-fix-20260910
