@@ -216,3 +216,32 @@ body.ua-earth-lock{overflow:hidden!important;touch-action:none!important}
 .home-classic .home-directory-symbolic a,
 .home-classic .home-directory-symbolic a:visited,
 .home-classic .home-directory-symbolic a:hover{color:#c7a8ff!important}
+
+/* Site-wide content-surface cleanup. Keep the Earth observation surface and
+ * its controls framed; archive content should read as one uninterrupted page. */
+.page,
+.content,
+.box,
+.box-title,
+.box-body,
+.layout,
+.archive-table,
+.archive-table th,
+.archive-table td,
+.timeline td,
+.entity-index h3,
+.mapbox,
+.webring,
+.footer,
+.crumb,
+.marq,
+.progress,
+.note,
+.official,
+.status,
+.fiction,
+.source,
+.newgif,
+.hr{border:0!important;box-shadow:none!important}
+.archive-table th,.archive-table td,.timeline td{border-bottom:0!important}
+.page{background:transparent!important}
