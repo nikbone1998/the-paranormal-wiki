@@ -246,7 +246,7 @@ function home(){
   <div class="ua-globe-foot"><span class="ua-globe-signal">SIGNAL: NOMINAL // GEOSPHERE LINK ACTIVE</span><span class="ua-globe-future">ENTITY COORDINATES: LOADING</span></div>
 </section>
 <!-- UNSEEN_EARTH_SECTION_END -->
-`);
+`); app.classList.add('home-page');
 }
 function entityIndex(cat=''){
  const list=E.filter(e=>!cat||e.category===cat),g={};list.forEach(e=>(g[e.name[0].toUpperCase()]??=[]).push(e));
