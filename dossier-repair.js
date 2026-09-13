@@ -563,6 +563,9 @@
       .dossier-research-inner>.box:last-child{margin-bottom:0}
       .dossier-modernized .box{scroll-margin-top:48px}
       .dossier-modernized #dossier-overview{scroll-margin-top:48px}
+      .occult-astro-gallery{margin:10px 0 14px}
+      .occult-astro-gallery>div{padding:7px}
+      .occult-astro-gallery img{display:block;width:100%;height:210px;object-fit:contain;background:#080808;margin:0 auto 6px}
       @media(max-width:680px){
         .dossier-nav{top:0;margin-left:-3px;margin-right:-3px;padding:5px 4px}
         .dossier-nav a{padding:5px 6px;font-size:9px}
@@ -570,6 +573,7 @@
         .dossier-quickfacts>div{grid-template-columns:112px 1fr}
         .dossier-quickfacts>div:nth-child(odd){border-right:0}
         .dossier-core-sections .box-body{padding:8px}
+        .occult-astro-gallery img{height:170px}
       }
       @media(prefers-reduced-motion:reduce){.dossier-nav{scroll-behavior:auto}}
     `;
@@ -695,7 +699,7 @@
     }
   };
 
-  const astrologicalImages = `<div class="occult-directory"><div><img src="https://www.wga.hu/art/zgothic/miniatur/1051-100/09_1051.jpg" alt="Medieval zodiac diagram from a French medical miscellany" loading="lazy"><p class="tiny">Medieval zodiac diagram from a French medical miscellany. The signs appear in a circular calendar-like arrangement around a central sun.</p></div><div><img src="https://pbs.twimg.com/media/DOauN2OX0AEL7sl.jpg" alt="Comparison of Arabic and Latin planetary symbols" loading="lazy"><p class="tiny">A comparison of planetary signs in the Arabic <i>Ghāyat al-Ḥakīm</i> tradition and the Latin <i>Picatrix</i>.</p></div></div>`;
+  const astrologicalImages = `<div class="occult-directory occult-astro-gallery"><div><img src="https://www.wga.hu/art/zgothic/miniatur/1051-100/09_1051.jpg" alt="Medieval zodiac diagram from a French medical miscellany" loading="lazy"><p class="tiny">Medieval zodiac diagram from a French medical miscellany. The signs appear in a circular calendar-like arrangement around a central sun.</p></div><div><img src="https://pbs.twimg.com/media/DOauN2OX0AEL7sl.jpg" alt="Comparison of Arabic and Latin planetary symbols" loading="lazy"><p class="tiny">A comparison of planetary signs in the Arabic <i>Ghāyat al-Ḥakīm</i> tradition and the Latin <i>Picatrix</i>.</p></div></div>`;
 
   const showPlanetaryDirectory = (parts) => {
     const target = document.getElementById('app');
