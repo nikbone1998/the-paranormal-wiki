@@ -748,6 +748,5 @@
     else linkSymbolDirectories();
   };
   addEventListener('hashchange', () => setTimeout(syncSymbolDirectories, 0));
-  new MutationObserver(() => setTimeout(syncSymbolDirectories, 0)).observe(document.getElementById('app'), { childList: true });
   syncSymbolDirectories();
 })();
