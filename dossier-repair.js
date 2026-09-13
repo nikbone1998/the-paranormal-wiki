@@ -647,10 +647,74 @@
     ['ANIMAL, ELEMENTAL & CONTEMPORARY SYMBOLISM', 'animal-elemental-contemporary-symbolism']
   ];
 
+  const planetaryDirectories = [
+    ['The Classical Seven', 'classical-planets', '☉ ☽ ☿ ♀ ♂ ♃ ♄', 'The Sun, Moon, and five visible planets: the original planetary vocabulary shared by astrology, alchemy, medicine, and ritual calendars.'],
+    ['The Zodiac', 'zodiac-signs', '♈ ♉ ♊ ♋', 'The twelve signs, their figures, seasonal sequence, and the symbolic vocabulary built around the ecliptic.'],
+    ['Elements & Modalities', 'elements-modalities', '🜂 🜄 🜁 🜃', 'Fire, Water, Air, Earth, and the cardinal, fixed, and mutable divisions used to organize astrological qualities.'],
+    ['Houses, Angles & Aspects', 'houses-aspects', 'ASC ☌ △ ☍', 'The chart’s twelve houses, four angles, lunar nodes, and the geometric symbols used to describe planetary relationships.'],
+    ['Moon Phases & Eclipses', 'lunar-symbols', '● ◐ ◑ ○', 'Lunar phases, eclipse imagery, and the recurring visual language of darkness, return, and celestial timing.'],
+    ['Outer Planets & Modern Additions', 'modern-planets', '♅ ♆ ♇ ⊕', 'Later astronomical symbols and modern astrological additions, including Uranus, Neptune, Pluto, Earth, Chiron, and asteroids.']
+  ];
+
+  const planetaryEntries = {
+    'classical-planets': {
+      title: 'THE CLASSICAL SEVEN',
+      intro: 'Before the telescope changed the map of the heavens, astrology organized the sky around seven moving lights visible to the naked eye. Their glyphs also became the signs of the seven traditional metals in alchemical writing.',
+      rows: [['☉','SUN','Gold · vitality · center'],['☽','MOON','Silver · change · reflection'],['☿','MERCURY','Quicksilver · movement · language'],['♀','VENUS','Copper · attraction · harmony'],['♂','MARS','Iron · force · conflict'],['♃','JUPITER','Tin · growth · authority'],['♄','SATURN','Lead · limits · time']],
+      history: 'The familiar planetary glyphs were standardized gradually in manuscript, astronomical, astrological, and alchemical use. Their forms gathered together older visual ideas—solar disks, crescents, weapons, mirrors, and letter-based abbreviations—rather than arriving as one fixed code.'
+    },
+    'zodiac-signs': {
+      title: 'THE ZODIAC',
+      intro: 'The zodiac divides the apparent annual path of the Sun into twelve signs. Its animals and figures became one of the most recognizable symbolic systems in European, Mediterranean, Middle Eastern, and later global astrological imagery.',
+      rows: [['♈','ARIES','The Ram'],['♉','TAURUS','The Bull'],['♊','GEMINI','The Twins'],['♋','CANCER','The Crab'],['♌','LEO','The Lion'],['♍','VIRGO','The Maiden'],['♎','LIBRA','The Scales'],['♏','SCORPIO','The Scorpion'],['♐','SAGITTARIUS','The Archer'],['♑','CAPRICORN','The Sea-Goat'],['♒','AQUARIUS','The Water-Bearer'],['♓','PISCES','The Fishes']],
+      history: 'The sign sequence developed from ancient Mesopotamian sky traditions and was refined through Hellenistic astronomy and astrology. Medieval manuscripts frequently paired the signs with calendars, medicine, seasons, and images of the human body.'
+    },
+    'elements-modalities': {
+      title: 'ELEMENTS & MODALITIES',
+      intro: 'Astrological systems use four elements to describe broad qualities and three modalities to describe how a sign begins, sustains, or changes a pattern.',
+      rows: [['🜂','FIRE','Aries · Leo · Sagittarius'],['🜃','EARTH','Taurus · Virgo · Capricorn'],['🜁','AIR','Gemini · Libra · Aquarius'],['🜄','WATER','Cancer · Scorpio · Pisces'],['—','CARDINAL','Beginning and initiation'],['—','FIXED','Continuance and preservation'],['—','MUTABLE','Transition and adaptation']],
+      history: 'The four-element scheme entered Western astrology through ancient natural philosophy. Later astrologers joined it to zodiac signs, seasonal patterns, humoral medicine, alchemical images, and ritual correspondences.'
+    },
+    'houses-aspects': {
+      title: 'HOUSES, ANGLES & ASPECTS',
+      intro: 'A horoscope is not only a list of signs and planets. It is a circular map in which houses locate topics of life, angles orient the chart, and aspects mark geometric relationships between planets.',
+      rows: [['ASC','ASCENDANT','Eastern horizon'],['MC','MIDHEAVEN','Highest point of the chart'],['☊','NORTH NODE','Ascending lunar node'],['☋','SOUTH NODE','Descending lunar node'],['☌','CONJUNCTION','0° relationship'],['✶','SEXTILE','60° relationship'],['□','SQUARE','90° relationship'],['△','TRINE','120° relationship'],['☍','OPPOSITION','180° relationship']],
+      history: 'House division and aspect doctrine developed through Hellenistic and later medieval astrology. The symbols used for aspects are comparatively modern shorthand for relationships that older authors described with geometry and written terminology.'
+    },
+    'lunar-symbols': {
+      title: 'MOON PHASES & ECLIPSES',
+      intro: 'The changing lunar disk supplied astrology and ritual calendars with a visible cycle of emergence, fullness, decline, disappearance, and return.',
+      rows: [['●','NEW MOON','Conjunction of Sun and Moon'],['◔','WAXING CRESCENT','First visible return of light'],['◐','FIRST QUARTER','Half-illuminated Moon'],['◕','WAXING GIBBOUS','Approach to fullness'],['○','FULL MOON','Opposition of Sun and Moon'],['◑','LAST QUARTER','Half-illuminated Moon'],['◒','WANING CRESCENT','Light withdrawing'],['☉ / ☽','ECLIPSE','Sun, Moon, and node aligned']],
+      history: 'Crescents, disks, and eclipsed suns appear in calendar art, astronomical manuscripts, talismans, and religious imagery across many periods. Astrological use made the lunar phase a repeating indicator of timing and change.'
+    },
+    'modern-planets': {
+      title: 'OUTER PLANETS & MODERN ADDITIONS',
+      intro: 'Telescopic discoveries expanded the symbolic vocabulary. New glyphs were proposed by astronomers and later adopted, altered, or supplemented by modern astrologers.',
+      rows: [['♅','URANUS','Discovery-era astronomical glyph'],['♆','NEPTUNE','Trident symbol'],['♇','PLUTO','Monogram and alternate glyphs'],['⊕','EARTH','Terrestrial globe / cross'],['⚷','CHIRON','Key-like modern glyph'],['⚳','CERES','Dwarf planet and asteroid symbol'],['⚴','PALLAS','Asteroid symbol'],['⚵','JUNO','Asteroid symbol'],['⚶','VESTA','Asteroid symbol']],
+      history: 'Unlike the classical seven, modern symbols have competing forms and more traceable dates of proposal. Their use reflects the meeting of scientific discovery, print culture, ephemerides, and modern astrological interpretation.'
+    }
+  };
+
+  const astrologicalImages = `<div class="occult-directory"><div><img src="https://www.wga.hu/art/zgothic/miniatur/1051-100/09_1051.jpg" alt="Medieval zodiac diagram from a French medical miscellany" loading="lazy"><p class="tiny">Medieval zodiac diagram from a French medical miscellany. The signs appear in a circular calendar-like arrangement around a central sun.</p></div><div><img src="https://pbs.twimg.com/media/DOauN2OX0AEL7sl.jpg" alt="Comparison of Arabic and Latin planetary symbols" loading="lazy"><p class="tiny">A comparison of planetary signs in the Arabic <i>Ghāyat al-Ḥakīm</i> tradition and the Latin <i>Picatrix</i>.</p></div></div>`;
+
+  const showPlanetaryDirectory = (parts) => {
+    const target = document.getElementById('app');
+    if (!target) return;
+    const folder = parts[1];
+    if (!folder) {
+      target.innerHTML = `<div class="occult-page"><h2 class="welcome">PLANETARY & ASTROLOGICAL SYMBOLS</h2><p class="occult-intro">A directory of the signs used to map planets, zodiacal figures, lunar cycles, elements, and relationships in the astrological chart. Open a file below to view its symbol set, historical background, and related imagery.</p>${astrologicalImages}<div class="occult-directory">${planetaryDirectories.map(([name,slug,marks,description]) => `<div><span class="occult-symbol" aria-hidden="true">${marks}</span><a href="#occult-symbols/planetary-astrological-symbols/${slug}">${name.toUpperCase()}</a><p>${description}</p><p><a href="#occult-symbols/planetary-astrological-symbols/${slug}">[ OPEN DIRECTORY ]</a></p></div>`).join('')}</div><p class="occult-return"><a href="#occult-symbols">[ RETURN TO SYMBOLS &amp; SYMBOLISM ]</a> &nbsp; <a href="#occult">[ RETURN TO THE OCCULT ]</a></p></div>`;
+      return;
+    }
+    const file = planetaryEntries[folder];
+    if (!file) return;
+    target.innerHTML = `<div class="occult-page"><h2 class="welcome">${file.title}</h2><p class="occult-intro">${file.intro}</p><table class="archive-table"><tr><th>SYMBOL</th><th>NAME</th><th>ASSOCIATIONS</th></tr>${file.rows.map(([symbol,name,meaning]) => `<tr><td style="font:26px Georgia;text-align:center">${symbol}</td><td><b>${name}</b></td><td>${meaning}</td></tr>`).join('')}</table><section class="occult-article"><h3>HISTORY &amp; DEVELOPMENT</h3><p>${file.history}</p></section><section class="occult-sources"><h3>IMAGE &amp; READING NOTES</h3><p>The visual material above comes from historic astrological manuscript and planetary-symbol comparison imagery. This directory will expand with individual symbol records, manuscript examples, and cross-links to related occult traditions.</p></section><p class="occult-return"><a href="#occult-symbols/planetary-astrological-symbols">[ BACK TO PLANETARY DIRECTORY ]</a> &nbsp; <a href="#occult-symbols">[ SYMBOLS &amp; SYMBOLISM ]</a></p></div>`;
+  };
+
   const showSymbolDirectory = () => {
-    const key = decodeURIComponent(location.hash.replace(/^#occult-symbols\//, ''));
-    const item = symbolDirectories.find(([, slug]) => slug === key);
-    if (!item) return;
+    const parts = decodeURIComponent(location.hash.replace(/^#occult-symbols\//, '')).split('/');
+    if (parts[0] === 'planetary-astrological-symbols') return showPlanetaryDirectory(parts);
+    const item = symbolDirectories.find(([, slug]) => slug === parts[0]);
+    if (!item || parts[1]) return;
     const [title] = item;
     const target = document.getElementById('app');
     if (!target) return;
