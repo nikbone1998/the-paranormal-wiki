@@ -563,9 +563,9 @@
       .dossier-research-inner>.box:last-child{margin-bottom:0}
       .dossier-modernized .box{scroll-margin-top:48px}
       .dossier-modernized #dossier-overview{scroll-margin-top:48px}
-      .occult-astro-gallery{margin:10px 0 14px}
-      .occult-astro-gallery>div{padding:7px}
-      .occult-astro-gallery img{display:block;width:100%;height:210px;object-fit:contain;background:#080808;margin:0 auto 6px}
+      .occult-astro-gallery,.occult-alchemy-gallery{margin:10px 0 14px}
+      .occult-astro-gallery>div,.occult-alchemy-gallery>div{padding:7px}
+      .occult-astro-gallery img,.occult-alchemy-gallery img{display:block;width:100%;height:210px;object-fit:contain;background:#080808;margin:0 auto 6px}
       @media(max-width:680px){
         .dossier-nav{top:0;margin-left:-3px;margin-right:-3px;padding:5px 4px}
         .dossier-nav a{padding:5px 6px;font-size:9px}
@@ -573,7 +573,7 @@
         .dossier-quickfacts>div{grid-template-columns:112px 1fr}
         .dossier-quickfacts>div:nth-child(odd){border-right:0}
         .dossier-core-sections .box-body{padding:8px}
-        .occult-astro-gallery img{height:170px}
+        .occult-astro-gallery img,.occult-alchemy-gallery img{height:170px}
       }
       @media(prefers-reduced-motion:reduce){.dossier-nav{scroll-behavior:auto}}
     `;
@@ -699,7 +699,56 @@
     }
   };
 
+  const alchemyDirectories = [
+    ['The Seven Metals', 'seven-metals', '☉ ☽ ☿ ♀ ♂ ♃ ♄', 'Gold, silver, mercury, copper, iron, tin, and lead, together with their planetary signs.'],
+    ['The Three Principles & Four Elements', 'principles-elements', '☿ 🜍 🜔', 'Mercury, Sulfur, Salt, and the elemental triangle signs that shaped alchemical theory.'],
+    ['The Great Work', 'great-work', '⚫ ⚪ 🟡 🔴', 'Nigredo, albedo, citrinitas, and rubedo: the color stages used to describe transformation.'],
+    ['Alchemical Operations', 'operations', '△ ◇ ○', 'Calcination, dissolution, separation, conjunction, fermentation, distillation, and coagulation.'],
+    ['Emblems & Allegorical Figures', 'emblems-figures', '☉ ☽ 🜏', 'The Sun and Moon, the Ouroboros, the Rebis, royal pairs, birds, dragons, and other visual allegories.'],
+    ['Manuscripts, Books & Symbol Tables', 'manuscripts-texts', '✦ ☿ ☉', 'Historic symbol lists, emblem books, illustrated treatises, and the manuscript traditions that preserved them.']
+  ];
+
+  const alchemyEntries = {
+    'seven-metals': {
+      title: 'THE SEVEN METALS',
+      intro: 'In traditional alchemical notation, metals and the visible planets were joined into one visual system. A planetary sign could identify both a celestial body and a corresponding metal in a recipe or diagram.',
+      rows: [['☉','GOLD / SOL','Sun · perfected metal'],['☽','SILVER / LUNA','Moon · reflective metal'],['☿','MERCURY / MERCURIUS','Mercury · quicksilver'],['♀','COPPER / VENUS','Venus · copper'],['♂','IRON / MARS','Mars · iron'],['♃','TIN / JUPITER','Jupiter · tin'],['♄','LEAD / SATURN','Saturn · lead']],
+      history: 'The planetary-metal scheme appears in Greek, Arabic, Latin, and early modern European alchemical writing. It made a compact notation possible while connecting laboratory substances to a larger celestial order.'
+    },
+    'principles-elements': {
+      title: 'THE THREE PRINCIPLES & FOUR ELEMENTS',
+      intro: 'Many alchemical authors described material change through three principles—Mercury, Sulfur, and Salt—while also using the older four-element vocabulary of Fire, Air, Water, and Earth.',
+      rows: [['☿','MERCURY','Volatility · fluidity · mediation'],['🜍','SULFUR','Combustion · activity · color'],['🜔','SALT','Fixity · body · residue'],['🜂','FIRE','Heat · ascent · transformation'],['🜁','AIR','Breath · movement · volatility'],['🜄','WATER','Dissolution · receptivity'],['🜃','EARTH','Weight · solidity · remainder']],
+      history: 'The four-element signs entered alchemy from ancient natural philosophy. The three-principle framework became especially associated with Paracelsian and early modern alchemical thought, though authors used the terms in different ways.'
+    },
+    'great-work': {
+      title: 'THE GREAT WORK',
+      intro: 'The Great Work is the long-form symbolic narrative of alchemy: a movement through breakdown, purification, illumination, and completion. Images of colors, kings, queens, animals, and celestial unions often mark its stages.',
+      rows: [['⚫','NIGREDO','Blackening · dissolution · first matter'],['⚪','ALBEDO','Whitening · washing · clarification'],['🟡','CITRINITAS','Yellowing · dawning light'],['🔴','RUBEDO','Reddening · completion · conjunction'],['☉ + ☽','CONIUNCTIO','Union of solar and lunar opposites']],
+      history: 'Not every alchemical author used the same stage sequence. The black-white-red progression is especially widespread, while citrinitas may appear as a distinct stage or be folded into the later red phase.'
+    },
+    'operations': {
+      title: 'ALCHEMICAL OPERATIONS',
+      intro: 'Alchemical texts combine practical operations with symbolic language. The same word can refer to a laboratory action, a change in matter, and an allegorical movement inside an emblem or narrative.',
+      rows: [['△','CALCINATION','Breaking down through heat'],['≈','DISSOLUTION','Reducing a body into liquid'],['↗','SEPARATION','Sorting and isolating parts'],['☌','CONJUNCTION','Joining separated principles'],['✦','FERMENTATION','Introducing a transformative agent'],['♨','DISTILLATION','Rising, condensing, and returning'],['●','COAGULATION','Fixing or solidifying a result']],
+      history: 'Operation lists vary by text and period. Their visual signs were often local to a manuscript or workshop, which is why historic symbol tables show many alternate marks for the same material or action.'
+    },
+    'emblems-figures': {
+      title: 'EMBLEMS & ALLEGORICAL FIGURES',
+      intro: 'Alchemy repeatedly turns processes into images: a serpent consuming its tail, a king and queen joining, a double-bodied figure, birds rising from vessels, and the Sun and Moon facing one another.',
+      rows: [['☉ / ☽','SUN & MOON','Gold and silver · solar and lunar pair'],['◯','OUROBOROS','Cycle · enclosure · return'],['☿ + ☉ + ☽','REBIS','Conjoined opposites'],['👑','RED KING & WHITE QUEEN','Royal pair in alchemical allegory'],['🜏','DRAGON / SERPENT','Raw force · death · renewal'],['🕊','BIRDS','Volatilization · ascent · spirit']],
+      history: 'Emblem books made alchemical material memorable through images, mottos, and short poems. These figures rarely have one single fixed meaning; their role changes according to the surrounding text and sequence of images.'
+    },
+    'manuscripts-texts': {
+      title: 'MANUSCRIPTS, BOOKS & SYMBOL TABLES',
+      intro: 'Alchemical signs survive in recipe books, notebooks, illustrated treatises, emblem collections, and later printed tables. These records show how varied the visual language could be from one workshop, author, or period to another.',
+      rows: [['☿','SYMBOL TABLES','Lists of materials and operations'],['☉','ILLUSTRATED TREATISES','Color stages and cosmological diagrams'],['✦','EMBLEM BOOKS','Images, mottos, and explanatory verse'],['♨','LABORATORY MANUALS','Vessels, furnaces, and preparations'],['◯','PHILOSOPHICAL TEXTS','Theories of matter and transformation']],
+      history: 'Important surviving traditions include Greek alchemical manuscripts, Arabic and Latin translations, Renaissance natural-philosophy texts, and early modern illustrated works. Each preserves a different mixture of laboratory practice, symbolic theory, and visual convention.'
+    }
+  };
+
   const astrologicalImages = `<div class="occult-directory occult-astro-gallery"><div><img src="https://www.wga.hu/art/zgothic/miniatur/1051-100/09_1051.jpg" alt="Medieval zodiac diagram from a French medical miscellany" loading="lazy"><p class="tiny">Medieval zodiac diagram from a French medical miscellany. The signs appear in a circular calendar-like arrangement around a central sun.</p></div><div><img src="https://pbs.twimg.com/media/DOauN2OX0AEL7sl.jpg" alt="Comparison of Arabic and Latin planetary symbols" loading="lazy"><p class="tiny">A comparison of planetary signs in the Arabic <i>Ghāyat al-Ḥakīm</i> tradition and the Latin <i>Picatrix</i>.</p></div></div>`;
+  const alchemicalImages = `<div class="occult-directory occult-alchemy-gallery"><div><img src="https://cms.allardpierson.nl/storage/media/Blogs/1.-PH338.jpg" alt="Sixteenth-century alchemical symbol table" loading="lazy"><p class="tiny">A sixteenth-century manuscript table of alchemical characters, including planetary metals and material signs.</p></div><div><img src="https://cms.allardpierson.nl/storage/media/Blogs/3.-PH185-fols.-2v-3r.jpg" alt="Seventeenth-century alchemical symbol list" loading="lazy"><p class="tiny">A seventeenth-century symbol list showing the compact visual notation used for substances and operations.</p></div></div>`;
 
   const showPlanetaryDirectory = (parts) => {
     const target = document.getElementById('app');
@@ -714,9 +763,23 @@
     target.innerHTML = `<div class="occult-page"><h2 class="welcome">${file.title}</h2><p class="occult-intro">${file.intro}</p><table class="archive-table"><tr><th>SYMBOL</th><th>NAME</th><th>ASSOCIATIONS</th></tr>${file.rows.map(([symbol,name,meaning]) => `<tr><td style="font:26px Georgia;text-align:center">${symbol}</td><td><b>${name}</b></td><td>${meaning}</td></tr>`).join('')}</table><section class="occult-article"><h3>HISTORY &amp; DEVELOPMENT</h3><p>${file.history}</p></section><section class="occult-sources"><h3>IMAGE &amp; READING NOTES</h3><p>The visual material above comes from historic astrological manuscript and planetary-symbol comparison imagery. This directory will expand with individual symbol records, manuscript examples, and cross-links to related occult traditions.</p></section><p class="occult-return"><a href="#occult-symbols/planetary-astrological-symbols">[ BACK TO PLANETARY DIRECTORY ]</a> &nbsp; <a href="#occult-symbols">[ SYMBOLS &amp; SYMBOLISM ]</a></p></div>`;
   };
 
+  const showAlchemyDirectory = (parts) => {
+    const target = document.getElementById('app');
+    if (!target) return;
+    const folder = parts[1];
+    if (!folder) {
+      target.innerHTML = `<div class="occult-page"><h2 class="welcome">ALCHEMICAL SYMBOLS</h2><p class="occult-intro">A directory of the marks, diagrams, colors, substances, and visual allegories used in alchemical manuscripts and printed treatises. Open a file below to view its symbol set and historical context.</p>${alchemicalImages}<div class="occult-directory">${alchemyDirectories.map(([name,slug,marks,description]) => `<div><span class="occult-symbol" aria-hidden="true">${marks}</span><a href="#occult-symbols/alchemical-symbols/${slug}">${name.toUpperCase()}</a><p>${description}</p><p><a href="#occult-symbols/alchemical-symbols/${slug}">[ OPEN DIRECTORY ]</a></p></div>`).join('')}</div><p class="occult-return"><a href="#occult-symbols">[ RETURN TO SYMBOLS &amp; SYMBOLISM ]</a> &nbsp; <a href="#occult">[ RETURN TO THE OCCULT ]</a></p></div>`;
+      return;
+    }
+    const file = alchemyEntries[folder];
+    if (!file) return;
+    target.innerHTML = `<div class="occult-page"><h2 class="welcome">${file.title}</h2><p class="occult-intro">${file.intro}</p><table class="archive-table"><tr><th>SYMBOL</th><th>NAME</th><th>ASSOCIATIONS</th></tr>${file.rows.map(([symbol,name,meaning]) => `<tr><td style="font:26px Georgia;text-align:center">${symbol}</td><td><b>${name}</b></td><td>${meaning}</td></tr>`).join('')}</table><section class="occult-article"><h3>HISTORY &amp; DEVELOPMENT</h3><p>${file.history}</p></section><section class="occult-sources"><h3>IMAGE &amp; READING NOTES</h3><p>Historic manuscript imagery at the main directory shows the varied character systems that circulated in alchemical writing. Individual records can later expand into illustrated manuscript examples, associated authors, and related material signs.</p></section><p class="occult-return"><a href="#occult-symbols/alchemical-symbols">[ BACK TO ALCHEMICAL DIRECTORY ]</a> &nbsp; <a href="#occult-symbols">[ SYMBOLS &amp; SYMBOLISM ]</a></p></div>`;
+  };
+
   const showSymbolDirectory = () => {
     const parts = decodeURIComponent(location.hash.replace(/^#occult-symbols\//, '')).split('/');
     if (parts[0] === 'planetary-astrological-symbols') return showPlanetaryDirectory(parts);
+    if (parts[0] === 'alchemical-symbols') return showAlchemyDirectory(parts);
     const item = symbolDirectories.find(([, slug]) => slug === parts[0]);
     if (!item || parts[1]) return;
     const [title] = item;
