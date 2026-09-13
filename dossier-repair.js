@@ -637,4 +637,53 @@
   const app = document.getElementById('app');
   if (app) new MutationObserver(scheduleEnhance).observe(app, { childList: true, subtree: true });
   addEventListener('hashchange', scheduleEnhance);
+
+  const symbolDirectories = [
+    ['PLANETARY & ASTROLOGICAL SYMBOLS', 'planetary-astrological-symbols'],
+    ['ALCHEMICAL SYMBOLS', 'alchemical-symbols'],
+    ['SIGILS, SEALS & MAGICAL ALPHABETS', 'sigils-seals-magical-alphabets'],
+    ['PROTECTIVE & DIVINATORY MARKS', 'protective-divinatory-marks'],
+    ['SECRET-SOCIETY & ESOTERIC EMBLEMS', 'secret-society-esoteric-emblems'],
+    ['ANIMAL, ELEMENTAL & CONTEMPORARY SYMBOLISM', 'animal-elemental-contemporary-symbolism']
+  ];
+
+  const showSymbolDirectory = () => {
+    const key = decodeURIComponent(location.hash.replace(/^#occult-symbols\//, ''));
+    const item = symbolDirectories.find(([, slug]) => slug === key);
+    if (!item) return;
+    const [title] = item;
+    const target = document.getElementById('app');
+    if (!target) return;
+    target.innerHTML = `<div class="occult-page"><h2 class="welcome">${title}</h2><p class="occult-return"><a href="#occult-symbols">[ RETURN TO SYMBOLS &amp; SYMBOLISM ]</a> &nbsp; <a href="#occult">[ RETURN TO THE OCCULT ]</a></p></div>`;
+    const crumb = document.getElementById('crumb');
+    if (crumb) crumb.textContent = `THE OCCULT > SYMBOLS & SYMBOLISM > ${title}`;
+  };
+
+  const linkSymbolDirectories = () => {
+    if (location.hash !== '#occult-symbols') return;
+    document.querySelectorAll('.occult-page .occult-article h3').forEach((heading, index) => {
+      const item = symbolDirectories[index];
+      if (!item || heading.dataset.symbolDirectory) return;
+      heading.dataset.symbolDirectory = item[1];
+      heading.tabIndex = 0;
+      heading.style.cursor = 'pointer';
+      heading.setAttribute('role', 'link');
+      heading.setAttribute('aria-label', `Open ${item[0]} directory`);
+      const open = document.createElement('p');
+      open.innerHTML = `<a href="#occult-symbols/${item[1]}">[ OPEN DIRECTORY ]</a>`;
+      heading.closest('.occult-article')?.append(open);
+      heading.addEventListener('click', () => { location.hash = `occult-symbols/${item[1]}`; });
+      heading.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); location.hash = `occult-symbols/${item[1]}`; }
+      });
+    });
+  };
+
+  const syncSymbolDirectories = () => {
+    if (location.hash.startsWith('#occult-symbols/')) showSymbolDirectory();
+    else linkSymbolDirectories();
+  };
+  addEventListener('hashchange', () => setTimeout(syncSymbolDirectories, 0));
+  new MutationObserver(() => setTimeout(syncSymbolDirectories, 0)).observe(document.getElementById('app'), { childList: true });
+  syncSymbolDirectories();
 })();
