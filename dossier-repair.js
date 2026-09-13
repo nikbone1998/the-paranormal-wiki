@@ -566,6 +566,9 @@
       .occult-astro-gallery,.occult-alchemy-gallery{margin:10px 0 14px}
       .occult-astro-gallery>div,.occult-alchemy-gallery>div{padding:7px}
       .occult-astro-gallery img,.occult-alchemy-gallery img{display:block;width:100%;height:210px;object-fit:contain;background:#080808;margin:0 auto 6px}
+      .occult-record-image{margin:10px 0 15px;padding:8px;border:1px solid #34345f;background:#05050e}
+      .occult-record-image img{display:block;width:100%;height:245px;object-fit:contain;background:#080808;margin:0 auto 7px}
+      .occult-record-image p{margin:0;font-size:12px;line-height:1.35}
       @media(max-width:680px){
         .dossier-nav{top:0;margin-left:-3px;margin-right:-3px;padding:5px 4px}
         .dossier-nav a{padding:5px 6px;font-size:9px}
@@ -574,6 +577,7 @@
         .dossier-quickfacts>div:nth-child(odd){border-right:0}
         .dossier-core-sections .box-body{padding:8px}
         .occult-astro-gallery img,.occult-alchemy-gallery img{height:170px}
+        .occult-record-image img{height:175px}
       }
       @media(prefers-reduced-motion:reduce){.dossier-nav{scroll-behavior:auto}}
     `;
@@ -759,7 +763,7 @@
   const renderSymbolRecord = (folder, record) => {
     const [slug, symbol, name, alternate, earliest, date, source, purpose, original, later, development, example, related, modern] = record;
     const parent = planetaryEntries[folder];
-    return `<div class="occult-page occult-symbol-record"><h2 class="welcome"><span class="occult-symbol" aria-hidden="true">${symbol}</span> ${name}</h2><p class="occult-intro">Individual archival record for the ${name} symbol.</p><table class="archive-table"><tr><th>PRIMARY FORM</th><td style="font:28px Georgia;text-align:center">${symbol}</td></tr><tr><th>ALTERNATE FORMS</th><td>${alternate}</td></tr><tr><th>EARLIEST KNOWN APPEARANCE</th><td>${earliest}</td></tr><tr><th>DATE / RANGE</th><td>${date}</td></tr><tr><th>RESPONSIBLE TRADITION</th><td>${source}</td></tr></table><section class="occult-article"><h3>WHY THE MARK WAS ADOPTED</h3><p>${purpose}</p></section><section class="occult-article"><h3>ORIGINAL AND LATER MEANINGS</h3><p><b>Original use:</b> ${original}</p><p><b>Later astrological use:</b> ${later}</p></section><section class="occult-article"><h3>FORM, TRANSMISSION &amp; EXAMPLES</h3><p><b>Change over time:</b> ${development}</p><p><b>Manuscript and printed record:</b> ${example}</p></section><section class="occult-article"><h3>RELATED USES</h3><p>${related}</p><p><b>Modern usage and variants:</b> ${modern}</p></section><section class="occult-sources"><h3>HISTORICAL VISUAL REFERENCE</h3><p>The constrained manuscript and planetary-sign comparison images below place this record within its wider written tradition.</p>${astrologicalImages}</section><p class="occult-return"><a href="#occult-symbols/planetary-astrological-symbols/${folder}">[ BACK TO ${parent.title} ]</a> &nbsp; <a href="#occult-symbols/planetary-astrological-symbols">[ PLANETARY DIRECTORY ]</a> &nbsp; <a href="#occult-symbols">[ SYMBOLS &amp; SYMBOLISM ]</a></p></div>`;
+    return `<div class="occult-page occult-symbol-record"><h2 class="welcome"><span class="occult-symbol" aria-hidden="true">${symbol}</span> ${name}</h2><p class="occult-intro">Individual archival record for the ${name} symbol.</p>${recordArtwork(folder, name)}<table class="archive-table"><tr><th>PRIMARY FORM</th><td style="font:28px Georgia;text-align:center">${symbol}</td></tr><tr><th>ALTERNATE FORMS</th><td>${alternate}</td></tr><tr><th>EARLIEST KNOWN APPEARANCE</th><td>${earliest}</td></tr><tr><th>DATE / RANGE</th><td>${date}</td></tr><tr><th>RESPONSIBLE TRADITION</th><td>${source}</td></tr></table><section class="occult-article"><h3>WHY THE MARK WAS ADOPTED</h3><p>${purpose}</p></section><section class="occult-article"><h3>ORIGINAL AND LATER MEANINGS</h3><p><b>Original use:</b> ${original}</p><p><b>Later astrological use:</b> ${later}</p></section><section class="occult-article"><h3>FORM, TRANSMISSION &amp; EXAMPLES</h3><p><b>Change over time:</b> ${development}</p><p><b>Manuscript and printed record:</b> ${example}</p></section><section class="occult-article"><h3>RELATED USES</h3><p>${related}</p><p><b>Modern usage and variants:</b> ${modern}</p></section><p class="occult-return"><a href="#occult-symbols/planetary-astrological-symbols/${folder}">[ BACK TO ${parent.title} ]</a> &nbsp; <a href="#occult-symbols/planetary-astrological-symbols">[ PLANETARY DIRECTORY ]</a> &nbsp; <a href="#occult-symbols">[ SYMBOLS &amp; SYMBOLISM ]</a></p></div>`;
   };
 
   const renderRecordLinks = folder => `<div class="occult-directory">${(symbolRecordDefs[folder] || []).map(record => {
@@ -817,6 +821,19 @@
 
   const astrologicalImages = `<div class="occult-directory occult-astro-gallery"><div><img src="https://www.wga.hu/art/zgothic/miniatur/1051-100/09_1051.jpg" alt="Medieval zodiac diagram from a French medical miscellany" loading="lazy"><p class="tiny">Medieval zodiac diagram from a French medical miscellany. The signs appear in a circular calendar-like arrangement around a central sun.</p></div><div><img src="https://pbs.twimg.com/media/DOauN2OX0AEL7sl.jpg" alt="Comparison of Arabic and Latin planetary symbols" loading="lazy"><p class="tiny">A comparison of planetary signs in the Arabic <i>Ghāyat al-Ḥakīm</i> tradition and the Latin <i>Picatrix</i>.</p></div></div>`;
   const alchemicalImages = `<div class="occult-directory occult-alchemy-gallery"><div><img src="https://cms.allardpierson.nl/storage/media/Blogs/1.-PH338.jpg" alt="Sixteenth-century alchemical symbol table" loading="lazy"><p class="tiny">A sixteenth-century manuscript table of alchemical characters, including planetary metals and material signs.</p></div><div><img src="https://cms.allardpierson.nl/storage/media/Blogs/3.-PH185-fols.-2v-3r.jpg" alt="Seventeenth-century alchemical symbol list" loading="lazy"><p class="tiny">A seventeenth-century symbol list showing the compact visual notation used for substances and operations.</p></div></div>`;
+
+  const recordArtwork = (folder, name) => {
+    const art = {
+      'classical-planets': ['https://www.facsimiles.com/fileadmin/_processed_/wmimages/csm_011100_Einzelseite_c13d0ec09d-95938eda37.png', 'Illuminated astronomical volvella with zodiac and planetary imagery, c. 1400.', 'Codex of Astronomy and Astrology of King Wenceslas', 'https://www.facsimiles.com/facsimiles/the-codex-of-astronomy-and-astrology-of-king-wenceslas'],
+      'zodiac-signs': ['https://www.facsimiles.com/fileadmin/_processed_/wmimages/csm_011100_Einzelseite_c13d0ec09d-95938eda37.png', 'Illuminated zodiac and planetary diagram, c. 1400.', 'Codex of Astronomy and Astrology of King Wenceslas', 'https://www.facsimiles.com/facsimiles/the-codex-of-astronomy-and-astrology-of-king-wenceslas'],
+      'elements-modalities': ['https://cms.allardpierson.nl/storage/media/Blogs/1.-PH338.jpg', 'Historic alchemical symbol table showing a related visual language of elements, planets, and materials.', 'Allard Pierson', 'https://www.allardpierson.nl/en/blog/chemical-symbols-characters-used-in-alchemical-texts'],
+      'houses-aspects': ['https://www.facsimiles.com/fileadmin/_processed_/wmimages/csm_011100_Einzelseite_c13d0ec09d-95938eda37.png', 'Illuminated astrological diagram with circular divisions and planetary imagery, c. 1400.', 'Codex of Astronomy and Astrology of King Wenceslas', 'https://www.facsimiles.com/facsimiles/the-codex-of-astronomy-and-astrology-of-king-wenceslas'],
+      'lunar-symbols': ['https://khaledkthiri.files.wordpress.com/2023/05/img_3876.jpg', 'Medieval Arabic manuscript diagrams of lunar phases and celestial geometry.', 'Medieval Arabic lunar diagrams', 'https://azwrite.com/2023/05/11/abu-abdullah-al-khwarizmi-pioneering-arab-scientist-in-astronomy-and-mathematics/'],
+      'modern-planets': ['https://www.facsimiles.com/fileadmin/_processed_/wmimages/csm_011100_Einzelseite_c13d0ec09d-95938eda37.png', 'Historic astronomical diagram—shown here as visual context for the later expansion of planetary notation.', 'Codex of Astronomy and Astrology of King Wenceslas', 'https://www.facsimiles.com/facsimiles/the-codex-of-astronomy-and-astrology-of-king-wenceslas']
+    }[folder];
+    if (!art) return '';
+    return `<figure class="occult-record-image"><img src="${art[0]}" alt="Historical astronomical image used as context for the ${name} symbol" loading="lazy"><figcaption>${art[1]} Source: <a href="${art[3]}" target="_blank" rel="noopener noreferrer">${art[2]}</a>.</figcaption></figure>`;
+  };
 
   const showPlanetaryDirectory = (parts) => {
     const target = document.getElementById('app');
